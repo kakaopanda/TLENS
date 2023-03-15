@@ -2,8 +2,6 @@ import * as React from "react";
 import "./Header.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchDrawer from "../../components/Drawer-Components/SearchDrawer";
-import MenuDrawer from "../../components/Drawer-Components/MenuDrawer";
 
 //MUI
 import AppBar from "@mui/material/AppBar";
@@ -52,6 +50,20 @@ const Header = () => {
     });
   };
 
+  const handleNavigate = (text) => {
+    if (text === "분야별") {
+      navigate("/");
+    } else if (text === "지역별") {
+      navigate("/region");
+    } else if (text === "언론사 분석") {
+      navigate("/repoter");
+    } else if (text === "기업 분석") {
+      navigate("/company");
+    } else {
+      navigate("/");
+    }
+  };
+
   const list = (anchor) => (
     <Box
       sx={{ width: 250 }}
@@ -74,7 +86,11 @@ const Header = () => {
       <List>
         {["분야별", "지역별"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                handleNavigate(text);
+              }}
+            >
               <ListItemIcon>
                 {index % 2 === 0 ? (
                   <TextFieldsIcon color="primary" />
@@ -89,9 +105,13 @@ const Header = () => {
       </List>
       <Divider />
       <List>
-        {["기업 분석", "기자 분석"].map((text, index) => (
+        {["기업 분석", "언론사 분석"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                handleNavigate(text);
+              }}
+            >
               <ListItemIcon>
                 {index % 2 === 0 ? (
                   <WebhookIcon color="primary" />
@@ -108,7 +128,11 @@ const Header = () => {
       <List>
         {["통계자료"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                handleNavigate(text);
+              }}
+            >
               <ListItemIcon>
                 {index % 2 === 0 ? <InsertChartIcon color="primary" /> : null}
               </ListItemIcon>
