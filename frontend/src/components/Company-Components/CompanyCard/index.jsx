@@ -11,7 +11,7 @@ import Link from "@mui/joy/Link";
 const CompanyCard = ({ name, sectors, ceo, index }) => {
   const navigate = useNavigate();
   const handleCompanyDetail = (name) => {
-    navigate(`/company/${name}`);
+    navigate(`/company/${name}`, { state: index });
   };
   return (
     <div>
@@ -19,7 +19,7 @@ const CompanyCard = ({ name, sectors, ceo, index }) => {
         <CardOverflow>
           <img
             style={{ width: 230, height: 130 }}
-            src={`${process.env.PUBLIC_URL}/images/${index}.jpg`}
+            src={`/img/${index}.jpg`}
             alt=""
           />
         </CardOverflow>

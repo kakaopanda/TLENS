@@ -10,6 +10,8 @@ import Company from "./pages/Company";
 import Region from "./pages/Region";
 import Repoter from "./pages/Reporter";
 import CompanyDetail from "./components/Company-Components/CompanyDetail";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/region" element={<Region />} />
           <Route path="/repoter" element={<Repoter />} />
           <Route path="/company/:name" element={<CompanyDetail />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
     </React.Fragment>

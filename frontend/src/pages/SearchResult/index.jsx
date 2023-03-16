@@ -6,7 +6,7 @@ const SearchResult = () => {
 
   return (
     <div>
-      <h2>{keyword}를 검색한 결과 입니다.</h2>
+      <h2>{keyword} 검색한 결과 입니다.</h2>
     </div>
   );
 };

@@ -177,14 +177,14 @@ const Header = () => {
             onKeyUp={toggleDrawer1(anchor, false)}
           />
         </Box>
-        <IconButton
+        {/* <IconButton
           size="large"
           edge="start"
           color="primary"
           sx={{ marginRight: "5%" }}
         >
           <SearchIcon />
-        </IconButton>
+        </IconButton> */}
       </Box>
       <br />
       <br />
@@ -240,7 +240,14 @@ const Header = () => {
                 {search("top")}
               </Drawer>
             </React.Fragment>
-            <IconButton size="large" edge="start" color="primary">
+            <IconButton
+              onClick={() => {
+                navigate("/login");
+              }}
+              size="large"
+              edge="start"
+              color="primary"
+            >
               <PersonIcon />
             </IconButton>
           </Box>
