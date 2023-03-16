@@ -1,50 +1,49 @@
 import * as React from "react";
-import AspectRatio from "@mui/joy/AspectRatio";
+import { useNavigate } from "react-router-dom";
+
+// MUI
 import Card from "@mui/joy/Card";
 import CardOverflow from "@mui/joy/CardOverflow";
 import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
-import IconButton from "@mui/joy/IconButton";
 import Link from "@mui/joy/Link";
-import Favorite from "@mui/icons-material/Favorite";
 
-const CompanyCard = () => {
+const CompanyCard = ({ name, sectors, ceo, index }) => {
+  const navigate = useNavigate();
+  const handleCompanyDetail = (name) => {
+    navigate(`/company/${name}`);
+  };
   return (
     <div>
-      <Card variant="outlined" sx={{ width: 320 }}>
+      <Card variant="outlined" sx={{ width: 230, margin: 2 }}>
         <CardOverflow>
-          <AspectRatio ratio="2">
-            <img
-              src="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318"
-              srcSet="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318&dpr=2 2x"
-              loading="lazy"
-              alt=""
-            />
-          </AspectRatio>
-          <IconButton
-            aria-label="Like minimal photography"
-            size="md"
-            variant="solid"
-            color="danger"
-            sx={{
-              position: "absolute",
-              zIndex: 2,
-              borderRadius: "50%",
-              right: "1rem",
-              bottom: 0,
-              transform: "translateY(50%)",
-            }}
-          >
-            <Favorite />
-          </IconButton>
+          <img
+            style={{ width: 230, height: 130 }}
+            src={`${process.env.PUBLIC_URL}/images/${index}.jpg`}
+            alt=""
+          />
         </CardOverflow>
-        <Typography level="h2" sx={{ fontSize: "md", mt: 2 }}>
-          <Link href="#multiple-actions" overlay underline="none">
-            Yosemite National Park
+        <Typography level="h2" sx={{ fontSize: "md", mt: 1 }}>
+          <Link
+            sx={{ color: "black" }}
+            onClick={() => {
+              handleCompanyDetail(name);
+            }}
+            overlay
+            underline="none"
+          >
+            {name}
           </Link>
         </Typography>
         <Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
-          <Link href="#multiple-actions">California</Link>
+          <Link
+            sx={{ color: "black" }}
+            onClick={() => {
+              handleCompanyDetail(name);
+            }}
+          >
+            {sectors}
+          </Link>
         </Typography>
         <Divider inset="context" />
         <CardOverflow
@@ -61,14 +60,7 @@ const CompanyCard = () => {
             level="body3"
             sx={{ fontWeight: "md", color: "text.secondary" }}
           >
-            6.3k views
-          </Typography>
-          <Divider orientation="vertical" />
-          <Typography
-            level="body3"
-            sx={{ fontWeight: "md", color: "text.secondary" }}
-          >
-            1 hour ago
+            대표 : {ceo}
           </Typography>
         </CardOverflow>
       </Card>

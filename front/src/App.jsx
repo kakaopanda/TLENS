@@ -9,6 +9,7 @@ import SearchResult from "./pages/SearchResult";
 import Company from "./pages/Company";
 import Region from "./pages/Region";
 import Repoter from "./pages/Reporter";
+import CompanyDetail from "./components/Company-Components/CompanyDetail";
 
 function App() {
   return (
@@ -17,10 +18,11 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/search" element={<SearchResult />} />
+          <Route path="/search/:keyword" element={<SearchResult />} />
           <Route path="/company" element={<Company />} />
           <Route path="/region" element={<Region />} />
           <Route path="/repoter" element={<Repoter />} />
+          <Route path="/company/:name" element={<CompanyDetail />} />
         </Routes>
       </div>
     </React.Fragment>

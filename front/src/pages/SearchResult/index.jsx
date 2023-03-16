@@ -1,19 +1,12 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const SearchResult = () => {
-  const location = useLocation();
-
-  const [keyword, setKeyword] = useState("");
-
-  useEffect(() => {
-    setKeyword(location.state);
-  }, []);
+  const { keyword } = useParams();
 
   return (
     <div>
-      <h2>{keyword}</h2>
+      <h2>{keyword}를 검색한 결과 입니다.</h2>
     </div>
   );
 };
