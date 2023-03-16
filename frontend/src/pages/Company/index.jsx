@@ -1,19 +1,12 @@
 import * as React from "react";
 import "./Company.scss";
 import CompanyCard from "../../components/Company-Components/CompanyCard";
+import company from "./Company.json";
 
 // MUI
 import Box from "@mui/material/Box";
 
 const Company = () => {
-  const company = [
-    ["LG전자", "통신 및 송 장비 제조업", "조주완, 배두용"],
-    ["기아자동차", "자동차 제조업", "송호정, 최준영"],
-    ["한국전력공사", "송전 및 배전업", "정승일"],
-    ["한화", "화약 및 불꽃제품 제조업", "금춘수, 옥경석"],
-    ["SK 하이닉스", "유사 반도체소자 제조업", "박정호, 곽노정"],
-  ];
-
   return (
     <div className="company-main">
       <Box
@@ -46,13 +39,16 @@ const Company = () => {
         }}
       >
         {company.map((V, index) => {
+          console.log(V);
           return (
             <CompanyCard
               key={index}
-              name={V[0]}
-              sectors={V[1]}
-              ceo={V[2]}
-              index={index}
+              name={V.name}
+              ename={V.ename}
+              category={V.category}
+              ceo={V.ceo}
+              birth={V.birth}
+              index={index + 1}
             />
           );
         })}
