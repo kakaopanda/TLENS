@@ -23,7 +23,7 @@ const KeywordChart = () => {
         type="area"
         series={[
           {
-            name: "South",
+            name: "싸피",
             data: generateDayWiseTimeSeries(
               new Date("11 Feb 2017 GMT").getTime(),
               20,
@@ -34,7 +34,7 @@ const KeywordChart = () => {
             ),
           },
           {
-            name: "North",
+            name: "삼성",
             data: generateDayWiseTimeSeries(
               new Date("11 Feb 2017 GMT").getTime(),
               20,
@@ -45,7 +45,7 @@ const KeywordChart = () => {
             ),
           },
           {
-            name: "Central",
+            name: "삼성전자",
             data: generateDayWiseTimeSeries(
               new Date("11 Feb 2017 GMT").getTime(),
               20,
