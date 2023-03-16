@@ -8,17 +8,25 @@ import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
 import Link from "@mui/joy/Link";
 
-const CompanyCard = ({ name, sectors, ceo, index }) => {
+const CompanyCard = ({ name, ename, category, ceo, birth, index }) => {
   const navigate = useNavigate();
   const handleCompanyDetail = (name) => {
-    navigate(`/company/${name}`, { state: index });
+    navigate(`/company/${name}`, {
+      state: {
+        category: category,
+        ceo: ceo,
+        birth: birth,
+        index: index,
+        ename: ename,
+      },
+    });
   };
   return (
     <div>
       <Card variant="outlined" sx={{ width: 230, margin: 2 }}>
         <CardOverflow>
           <img
-            style={{ width: 230, height: 130 }}
+            style={{ width: 230, height: 130, objectFit: "cover" }}
             src={`/img/${index}.jpg`}
             alt=""
           />
@@ -27,7 +35,7 @@ const CompanyCard = ({ name, sectors, ceo, index }) => {
           <Link
             sx={{ color: "black" }}
             onClick={() => {
-              handleCompanyDetail(name);
+              handleCompanyDetail(name, category, ceo, birth, ename);
             }}
             overlay
             underline="none"
@@ -39,10 +47,10 @@ const CompanyCard = ({ name, sectors, ceo, index }) => {
           <Link
             sx={{ color: "black" }}
             onClick={() => {
-              handleCompanyDetail(name);
+              handleCompanyDetail(name, category, ceo, birth, ename);
             }}
           >
-            {sectors}
+            {category}
           </Link>
         </Typography>
         <Divider inset="context" />
