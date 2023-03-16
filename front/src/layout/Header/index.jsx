@@ -154,7 +154,7 @@ const Header = () => {
   const toggleDrawer1 = (anchor, open) => (event) => {
     if (event.key === "Enter") {
       setState({ ...state, [anchor]: open });
-      navigate("/search", { state: keyword });
+      navigate(`/search/${keyword}`);
     }
   };
 
