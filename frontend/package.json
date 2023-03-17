@@ -36,13 +36,9 @@
     "recharts": "^2.5.0",
     "sass": "^1.59.2",
     "styled-components": "^5.3.8",
-<<<<<<< HEAD
+    "three": "^0.150.1",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.2"
-=======
-    "three": "^0.150.1",
-    "web-vitals": "^2.1.4"
->>>>>>> dev
   },
   "scripts": {
     "start": "react-scripts start",
