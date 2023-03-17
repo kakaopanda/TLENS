@@ -78,7 +78,7 @@ const Header = () => {
               navigate("/");
             }}
           >
-            <img src={process.env.PUBLIC_URL + "tlens_logo.png"} alt="" />
+            <img src={"/images/tlens_logo.png"} alt="" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -219,7 +219,7 @@ const Header = () => {
               navigate("/");
             }}
           >
-            <img src={process.env.PUBLIC_URL + "tlens_logo.png"} alt="" />
+            <img src={"/images/tlens_logo.png"} alt="" />
           </Button>
           <Box>
             <React.Fragment key={"top"}>
