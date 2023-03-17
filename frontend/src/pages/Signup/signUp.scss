@@ -1,0 +1,90 @@
+@media all and (min-width: 1024px) {
+  .input-forms {
+    padding: 70px;
+    input{
+      width: 30vw;
+    }
+  }
+
+}
+@media all and (max-width: 1024px) {
+  .input-forms {
+    padding: 60px;
+    input{
+      width: 330px;
+    }
+  }
+}
+
+@media all and (max-width: 768px) {
+  .input-forms {
+    padding: 50px;
+    input{
+      width: 300px;
+    }
+  }
+}
+
+
+
+
+
+.container {
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  height: 100vh;
+}
+
+.box1 {
+  background-color: white;
+  display: grid;
+  justify-content: center;
+  .logo{
+    margin-left: 15%;
+    width: 15vw;
+    margin-top: 25%;
+  }
+  div{
+    display: grid;
+    justify-content: start;
+    font-size: 40px;
+    font-weight: bold;
+  }
+}
+
+.box2 {
+  background-color: #88c4ff;
+}
+
+.signup-wrapper {
+  font-family: 'Noto Sans KR', sans-serif;
+  .input-forms {
+    margin: 10%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    .input{
+      width: 500px;
+    }
+    .input-label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #282c34;
+    }
+
+    .input-forms-item {
+      padding: 7px 0;
+      .input-area{
+        border-radius: 50%;
+      }
+      
+      .error-message {
+        font-size: 1rem;
+        color: blue;
+        font-weight: bold;
+      }
+    }
+  }
+}
