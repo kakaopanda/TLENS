@@ -39,7 +39,6 @@ const Company = () => {
         }}
       >
         {company.map((V, index) => {
-          console.log(V);
           return (
             <CompanyCard
               key={index}
