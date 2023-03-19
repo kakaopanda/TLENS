@@ -105,7 +105,7 @@ const MainChart = (props) => {
         <Divider orientation="vertical" flexItem />
         <div style={{ width: "45%" }}>
           <br />
-          {/* <Wordcloud /> */}
+          <Wordcloud />
         </div>
       </div>
       <Divider />

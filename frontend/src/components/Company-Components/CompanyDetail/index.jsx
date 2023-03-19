@@ -2,6 +2,10 @@ import React from "react";
 import { useParams, useLocation } from "react-router-dom";
 import CompanyRecharts from "../CompanyRecharts";
 import CompanyForceDirected from "../CompanyForceDirected";
+import CompanyKeyword from "../CompanyKeyword";
+import MainNewsCard from "../../Main-Components/MainNewsCard";
+import WordCloud from "../../Main-Components/WordCloud";
+import HotKeywordChart from "../../Main-Components/HotKeywordChart";
 
 import Divider from "@mui/material/Divider";
 
@@ -123,9 +127,55 @@ const CompanyDetail = () => {
         <div style={{ display: "flex" }}>
           <div style={{ width: "50%" }}>
             <h2 style={{ marginLeft: "2%" }}>연간 키워드 분석 : {name}</h2>
-            <CompanyForceDirected data={data} config={config} />
+            <div
+              style={{
+                backgroundColor: "white",
+                borderRadius: "20px",
+                margin: "5%",
+              }}
+            >
+              <CompanyKeyword />
+            </div>
           </div>
-          <div style={{ width: "50%" }}></div>
+          <div style={{ width: "50%" }}>
+            <h2 style={{ marginLeft: "2%" }}>키워드 통계 : {name} </h2>
+            <div
+              style={{
+                backgroundColor: "white",
+                borderRadius: "20px",
+                margin: "5%",
+              }}
+            >
+              <CompanyKeyword />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>T:LENS 키워드 분석 : {name}</h2>
+        <Divider />
+        <div style={{ display: "flex" }}>
+          <div
+            style={{
+              width: "65%",
+              justifyContent: "center",
+              height: "90vh",
+              overflowY: "auto",
+            }}
+          >
+            <MainNewsCard />
+          </div>
+          <div style={{ width: "35%" }}>
+            <br />
+            <br />
+            <br />
+            <HotKeywordChart />
+
+            <br />
+            <br />
+            <h3>{name} HOT Keyword</h3>
+            <WordCloud />
+          </div>
         </div>
       </div>
     </div>

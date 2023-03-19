@@ -12,6 +12,7 @@ import Repoter from "./pages/Reporter";
 import CompanyDetail from "./components/Company-Components/CompanyDetail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Statistics from "./pages/Statistics";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/company/:name" element={<CompanyDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/statistics" element={<Statistics />} />
         </Routes>
       </div>
     </React.Fragment>

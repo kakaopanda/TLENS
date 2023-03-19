@@ -60,7 +60,7 @@ const Header = () => {
     } else if (text === "기업 분석") {
       navigate("/company");
     } else {
-      navigate("/");
+      navigate("/statistics");
     }
   };
 

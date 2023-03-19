@@ -35,7 +35,7 @@ const Main = () => {
       <Box
         sx={{
           flexGrow: 1,
-          // maxWidth: { xs: 320, sm: 480 },
+          maxWidth: { xs: "100%" },
           bgcolor: "background.paper",
         }}
       >
@@ -53,67 +53,67 @@ const Main = () => {
         >
           <Tab
             icon={<AppsIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="전체"
             value="1"
           />
           <Tab
             icon={<HandshakeIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="정치"
             value="2"
           />
           <Tab
             icon={<MonetizationOnIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="경제"
             value="3"
           />
           <Tab
             icon={<LanguageIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="국제"
             value="4"
           />
           <Tab
             icon={<GroupsIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="사회"
             value="5"
           />
           <Tab
             icon={<StarIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="문화"
             value="6"
           />
           <Tab
             icon={<AutoAwesomeOutlinedIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="연예"
             value="7"
           />
           <Tab
             icon={<EmojiEventsOutlinedIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="스포츠"
             value="8"
           />
           <Tab
             icon={<ScienceOutlinedIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="과학"
             value="9"
           />
           <Tab
             icon={<SolarPowerIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="환경"
             value="10"
           />
           <Tab
             icon={<ImportantDevicesOutlinedIcon fontSize="large" />}
-            sx={{ width: 130 }}
+            sx={{ width: "10%" }}
             label="IT"
             value="11"
           />
