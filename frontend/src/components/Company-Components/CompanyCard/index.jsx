@@ -26,7 +26,7 @@ const CompanyCard = ({ name, ename, category, ceo, birth, index }) => {
       <Card variant="outlined" sx={{ width: 230, margin: 2 }}>
         <CardOverflow>
           <img
-            style={{ width: 230, height: 130, objectFit: "cover" }}
+            style={{ width: "100%", height: 130, objectFit: "cover" }}
             src={`/img/${index}.jpg`}
             alt=""
           />

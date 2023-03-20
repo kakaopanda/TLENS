@@ -6,8 +6,6 @@ import ReporterCarousel from "../../components/Reporter-Components/ReporterCarou
 import Box from "@mui/material/Box";
 
 const Repoter = () => {
-  const images = ["images/1.jpg", "images/3.jpg", "images/2.jpg"];
-
   return (
     <div>
       <Box
@@ -33,7 +31,7 @@ const Repoter = () => {
         </div>
       </Box>
       <div className="app1">
-        <ReporterCarousel images={images} />
+        <ReporterCarousel />
       </div>
     </div>
   );
