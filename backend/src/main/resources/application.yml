@@ -1,0 +1,97 @@
+spring:
+  security:
+    user:
+      password: 2ce1414d-e44c-48f7-9286-a76eaa7c53e2
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  main:
+    allow-bean-definition-overriding: true
+  web:
+    resources:
+      static-locations: classpath:/dist/
+      add-mappings: 'false'
+  redis:
+    port: 6379
+    host: j8c206.p.ssafy.io
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+        show-sql: true
+    open-in-view: true
+    database: mysql
+  datasource:
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    hikari:
+#      password: nVNUcEiOY5
+#      username: S08P23C206@stg-yswa-kr-practice-db-master
+#    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/s08p23c206
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      password: ssafy
+      username: root
+    url: jdbc:mysql://localhost:3306/tlens
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        debug: true
+        smtp:
+          connectiontimeout: 5000
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            enable: true
+
+jwt:
+  accessTokenExpiration: '18000000000' #'1800000'
+  refreshTokenExpiration: '604800000'
+  secret: dyAeHubOOc8KaOfYB6XEQoEj1QzRlVgtjNL8PYs1A1tymZvvqkcEU7L1imkKHeDa
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+  api-docs:
+    path: /api-docs
+  show-actuator: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  paths-to-match:
+    - /v1/**
+
+server:
+  servlet:
+    encoding:
+      enabled: 'true'
+      force: 'true'
+      charset: UTF-8
+    contextPath: /
+  port: '8082'
+  compression:
+    enabled: 'true'
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+
+spa:
+  default-file: /dist/index.html
+
+file:
+  path: /usr/local/share
+  path-certificate: /usr/local/share
+
+
+common-code:
+  evaluation-question-parent-id: 1
+  category-parent-id: 2
