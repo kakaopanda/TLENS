@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 import "./ReporterCarousel.scss";
 import ReporterCard from "../ReporterCard";
+import reporter from "../../../pages/Reporter/Reporter.json";
+import ReporterCard2 from "../ReporterCard2";
 
 // MUI
 import Divider from "@mui/material/Divider";
+import List from "@mui/joy/List";
+import ListItem from "@mui/joy/ListItem";
+import ListItemButton from "@mui/joy/ListItemButton";
+import ListItemContent from "@mui/joy/ListItemContent";
 
 const CARDS = 16;
 const MAX_VISIBILITY = 4;
@@ -65,9 +71,41 @@ const ReporterCarousel = () => {
           ))}
         </Carousel>
       </div>
-      <div style={{ margin: "0 8% 0 8%" }}>
-        <Divider />
-        {active}
+      <br />
+      <Divider sx={{ margin: "0 8% 0 8%" }} />
+      {reporter[active] ? (
+        <h2 style={{ textAlign: "left", marginLeft: "8%" }}>
+          {reporter[active][0][0]} : {reporter[active].length}명
+        </h2>
+      ) : null}
+      <div
+        style={{
+          margin: "0 8% 0 8%",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {reporter[active] ? (
+          reporter[active].map((V, index) => {
+            return (
+              <div>
+                <List>
+                  <ListItem>
+                    <ListItemButton>
+                      <ListItemContent>
+                        <ReporterCard2 key={index} V={V} />
+                      </ListItemContent>
+                    </ListItemButton>
+                  </ListItem>
+                </List>
+              </div>
+            );
+          })
+        ) : (
+          <h2>등록된 기자가 없습니다</h2>
+        )}
       </div>
     </div>
   );

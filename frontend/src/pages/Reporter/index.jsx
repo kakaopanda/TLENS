@@ -1,5 +1,5 @@
 import React from "react";
-import "./Repoter.scss";
+import "./Reporter.scss";
 import ReporterCarousel from "../../components/Reporter-Components/ReporterCarousel";
 
 // MUI
@@ -30,7 +30,7 @@ const Repoter = () => {
           </h3>
         </div>
       </Box>
-      <div className="app1">
+      <div className="reporter-main">
         <ReporterCarousel />
       </div>
     </div>
