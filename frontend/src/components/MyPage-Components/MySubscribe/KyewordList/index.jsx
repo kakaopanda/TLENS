@@ -18,8 +18,7 @@ function Keyword({ word, onClick, onClickDelete, selected }) {
         color: '#ffffff',
         borderRadius: '5px',
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+
     >
       <span
         style={{

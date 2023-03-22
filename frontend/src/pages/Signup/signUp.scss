@@ -1,90 +1,135 @@
 @media all and (min-width: 1024px) {
   .input-forms {
-    padding: 70px;
+    padding: 35px;
     input{
-      width: 30vw;
+      width: 20vw;
+      margin-left: 20px;
     }
   }
 
 }
 @media all and (max-width: 1024px) {
   .input-forms {
-    padding: 60px;
+    padding: 50px;
     input{
-      width: 330px;
+      width: 20vw;
     }
   }
 }
 
 @media all and (max-width: 768px) {
   .input-forms {
-    padding: 50px;
+    padding: 60px;
     input{
-      width: 300px;
+      width: 20vw;
     }
   }
 }
-
-
 
 
 
 .container {
   display: grid;
-  grid-template-columns: 3fr 5fr;
+  grid-template-columns: 4fr 5fr;
   height: 100vh;
 }
 
 .box1 {
   background-color: white;
-  display: grid;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .logo{
-    margin-left: 15%;
-    width: 15vw;
-    margin-top: 25%;
+    margin-top: 10%;
+    img{
+      width: 300px;
+      margin-inline-end: 50px;
+    }
   }
-  div{
+  .description{
+    margin-top: 20px;
     display: grid;
-    justify-content: start;
-    font-size: 40px;
-    font-weight: bold;
+    text-align: start;
+    
+    h2{
+      margin-inline: 80px;
+      margin-block: 30px;
+      font-size: 30px;
+    }
   }
 }
 
 .box2 {
   background-color: #88c4ff;
+  opacity: 80%;
+  padding: 5px;
+  .input-label {
+    justify-content: center;
+  }
 }
 
 .signup-wrapper {
   font-family: 'Noto Sans KR', sans-serif;
+
   .input-forms {
-    margin: 10%;
+    margin: 5%;
     display: grid;
     align-items: center;
-    justify-content: center;
     background-color: #ffffff;
-    border-radius: 10px;
-    .input{
-      width: 500px;
-    }
-    .input-label {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #282c34;
-    }
+    border-radius: 15px;
 
+    .input-label {
+      margin-right: 10px;
+      margin-left: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #000000;
+    }
     .input-forms-item {
-      padding: 7px 0;
-      .input-area{
-        border-radius: 50%;
-      }
-      
-      .error-message {
-        font-size: 1rem;
-        color: blue;
-        font-weight: bold;
-      }
+      margin-top: 10px;
+      padding: 5px 0;
+      display: flex;
+      justify-content: space-between;
+
+    }
+    .error-message {
+      font-size: 15px;
+      text-align: start;
+      margin-left: 10px;
+      color: red;
+      font-weight: bold;
     }
   }
+}
+
+.Typography-bold {
+  font-weight: bold;
+  font-size: 13px;
+  color: black;
+}
+
+
+
+
+.membership-check {
+  display: flex;
+  align-items: center;
+}
+
+.input-combo{
+  display: flex;
+  justify-content: start;
+  margin-top: 20px;
+}
+
+.input-datepicker{
+  display: flex;
+  justify-content: start;
+  margin-top: 25px;
+}
+
+.submit-button{
+  margin-block: 15px;
+  display: flex;
+  justify-content: center;
 }
