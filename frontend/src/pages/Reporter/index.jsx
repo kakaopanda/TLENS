@@ -5,7 +5,7 @@ import ReporterCarousel from "../../components/Reporter-Components/ReporterCarou
 // MUI
 import Box from "@mui/material/Box";
 
-const Repoter = () => {
+const Reporter = () => {
   return (
     <div>
       <Box
@@ -37,4 +37,4 @@ const Repoter = () => {
   );
 };
 
-export default Repoter;
+export default Reporter;

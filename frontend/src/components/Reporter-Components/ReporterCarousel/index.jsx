@@ -7,10 +7,6 @@ import ReporterCard2 from "../ReporterCard2";
 
 // MUI
 import Divider from "@mui/material/Divider";
-import List from "@mui/joy/List";
-import ListItem from "@mui/joy/ListItem";
-import ListItemButton from "@mui/joy/ListItemButton";
-import ListItemContent from "@mui/joy/ListItemContent";
 
 const CARDS = 16;
 const MAX_VISIBILITY = 4;
@@ -19,36 +15,34 @@ const Carousel = ({ children, active, handlePrev, handleNext }) => {
   const count = React.Children.count(children);
 
   return (
-    <>
-      <div className="carousel">
-        {active > 0 && (
-          <button className="nav left" onClick={handlePrev}>
-            <TiChevronLeftOutline />
-          </button>
-        )}
-        {React.Children.map(children, (child, i) => (
-          <div
-            className="card-container"
-            style={{
-              "--active": i === active ? 1 : 0,
-              "--offset": (active - i) / 3,
-              "--direction": Math.sign(active - i),
-              "--abs-offset": Math.abs(active - i) / 3,
-              pointerEvents: active === i ? "auto" : "none",
-              opacity: Math.abs(active - i) >= MAX_VISIBILITY ? "0" : "1",
-              display: Math.abs(active - i) > MAX_VISIBILITY ? "none" : "block",
-            }}
-          >
-            {child}
-          </div>
-        ))}
-        {active < count - 1 && (
-          <button className="nav right" onClick={handleNext}>
-            <TiChevronRightOutline />
-          </button>
-        )}
-      </div>
-    </>
+    <div className="carousel">
+      {active > 0 && (
+        <button className="nav left" onClick={handlePrev}>
+          <TiChevronLeftOutline />
+        </button>
+      )}
+      {React.Children.map(children, (child, i) => (
+        <div
+          className="card-container"
+          style={{
+            "--active": i === active ? 1 : 0,
+            "--offset": (active - i) / 3,
+            "--direction": Math.sign(active - i),
+            "--abs-offset": Math.abs(active - i) / 3,
+            pointerEvents: active === i ? "auto" : "none",
+            opacity: Math.abs(active - i) >= MAX_VISIBILITY ? "0" : "1",
+            display: Math.abs(active - i) > MAX_VISIBILITY ? "none" : "block",
+          }}
+        >
+          {child}
+        </div>
+      ))}
+      {active < count - 1 && (
+        <button className="nav right" onClick={handleNext}>
+          <TiChevronRightOutline />
+        </button>
+      )}
+    </div>
   );
 };
 
@@ -89,19 +83,7 @@ const ReporterCarousel = () => {
       >
         {reporter[active] ? (
           reporter[active].map((V, index) => {
-            return (
-              <div>
-                <List>
-                  <ListItem>
-                    <ListItemButton>
-                      <ListItemContent>
-                        <ReporterCard2 key={index} V={V} />
-                      </ListItemContent>
-                    </ListItemButton>
-                  </ListItem>
-                </List>
-              </div>
-            );
+            return <ReporterCard2 key={index} V={V} />;
           })
         ) : (
           <h2>등록된 기자가 없습니다</h2>
