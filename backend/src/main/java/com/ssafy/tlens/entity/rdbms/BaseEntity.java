@@ -1,4 +1,4 @@
-package com.ssafy.tlens.rdbms;
+package com.ssafy.tlens.entity.rdbms;
 
 import lombok.Getter;
 import lombok.Setter;
