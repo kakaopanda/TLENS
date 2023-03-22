@@ -13,6 +13,7 @@ import CompanyDetail from "./components/Company-Components/CompanyDetail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Statistics from "./pages/Statistics";
+import Mypage from "./pages/Mypage"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="/mypage" element={<Mypage />} />
         </Routes>
       </div>
     </React.Fragment>
