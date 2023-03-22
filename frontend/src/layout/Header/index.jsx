@@ -242,7 +242,7 @@ const Header = () => {
             </React.Fragment>
             <IconButton
               onClick={() => {
-                navigate("/login");
+                navigate("/home");
               }}
               size="large"
               edge="start"
