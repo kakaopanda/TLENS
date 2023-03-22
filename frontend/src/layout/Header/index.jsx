@@ -56,7 +56,7 @@ const Header = () => {
     } else if (text === "지역별") {
       navigate("/region");
     } else if (text === "언론사 분석") {
-      navigate("/repoter");
+      navigate("/reporter");
     } else if (text === "기업 분석") {
       navigate("/company");
     } else {
