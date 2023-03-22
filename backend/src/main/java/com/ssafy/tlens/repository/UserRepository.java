@@ -1,6 +1,6 @@
 package com.ssafy.tlens.repository;
 
-import com.ssafy.tlens.rdbms.User;
+import com.ssafy.tlens.entity.rdbms.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.ssafy.tlens.common.auth;
 
-import com.ssafy.tlens.rdbms.User;
+import com.ssafy.tlens.entity.rdbms.User;
 import com.ssafy.tlens.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,6 @@
 package com.ssafy.tlens.common.auth;
 
-import com.ssafy.tlens.rdbms.User;
+import com.ssafy.tlens.entity.rdbms.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
