@@ -113,6 +113,7 @@ const MainChart = (props) => {
       <Divider />
       <div style={{ display: "flex" }}>
         <div
+          className="main-news"
           style={{
             width: "65%",
             justifyContent: "center",
