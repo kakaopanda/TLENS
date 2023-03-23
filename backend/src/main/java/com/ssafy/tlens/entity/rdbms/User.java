@@ -43,7 +43,7 @@ public class User {
     private List<Keyword> keywords = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<UserReporterSubscribe> subscribes = new ArrayList<>();
+    private List<Subscribe> subscribes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<UserNewsScrap> scraps = new ArrayList<>();
