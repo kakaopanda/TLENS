@@ -30,7 +30,7 @@ public class Reporter {
     private List<ReporterTrend> trends = new ArrayList<>();
 
     @OneToMany(mappedBy = "reporter")
-    private List<UserReporterSubscribe> subscribes = new ArrayList<>();
+    private List<Subscribe> subscribes = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "press_id")
