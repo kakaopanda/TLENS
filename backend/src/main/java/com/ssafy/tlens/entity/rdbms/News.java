@@ -48,6 +48,26 @@ public class News extends BaseTimeEntity {
     @Column(name = "thumbnail" , length = 300)
     private String thumbNail;
 
+    @Column(name = "link" , length = 300)
+    private String link;
+
     @OneToMany(mappedBy = "news")
     private List<UserNewsScrap> scraps = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "newsId=" + newsId +
+                ", title='" + title + '\'' +
+                ", summary='" + summary + '\'' +
+                ", reporter='" + reporter + '\'' +
+                ", press='" + press + '\'' +
+                ", region='" + region + '\'' +
+                ", category='" + category + '\'' +
+                ", enterprise='" + enterprise + '\'' +
+                ", thumbNail='" + thumbNail + '\'' +
+                ", link='" + link + '\'' +
+                ", scraps=" + scraps +
+                '}';
+    }
 }
