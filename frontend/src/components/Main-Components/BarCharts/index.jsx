@@ -13,6 +13,11 @@ const BarCharts = () => {
           },
         ]}
         options={{
+          chart: {
+            toolbar: {
+              show: false, // 메뉴 버튼 안보이게 설정
+            },
+          },
           plotOptions: {
             bar: {
               barHeight: "100%",
@@ -76,10 +81,6 @@ const BarCharts = () => {
             text: "키워드 변화 TOP 10",
             align: "center",
             floating: true,
-          },
-          subtitle: {
-            text: "Category Names as DataLabels inside bars",
-            align: "center",
           },
           tooltip: {
             theme: "dark",

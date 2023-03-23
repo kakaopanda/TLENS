@@ -1,98 +1,62 @@
 import React from "react";
 import ApexCharts from "react-apexcharts";
 
-function generateDayWiseTimeSeries(baseval, count, yrange) {
-  var i = 0;
-  var series = [];
-  while (i < count) {
-    var x = baseval;
-    var y =
-      Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-
-    series.push([x, y]);
-    baseval += 86400000;
-    i++;
-  }
-  return series;
-}
-
 const KeywordChart = () => {
+  const state = {
+    series: [
+      {
+        name: "삼성",
+        data: [31, 40, 28, 51, 42, 109, 100],
+      },
+      {
+        name: "싸피",
+        data: [11, 32, 45, 32, 34, 52, 41],
+      },
+      {
+        name: "삼피",
+        data: [51, 5, 45, 23, 83, 11, 21],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false, // 메뉴 버튼 안보이게 설정
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+      },
+      title: {
+        text: "시간별 핫 키워드",
+      },
+      xaxis: {
+        type: "datetime",
+        categories: [
+          "2018-09-19T00:00:00.000Z",
+          "2018-09-19T01:30:00.000Z",
+          "2018-09-19T02:30:00.000Z",
+          "2018-09-19T03:30:00.000Z",
+          "2018-09-19T04:30:00.000Z",
+          "2018-09-19T05:30:00.000Z",
+          "2018-09-19T06:30:00.000Z",
+        ],
+      },
+      tooltip: {
+        x: {
+          format: "dd/MM/yy HH:mm",
+        },
+      },
+    },
+  };
+
   return (
     <div>
-      <ApexCharts
-        type="area"
-        series={[
-          {
-            name: "싸피",
-            data: generateDayWiseTimeSeries(
-              new Date("11 Feb 2017 GMT").getTime(),
-              20,
-              {
-                min: 10,
-                max: 60,
-              }
-            ),
-          },
-          {
-            name: "삼성",
-            data: generateDayWiseTimeSeries(
-              new Date("11 Feb 2017 GMT").getTime(),
-              20,
-              {
-                min: 10,
-                max: 20,
-              }
-            ),
-          },
-          {
-            name: "삼성전자",
-            data: generateDayWiseTimeSeries(
-              new Date("11 Feb 2017 GMT").getTime(),
-              20,
-              {
-                min: 10,
-                max: 15,
-              }
-            ),
-          },
-        ]}
-        options={{
-          chart: {
-            type: "area",
-            height: 350,
-            stacked: true,
-            events: {
-              selection: function (chart, e) {
-                console.log(new Date(e.xaxis.min));
-              },
-            },
-          },
-          title: {
-            text: "시간별 핫 키워드 TOP(10)",
-          },
-          colors: ["#008FFB", "#00E396", "#CED4DC"],
-          dataLabels: {
-            enabled: false,
-          },
-          stroke: {
-            curve: "smooth",
-          },
-          fill: {
-            type: "gradient",
-            gradient: {
-              opacityFrom: 0.6,
-              opacityTo: 0.8,
-            },
-          },
-          legend: {
-            position: "top",
-            horizontalAlign: "left",
-          },
-          xaxis: {
-            type: "datetime",
-          },
-        }}
-      />
+      <ApexCharts options={state.options} series={state.series} type="area" />
     </div>
   );
 };
