@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "title": "코로나바이러스 관련 뉴스 1",
+    "content": "코로나바이러스 관련 뉴스 내용 1",
+    "category": "코로나바이러스"
+  },
+  {
+    "id": 2,
+    "title": "정치 뉴스 1",
+    "content": "정치 뉴스 내용 1",
+    "category": "정치"
+  },
+  {
+    "id": 3,
+    "title": "경제 뉴스 1",
+    "content": "경제 뉴스 내용 1",
+    "category": "경제"
+  },
+  {
+    "id": 4,
+    "title": "국제 뉴스 1",
+    "content": "국제 뉴스 내용 1",
+    "category": "국제"
+  },
+  {
+    "id": 5,
+    "title": "환경 뉴스 1",
+    "content": "환경 뉴스 내용 1",
+    "category": "환경"
+  },
+  {
+    "id": 6,
+    "title": "사회 뉴스 1",
+    "content": "사회 뉴스 내용 1",
+    "category": "사회"
+  },
+  {
+    "id": 7,
+    "title": "문화 뉴스 1",
+    "content": "문화 뉴스 내용 1",
+    "category": "문화"
+  },
+  {
+    "id": 8,
+    "title": "스포츠 뉴스 1",
+    "content": "스포츠 뉴스 내용 1",
+    "category": "스포츠"
+  },
+  {
+    "id": 9,
+    "title": "연예 뉴스 1",
+    "content": "연예 뉴스 내용 1",
+    "category": "연예"
+  },
+  {
+    "id": 10,
+    "title": "범죄 뉴스 1",
+    "content": "범죄 뉴스 내용 1",
+    "category": "범죄"
+  },
+  {
+    "id": 11,
+    "title": "교육 뉴스 1",
+    "content": "교육 뉴스 내용 1",
+    "category": "교육"
+  },
+  {
+    "id": 12,
+    "title": "과학 뉴스 1",
+    "content": "과학 뉴스 내용 1",
+    "category": "과학"
+  },
+  {
+    "id": 13,
+    "title": "기술 뉴스 1",
+    "content": "기술 뉴스 내용 1",
+    "category": "기술"
+  }
+]
