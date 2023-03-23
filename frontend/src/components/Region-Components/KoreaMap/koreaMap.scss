@@ -1,0 +1,35 @@
+.korea-map{
+  fill:#06c;
+  height:45vw;
+  width:40vw;
+}
+
+path:hover, path.selected {
+  fill: rgb(166, 207, 249);
+}
+
+// path:hover,
+// path:active {
+//   fill: rgb(166, 207, 249);
+// }
+
+.card {
+  position: absolute;
+  width: 15vw;
+  height: 15vh;
+  background-color: rgba(255, 255, 155, 0.700);
+  // padding: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  z-index: 20; /* 카드의 z-index 값 수정 */
+}
+
+.label {
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 3px 5px;
+  border-radius: 5px;
+  z-index: 11;
+}

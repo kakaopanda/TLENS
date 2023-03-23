@@ -97,7 +97,6 @@ const Home = () => {
       <div className="inner bg-blue">
         <Login />
       </div>
-
       <div className="inner bg-pink">
         <SignUp />
       </div>
