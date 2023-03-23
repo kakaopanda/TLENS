@@ -1,6 +1,9 @@
 package com.ssafy.tlens.entity.rdbms;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -8,6 +11,9 @@ import java.sql.Timestamp;
 
 @Getter
 @MappedSuperclass
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseTrendEntity {
 
