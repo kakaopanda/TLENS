@@ -24,6 +24,9 @@ const HotKeywordChart = () => {
           chart: {
             height: 350,
             type: "radar",
+            toolbar: {
+              show: false, // 메뉴 버튼 안보이게 설정
+            },
             dropShadow: {
               enabled: true,
               blur: 1,

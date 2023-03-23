@@ -28,12 +28,7 @@ const ReporterPieChart = () => {
 
   return (
     <div>
-      <ApexCharts
-        options={state.options}
-        series={state.series}
-        type="pie"
-        width={350}
-      />
+      <ApexCharts options={state.options} series={state.series} type="pie" />
     </div>
   );
 };
