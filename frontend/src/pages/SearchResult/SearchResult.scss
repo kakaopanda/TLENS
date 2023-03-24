@@ -1,0 +1,39 @@
+.searchresult-wrapper {
+    .searchresult-container {
+      text-align: left;
+      display: flex;
+  
+      .searchresult-text {
+        width: 65%;
+      }
+  
+      .searchresult-text2 {
+        width: 35%;
+      }
+    }
+  
+    .searchresult-main {
+      display: flex;
+  
+      .searchresult-news {
+        margin-top: 1%;
+        width: 65%;
+        justify-content: center;
+        height: 90vh;
+        overflow-y: auto;
+      }
+
+      .searchresult-news::-webkit-scrollbar {
+        display: none;
+      }
+
+      .searchresult-h4 {
+        width: 35%;
+        text-align: left;
+  
+        h4 {
+          margin-left: 3%;
+        }
+      }
+    }
+  }

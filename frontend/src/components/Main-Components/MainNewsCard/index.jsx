@@ -138,7 +138,7 @@ const MainNewsCard = () => {
                 <Link
                   overlay
                   underline="none"
-                  href="#interactive-card"
+                  href="/여기에 url을 보내주자"
                   sx={{ color: "text.tertiary" }}
                 >
                   {V[2]}
