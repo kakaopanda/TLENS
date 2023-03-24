@@ -1,17 +1,22 @@
-import React, {useState} from "react";
-import { Box, Divider} from "@mui/material";
+import React, { useState } from "react";
+import { Box, Divider } from "@mui/material";
 import KoreaMap from "../../components/Region-Components/KoreaMap";
-import WordCloud from "../../components/Region-Components/WordCloud"
+import WordCloud from "../../components/Region-Components/WordCloud";
+import KeywordNews from "../../components/Region-Components/KeywordNews";
+
 import "./Region.scss";
 
 const Region = () => {
-
   const [selectedRegion, setSelectedRegion] = useState(null);
+  const [selectedWord, setSelectedWord] = useState(null);
 
   function handleRegionSelect(name) {
     setSelectedRegion(name);
   }
 
+  function handleWordSelect(word) {
+    setSelectedWord(word);
+  }
 
   return (
     <div>
@@ -47,23 +52,26 @@ const Region = () => {
         }}
       >
         <div style={{ width: "50%" }}>
-        <KoreaMap onRegionSelect={handleRegionSelect} />
-
+          <KoreaMap onRegionSelect={handleRegionSelect} />
         </div>
         <Divider orientation="vertical" flexItem />
         <div style={{ width: "45%" }}>
-        {selectedRegion && (
-          <h3>"{selectedRegion}"와 관련된 T:LENS 뉴스</h3>
-        )}
-          <WordCloud />
-          <Divider flexItem/>
+          {selectedRegion && <h3>"{selectedRegion}"와 관련된 T:LENS 뉴스</h3>}
+          <WordCloud onWordSelect={handleWordSelect} region={selectedRegion}/>
+          <Divider flexItem />
           {selectedRegion && (
             <h5>전체 데이터 셋 : {selectedRegion}</h5>
+          )}
+
+          {selectedWord && (
+            <h5>선택한 단어: {selectedWord.text}</h5>
+          )}
+          {selectedWord && (
+            <KeywordNews keyword = {selectedWord.text} region = {selectedRegion}/>
           )}
         </div>
       </div>
     </div>
-
   );
 };
 

@@ -1,37 +1,73 @@
-import React, { useState, useEffect } from "react";
-import newsData from "../KeywordNews/newsData.json";
+import React from "react";
+import { Box, Card, Typography } from "@mui/material";
+import newsData from "./newsData.json";
 
-const KeywordNews = ({ word, category }) => {
-  const [news, setNews] = useState([]);
-
-  useEffect(() => {
-    const filteredNews = newsData.filter((item) => {
-      if (category === "코로나바이러스") {
-        return (
-          item.title.includes(word) ||
-          item.description.includes(word) ||
-          item.content.includes(word)
-        );
-      } else {
-        return item.category === category;
-      }
-    });
-
-    setNews(filteredNews);
-  }, [word, category]);
+const KeywordNews = ({ keyword, region }) => {
+  const relatedNews = newsData.filter((news) => {
+    if (news.keyword && keyword && news.region === region) {
+      // keyword와 newsData의 keyword 배열이 존재하고 region도 일치할 때
+      return news.keyword.includes(keyword);
+    } else {
+      return false;
+    }
+  });
 
   return (
-    <div>
-      <h2>
-        "{word}" 관련 {category} 뉴스 ({news.length})
-      </h2>
-      {news.map((item, index) => (
-        <div key={index}>
-          <h3>{item.title}</h3>
-          <p>{item.description}</p>
-        </div>
-      ))}
-    </div>
+    <Box>
+      <h3>관련 기사</h3>
+      {relatedNews.map((news) => {
+        return (
+          <div className="region-news-card">
+            <Card
+              key={news.id}
+              variant="outlined"
+              sx={{
+                margin: "auto",
+                marginTop: "15px",
+                width: "90%",
+                height: "120px", // 카드 높이를 120px로 지정
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                "&:hover": {
+                  boxShadow: "md",
+                  borderColor: "neutral.outlinedHoverBorder",
+                },
+              }}
+            >
+              <div style={{ width: "90px", height: "100%", overflow: "hidden" }}>
+                <img
+                  src={news.thumbnail}
+                  alt=""
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+              <div>
+                <Typography
+                  level="h2"
+                  fontSize="lg"
+                  id="card-description"
+                  mb={0.5}
+                >
+                  {news.title}
+                </Typography>
+                <Typography
+                  fontSize="sm"
+                  aria-describedby="card-description"
+                  mb={1}
+                >
+                  {news.date}
+                </Typography>
+              </div>
+            </Card>
+          </div>
+        );
+      })}
+    </Box>
   );
 };
 
