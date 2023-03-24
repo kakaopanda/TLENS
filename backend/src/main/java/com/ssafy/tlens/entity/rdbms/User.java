@@ -46,5 +46,5 @@ public class User {
     private List<Subscribe> subscribes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<UserNewsScrap> scraps = new ArrayList<>();
+    private List<Scrap> scraps = new ArrayList<>();
 }
