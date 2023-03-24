@@ -9,11 +9,12 @@ public interface TrendSerivce {
     void insertToCategory(CreateTrendRequestDTO createTrendRequestDTO);
     void insertToReporter(CreateTrendRequestDTO createTrendRequestDTO);
     void insertToRegion(CreateTrendRequestDTO createTrendRequestDTO);
-    void deleteToEnterprise(Long id);
-    void deleteToPress(Long id);
-    void deleteToCategory(Long id);
-    void deleteToReporter(Long id);
-    void deleteToRegion(Long id);
+//    void deleteToEnterprise(Long id);
+//    void deleteToPress(Long id);
+//    void deleteToCategory(Long id);
+//    void deleteToReporter(Long id);
+//    void deleteToRegion(Long id);
+
 
 
 
