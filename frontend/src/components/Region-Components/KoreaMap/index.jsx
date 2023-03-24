@@ -11,7 +11,9 @@ const KoreaMap = ({ onRegionSelect }) => {
 
   function handleRegionClick(event) {
     const id = event.target.getAttribute('name');
+    const simple = event.target.getAttribute('simple');
     const report = event.target.getAttribute('report');
+ 
     setId(id);
     setReport(report);
 
@@ -24,7 +26,7 @@ const KoreaMap = ({ onRegionSelect }) => {
     setLabel(name);
 
     // 콜백 함수 호출
-    onRegionSelect(id);
+    onRegionSelect(simple);
   }
 
 
@@ -36,6 +38,7 @@ const KoreaMap = ({ onRegionSelect }) => {
             key={path.id}
             id={path.id}
             name={path.name}
+            simple={path.simple}
             d={path.d}
 						report={path.report}
             onClick={handleRegionClick}
