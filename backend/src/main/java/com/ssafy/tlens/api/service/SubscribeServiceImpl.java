@@ -56,6 +56,6 @@ public class SubscribeServiceImpl implements SubscribeService {
         Subscribe subscribe = subscribeRepository.findByUserAndReporter(user, reporter)
                 .orElseThrow(() -> new NotFoundException("Could not found subscribe id"));
 
-        subscribeRepository.save(subscribe);
+        subscribeRepository.delete(subscribe);
     };
 }

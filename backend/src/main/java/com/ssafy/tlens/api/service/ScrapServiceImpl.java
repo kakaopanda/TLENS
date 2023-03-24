@@ -52,6 +52,6 @@ public class ScrapServiceImpl implements ScrapService {
         Scrap scrap = scrapRepository.findByUserAndNews(user, news)
                 .orElseThrow(() -> new NotFoundException("Could not found scrap id"));
 
-        scrapRepository.save(scrap);
+        scrapRepository.delete(scrap);
     };
 }
