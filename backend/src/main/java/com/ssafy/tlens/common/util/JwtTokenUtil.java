@@ -2,8 +2,8 @@ package com.ssafy.tlens.common.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ssafy.tlens.common.auth.CustomUserDetailService;
 import com.ssafy.tlens.common.auth.TokenInfo;
+import com.ssafy.tlens.config.auth.PrincipalDetailsService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import java.util.Date;
 public class JwtTokenUtil {
 
     @Autowired
-    private CustomUserDetailService customUserDetailService;
+    private PrincipalDetailsService principalDetailsService;
 
     private static String secretKey;
 
@@ -103,7 +103,7 @@ public class JwtTokenUtil {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = customUserDetailService.loadUserByUsername(this.getUserEmail(token));
+        UserDetails userDetails = principalDetailsService.loadUserByUsername(this.getUserEmail(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
