@@ -1,7 +1,11 @@
 package com.ssafy.tlens.repository;
 
-import com.ssafy.tlens.entity.rdbms.UserNewsScrap;
+import com.ssafy.tlens.entity.rdbms.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ScrapRepository extends JpaRepository<UserNewsScrap, Long> {
+import java.util.Optional;
+
+public interface ScrapRepository extends JpaRepository<Scrap, Long> {
+
+    Optional<Scrap> findByUserAndNews(User user, News news);
 }

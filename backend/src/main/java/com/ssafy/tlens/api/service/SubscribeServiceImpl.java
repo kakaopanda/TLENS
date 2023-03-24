@@ -32,8 +32,8 @@ public class SubscribeServiceImpl implements SubscribeService {
         // 이미 구독되어있으면 에러 반환
         if (subscribeRepository.findByUserAndReporter(user, reporter).isPresent()){
             // TODO 409에러로 변경
-            throw new DuplicateResourceException("already exist data by member id :" + user.getUserId() + " ,"
-                    + "board id : " + reporter.getReporterId());
+            throw new DuplicateResourceException("already exist data by user id :" + user.getUserId() + " ,"
+                    + "reporter id : " + reporter.getReporterId());
         }
 
         Subscribe subscribe = Subscribe.builder()
