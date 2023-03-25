@@ -1,6 +1,6 @@
 package com.ssafy.tlens.api.service;
 
-import com.ssafy.tlens.api.crawler.*;
+import com.ssafy.tlens.api.crawler.press.*;
 import com.ssafy.tlens.entity.rdbms.News;
 import com.ssafy.tlens.repository.NewsRepository;
 

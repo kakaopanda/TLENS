@@ -1,4 +1,4 @@
-package com.ssafy.tlens.api.crawler;
+package com.ssafy.tlens.api.crawler.press;
 
 import com.ssafy.tlens.entity.rdbms.News;
 import org.jsoup.Jsoup;
@@ -12,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-// 오마이뉴스는 전체 기사 RSS가 제공되지 않는다.
-public class OhMyNews {
+// 경향신문은 한번에 394개의 기사를 크롤링한다.
+public class Khan {
     public static void main(String[] args) throws IOException{
         crawl();
     }
 
     public static List<News> crawl() throws IOException {
         List<News> newsList = new ArrayList<>();
-        String targetURL = "https://rss.ohmynews.com/rss/ohmynews.xml";
+        String targetURL = "https://www.khan.co.kr/rss/rssdata/total_news.xml";
         Document doc = Jsoup.connect(targetURL).get();
         Elements contents = doc.select("item");
 
@@ -29,8 +29,8 @@ public class OhMyNews {
             String title = content.select("title").text(); // 기사 제목
             String summary = ""; // 기사 내용요약/
             String cont = ""; // 기사 내용(RDBMS에는 포함되지 않는 필드)
-            String reporter = content.select("author").text(); // 기자
-            String press = "한겨레"; // 언론사
+            String reporter = ""; // 기자
+            String press = "경향신문"; // 언론사
             String region = ""; // 지역
             String category = content.select("category").text();// 분야
             String enterprise = ""; // 기업
@@ -41,15 +41,15 @@ public class OhMyNews {
             String modifiedDate = ""; // 기사 수정 시각
 
             Document contentDoc = Jsoup.connect(link).get();
-            Elements newContents = contentDoc.select(".article_body");
+            Elements newContents = contentDoc.select("#wrap");
 
             for(Element newContent : newContents) {
                 // category = newContent.select(".category").select("a").text();
-                // reporter = newContent.select(".name").select("strong").text();
-                cont = newContent.select(".view-txt").text().replaceAll("기사와 직접적인 관련 없는 자료 사진.","")
+                reporter = newContent.select(".author").select("a").text();
+                cont = newContent.select(".content_text").text().replaceAll("기사와 직접적인 관련 없는 자료 사진.","")
                         .replaceAll("자료사진.","").replaceAll("크게보기게티이미지뱅크","");
-                thumbNail = newContent.select(".special_photo_box").select("img").attr("abs:src");
-                date = newContent.select(".left-flo").select(".date").text().replaceAll("등록 :","")
+                thumbNail = newContent.select(".art_photo_wrap").select("img").attr("abs:src");
+                date = newContent.select(".byline").select("em").text().replaceAll("입력 :","")
                         .replaceAll("수정 :","");
             }
             StringTokenizer st = new StringTokenizer(date," ");
@@ -91,6 +91,7 @@ public class OhMyNews {
                 System.out.println(news+", createdDate="+cldt+", modifiedDate="+mldt);
                 System.out.println(cont);
                 newsList.add(news);
+                System.out.println(newsList.size());
             }
         }
         return newsList;

@@ -1,4 +1,4 @@
-package com.ssafy.tlens.api.crawler;
+package com.ssafy.tlens.api.crawler.press;
 
 import com.ssafy.tlens.entity.rdbms.News;
 import org.json.simple.JSONArray;
