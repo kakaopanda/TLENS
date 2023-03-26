@@ -1,57 +1,134 @@
-import { useEffect } from "react";
-import * as am5 from "@amcharts/amcharts5";
-import * as am5hierarchy from "@amcharts/amcharts5/hierarchy";
-import data1 from "./data.json";
+import React, { useEffect } from "react";
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4plugins_forceDirected from "@amcharts/amcharts4/plugins/forceDirected";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import data from "./data.json";
 
 const SearchResultChart2 = () => {
   useEffect(() => {
-    // Set up chart
-    const root = am5.Root.new("chartdiv");
+    am4core.useTheme(am4themes_animated);
 
-    const container = root.container.children.push(
-      am5.Container.new(root, {
-        width: am5.percent(100),
-        height: am5.percent(100),
-        layout: root.verticalLayout,
-      })
+    const chart = am4core.create(
+      "chartdiv",
+      am4plugins_forceDirected.ForceDirectedTree
+    );
+    chart.data = data;
+    // chart.data = [
+    //   {
+    //     name: "Core",
+    //     children: [
+    //       {
+    //         name: "First",
+    //         children: [
+    //           { name: "A1", value: 100 },
+    //           { name: "A2", value: 60 },
+    //         ],
+    //       },
+    //       {
+    //         name: "Second",
+    //         children: [
+    //           { name: "B1", value: 135 },
+    //           { name: "B2", value: 98 },
+    //         ],
+    //       },
+    //       {
+    //         name: "Third",
+    //         children: [
+    //           {
+    //             name: "C1",
+    //             children: [
+    //               { name: "EE1", value: 130 },
+    //               { name: "EE2", value: 87 },
+    //               { name: "EE3", value: 55 },
+    //             ],
+    //           },
+    //           { name: "C2", value: 148 },
+    //           {
+    //             name: "C3",
+    //             children: [
+    //               { name: "CC1", value: 53 },
+    //               { name: "CC2", value: 30 },
+    //             ],
+    //           },
+    //           { name: "C4", value: 26 },
+    //         ],
+    //       },
+    //       {
+    //         name: "Fourth",
+    //         children: [
+    //           { name: "D1", value: 415 },
+    //           { name: "D2", value: 148 },
+    //           { name: "D3", value: 89 },
+    //         ],
+    //       },
+    //       {
+    //         name: "Fifth",
+    //         children: [
+    //           {
+    //             name: "E1",
+    //             children: [
+    //               { name: "EE1", value: 33 },
+    //               { name: "EE2", value: 40 },
+    //               { name: "EE3", value: 89 },
+    //             ],
+    //           },
+    //           {
+    //             name: "E2",
+    //             value: 148,
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // ];
+    const networkSeries = chart.series.push(
+      new am4plugins_forceDirected.ForceDirectedSeries()
     );
 
-    // Create series
-    const series = container.children.push(
-      am5hierarchy.ForceDirected.new(root, {
-        singleBranchOnly: false,
-        downDepth: 2,
-        topDepth: 1,
-        initialDepth: 1,
-        valueField: "value",
-        categoryField: "name",
-        childDataField: "children",
-        idField: "name",
-        linkWithField: "linkWith",
-        manyBodyStrength: -10,
-        centerStrength: 0.8,
-      })
-    );
+    networkSeries.dataFields.value = "value";
+    networkSeries.dataFields.name = "name";
+    networkSeries.dataFields.children = "children";
+    networkSeries.nodes.template.tooltipText = "{name}:{value}";
+    networkSeries.nodes.template.fillOpacity = 1;
 
-    series.get("colors").setAll({
-      step: 2,
+    networkSeries.nodes.template.label.text = "{name}";
+    networkSeries.fontSize = 10;
+
+    networkSeries.links.template.strokeWidth = 1;
+
+    const hoverState = networkSeries.links.template.states.create("hover");
+    hoverState.properties.strokeWidth = 3;
+    hoverState.properties.strokeOpacity = 1;
+
+    networkSeries.nodes.template.events.on("over", (event) => {
+      event.target.dataItem.childLinks.each(function (link) {
+        link.isHover = true;
+      });
+      if (event.target.dataItem.parentLink) {
+        event.target.dataItem.parentLink.isHover = true;
+      }
     });
 
-    series.links.template.set("strength", 0.5);
-    const data = data1;
-    series.data.setAll([data]);
-
-    series.set("selectedDataItem", series.dataItems[0]);
-
-    // Make stuff animate on load
-    series.appear(1000, 100);
+    networkSeries.nodes.template.events.on("out", (event) => {
+      event.target.dataItem.childLinks.each(function (link) {
+        link.isHover = false;
+      });
+      if (event.target.dataItem.parentLink) {
+        event.target.dataItem.parentLink.isHover = false;
+      }
+    });
 
     return () => {
-      root.dispose();
+      chart.dispose();
     };
-  }, [data1]);
+  }, []);
 
-  return <div id="chartdiv"></div>;
+  return (
+    <div
+      id="chartdiv"
+      style={{ width: "100%", height: "550px", maxWidth: "100%" }}
+    ></div>
+  );
 };
 
 export default SearchResultChart2;
