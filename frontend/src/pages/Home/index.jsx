@@ -1,108 +1,107 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-import Dots from "../../components/User-Components/Dots"
-import "./home.scss"
+import "./home.scss";
+import Auth from "../Auth";
 
-import SignUp from "../Signup";
-import Login from "../Login"
+const Home = () => {
+  const navigate = useNavigate();
 
-const DIVIDER_HEIGHT = 5;
+  let maxScrollValue;
+  const houseElem = useRef(null);
+  const progressBarElem = useRef(null);
 
-const Home = () => {  
-  const outerDivRef = useRef();
-  const [scrollIndex, setScrollIndex] = useState(1);
+  function scrollHandler() {
+    const scrollPer = window.pageYOffset / maxScrollValue;
+    const zMove = scrollPer * 950 - 500;
+    houseElem.current.style.transform = "translateZ(" + zMove + "vw)";
+    progressBarElem.current.style.width = scrollPer * 100 + "%";
+  }
+
+  function resizeHandler() {
+    maxScrollValue = document.documentElement.scrollHeight - window.innerHeight;
+  }
+
   useEffect(() => {
-    const wheelHandler = (e) => {
-      e.preventDefault();
-      const { deltaY } = e;
-      const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
-      const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
-
-      if (deltaY > 0) {
-        // 스크롤 내릴 때
-        if (scrollTop >= 0 && scrollTop < pageHeight) {
-          //현재 1페이지
-          console.log("현재 1페이지, down");
-          outerDivRef.current.scrollTo({
-            top: pageHeight + DIVIDER_HEIGHT,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(2);
-        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-          //현재 2페이지
-          console.log("현재 2페이지, down");
-          outerDivRef.current.scrollTo({
-            top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(3);
-        } else {
-          // 현재 3페이지
-          console.log("현재 3페이지, down");
-          outerDivRef.current.scrollTo({
-            top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(3);
-        }
-      } else {
-        // 스크롤 올릴 때
-        if (scrollTop >= 0 && scrollTop < pageHeight) {
-          //현재 1페이지
-          console.log("현재 1페이지, up");
-          outerDivRef.current.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(1);
-        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-          //현재 2페이지
-          console.log("현재 2페이지, up");
-          outerDivRef.current.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(1);
-        } else {
-          // 현재 3페이지
-          console.log("현재 3페이지, up");
-          outerDivRef.current.scrollTo({
-            top: pageHeight + DIVIDER_HEIGHT,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(2);
-        }
-      }
-    };
-    const outerDivRefCurrent = outerDivRef.current;
-    outerDivRefCurrent.addEventListener("wheel", wheelHandler);
+    window.addEventListener("scroll", scrollHandler);
+    window.addEventListener("resize", resizeHandler);
+    resizeHandler();
     return () => {
-      outerDivRefCurrent.removeEventListener("wheel", wheelHandler);
+      window.removeEventListener("scroll", scrollHandler);
+      window.removeEventListener("resize", resizeHandler);
     };
   }, []);
+
   return (
-    <div ref={outerDivRef} className="outer">
-      <Dots scrollIndex={scrollIndex} />
-      <div className="inner bg-yellow">
-        page1
-      </div>
-      <div className="divider">
-      </div>
-      <div className="inner bg-blue">
-        <Login />
-      </div>
-      <div className="inner bg-pink">
-        <SignUp />
+    <div className="html">
+      <div className="body">
+        <div className="world">
+          <div className="progress">
+            <div ref={progressBarElem} className="progress__bar"></div>
+          </div>
+          <div className="stage">
+            <div ref={houseElem} className="house">
+              <div className="house__wall house__wall--left">
+                <h1 className="made-by-tlens">
+                  Made By T:LENS(C206)
+                </h1>
+              </div>
+              <div className="house__wall house__wall--right">
+                <img src="img/C206.png" alt="c206" className="c206-image" />
+              </div>
+              <div className="house__wall house__wall--front house__wall--front-a">
+                <div className="house__contents">
+                  {/* <h3 className="house__contents-title">Hello!</h3> */}
+                  <img src="img/Tlens.gif" alt="" style={{ height: "28vh" }} />
+                  <p className="description">
+                    T:LENS의 자세한 이야기가 궁금하신가요? 스크롤을 내리셔서 확인해보세요!!
+                  </p>
+                  <div className="enter-button">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      sx={{ mt: 2 }}
+                      onClick={() => navigate("/main")}
+                    >
+                      T:LENS 즉시 이용하기
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div className="house__wall house__wall--front house__wall--front-b">
+                <div className="house__contents">
+                  <h3 className="house__contents-title">안녕하세요! T:LENS 입니다.</h3>
+                </div>
+              </div>
+              <div className="house__wall house__wall--front house__wall--front-c">
+                <div className="house__contents">
+                  <h3 className="house__contents-title">기사 작성 패턴 분석!</h3>
+                </div>
+              </div>
+              <div className="house__wall house__wall--front house__wall--front-d">
+                <div className="house__contents">
+                  <h3 className="house__contents-title">가치 중립적 정보 제공!</h3>
+                </div>
+              </div>
+              <div className="house__wall house__wall--front house__wall--front-e">
+                <div className="house__contents">
+                  <h3 className="house__contents-title">뉴스 트랜드 분석 및 시각화!</h3>
+                </div>
+              </div>
+              <div className="house__wall house__wall--front house__wall--front-f">
+                <div className="house__component" style={{ width: "100%" }}>
+                  <Auth />
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-
-export default Home
+export default Home;

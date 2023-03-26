@@ -216,7 +216,7 @@ const Header = () => {
           </React.Fragment>
           <Button
             onClick={() => {
-              navigate("/");
+              navigate("/main");
             }}
           >
             <img src={"/images/tlens_logo.png"} alt="" />
@@ -242,7 +242,7 @@ const Header = () => {
             </React.Fragment>
             <IconButton
               onClick={() => {
-                navigate("/home");
+                navigate("/auth");
               }}
               size="large"
               edge="start"
