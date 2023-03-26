@@ -31,7 +31,7 @@ const SearchResult = () => {
           <h4>"{keyword}" 연관 검색어 추천</h4>
           <SearchResultChart1 keyword={keyword} />
           <h4>"{keyword}" 연관 키워드</h4>
-          {/* <SearchResultChart2 keyword={keyword} /> */}
+          <SearchResultChart2 keyword={keyword} />
         </div>
       </div>
     </div>
