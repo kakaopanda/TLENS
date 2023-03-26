@@ -26,70 +26,72 @@ const Login = () => {
     >
       {({values, handleSubmit, handleChange}) => (
         <div className="login-wrapper">
-          <form onSubmit={handleSubmit} autoComplete="off">
-            <div className="input-forms">
-              <img src="img/logo.png" alt="로고"/>
-              <Divider
-                sx={{
-                  border: "2px solid #0066CC"
-                }}
-              />
-              <div className="input-forms-item">
-                <div className="input-label">이메일 : </div>
-                <TextField
-                  className="input-text"
-                  value={values.email}
-                  name="email"
-                  variant="outlined"
-                  onChange={handleChange}
-                  InputProps={{
-                    style: {
-                      borderRadius: '50px',
-                      height:'35px',
-                      borderBlockColor: "#0066cc",
-                    }
+          <div >
+            <form onSubmit={handleSubmit} autoComplete="off" className="container">
+              <div className="input-forms">
+                <img src="img/logo.png" alt="로고"/>
+                <Divider
+                  sx={{
+                    border: "2px solid #0066CC"
                   }}
                 />
-              </div>
-              <div className="error-message">
-                <ErrorMessage name="email"/>
-              </div>
-              <div className="input-forms-item">
-                <div className="input-label">비밀번호 : </div>
-                <TextField
-                    sx={{
-                      borderRadius: '50px',
-                    }}
-                    value={values.password}
-                    name="password"
+                <div className="input-forms-item">
+                  <div className="input-label">이메일 : </div>
+                  <TextField
+                    className="input-text"
+                    value={values.email}
+                    name="email"
                     variant="outlined"
-                    type="password"
                     onChange={handleChange}
                     InputProps={{
                       style: {
                         borderRadius: '50px',
                         height:'35px',
+                        borderBlockColor: "#0066cc",
                       }
                     }}
                   />
+                </div>
+                <div className="error-message">
+                  <ErrorMessage name="email"/>
+                </div>
+                <div className="input-forms-item">
+                  <div className="input-label">비밀번호 : </div>
+                  <TextField
+                      sx={{
+                        borderRadius: '50px',
+                      }}
+                      value={values.password}
+                      name="password"
+                      variant="outlined"
+                      type="password"
+                      onChange={handleChange}
+                      InputProps={{
+                        style: {
+                          borderRadius: '50px',
+                          height:'35px',
+                        }
+                      }}
+                    />
+                </div>
+                <div className="error-message">
+                  <ErrorMessage name="password"/>
+                </div>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  fullWidth
+                  type="submit"
+                  sx={{
+                    borderRadius: "50px",
+                    width: "150px"
+                  }}
+                >
+                  로그인
+                </Button>
               </div>
-              <div className="error-message">
-                <ErrorMessage name="password"/>
-              </div>
-              <Button
-                color="primary"
-                variant="contained"
-                fullWidth
-                type="submit"
-                sx={{
-                  borderRadius: "50px",
-                  width: "150px"
-                }}
-              >
-                로그인
-              </Button>
-            </div>
-          </form>
+            </form>
+          </div> 
         </div>
       )}
     </Formik>
