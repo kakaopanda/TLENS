@@ -26,7 +26,6 @@ public class News extends BaseTimeEntity {
     private String title;
 
     @Column(name = "summary")
-    @NotNull
     private String summary;
 
     @Column(name = "reporter" , length = 50)

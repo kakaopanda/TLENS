@@ -43,21 +43,21 @@ public class JsoupCrawler {
             "374", // SBS Biz
     };
 
-    public static void main(String[] args) throws IOException{
-        for(int i=0; i<press.length; i++){
-            // 언론사 번호가 두자리인 경우, 추가적인 전처리를 수행한다.
-            if(press[i].length()==2){
-                press[i] = "0"+press[i];
-            }
-            //
-            newsCrawl(baseURL + "/"+press[i]+"/0000000001");
-        }
-    }
+//    public static void main(String[] args) throws IOException{
+//        for(int i=0; i<press.length; i++){
+//            // 언론사 번호가 두자리인 경우, 추가적인 전처리를 수행한다.
+//            if(press[i].length()==2){
+//                press[i] = "0"+press[i];
+//            }
+//            //
+//            newsCrawl(baseURL + "/"+press[i]+"/0000000001");
+//        }
+//    }
 
     // URL에 대한 기사 1개를 대상으로 크롤링을 수행한다.
-    public static News newsCrawl(String URL) throws IOException {
+    public static NewsCrawlRequestDTO newsCrawl(String URL) throws IOException {
         // STEP1. [JSoup] 크롤링할 뉴스 정보를 담을 객체를 생성한다.
-        NewsCrawlRequestDTO news = new NewsCrawlRequestDTO();
+        NewsCrawlRequestDTO newsDto = new NewsCrawlRequestDTO();
         Document doc;
 
         // STEP2. [JSoup] 크롤링을 수행할 URL을 전달하여 HTTP 연결을 시도한다.
@@ -74,38 +74,38 @@ public class JsoupCrawler {
 
         // STEP2. [JSoup] <head>에서 언론사(press) 정보를 획득한다.
         Elements contents = doc.select("head");
-        news.setPress(contents.select("meta[name=twitter:creator]").attr("content"));
-        if(news.getPress()==null){
+        newsDto.setPress(contents.select("meta[name=twitter:creator]").attr("content"));
+        if(newsDto.getPress()==null){
             return null;
         }
 
         // STEP3. [JSoup] <body>에서 기사 정보(cont)를 획득한다.
         contents = doc.select("body");
-        news.setTitle(contents.select(".media_end_head_headline").select("span").text());
-        news.setReporter(contents.select(".media_end_head_journalist_box").select("em").text()
+        newsDto.setTitle(contents.select(".media_end_head_headline").select("span").text());
+        newsDto.setReporter(contents.select(".media_end_head_journalist_box").select("em").text()
                 .replaceAll(" ","").replaceAll("기자",""));
-        news.setCategory(contents.select(".media_end_categorize_item").text());
-        news.setThumbNail(contents.select("#img1").attr("src"));
-        news.setCont(contents.select("._article_content").text());
-        news.setLink(contents.select(".media_end_head_origin_link").attr("href"));
+        newsDto.setCategory(contents.select(".media_end_categorize_item").text());
+        newsDto.setThumbNail(contents.select("#img1").attr("src"));
+        newsDto.setCont(contents.select("._article_content").text());
+        newsDto.setLink(contents.select(".media_end_head_origin_link").attr("href"));
 
         // STEP4. 원문 링크가 제공되지 않는 기사는 더 이상 크롤링하지 않는다.
-        if(news.getLink()==""){
+        if(newsDto.getLink()==""){
             System.out.println("☆ (" + URL + ")" + " 원문 링크가 제공되지 않는 기사입니다.");
             return null;
         }
 
         // STEP5. [JSoup] 기사 작성일자 및 수정일자를 (yyyy-MM-dd HH:mm) 형식으로 변환한다.
         // 2023.03.23. 오후 9:17 -> 2023-03-23 21:17
-        news.setCreatedDate(getLocalDateTime(contents.select("._ARTICLE_DATE_TIME").text()));
-        news.setModifiedDate(getLocalDateTime(contents.select("._ARTICLE_MODIFY_DATE_TIME").text()));
+        newsDto.setCreatedDate(getLocalDateTime(contents.select("._ARTICLE_DATE_TIME").text()));
+        newsDto.setModifiedDate(getLocalDateTime(contents.select("._ARTICLE_MODIFY_DATE_TIME").text()));
 
         // STEP6. [Selenium] <body>에서 썸네일 URL(thumbnail)을 획득한다.
         SeleniumCrawler st = new SeleniumCrawler(URL);
-        news.setThumbNail(st.thumbCrawl());
+        newsDto.setThumbNail(st.thumbCrawl());
 
-        System.out.println("★ (" + URL + ") 크롤링이 완료되었습니다. " + news);
-        return null;
+        System.out.println("★ (" + URL + ") 크롤링이 완료되었습니다. " + newsDto);
+        return newsDto;
     }
 
     // 기사 원문에서 발췌한 작성일자 및 수정일자를 엔티티형식에 맞춰 변환한다.
