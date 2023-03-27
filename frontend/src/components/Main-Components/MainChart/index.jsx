@@ -123,13 +123,25 @@ const MainChart = (props) => {
           justifyContent: "space-between",
         }}
       >
-        <div style={{ width: "45%" }}>
-          <br />
+        <div
+          style={{
+            margin: "2%",
+            width: "45%",
+            border: "1px solid #D8D8D8",
+          }}
+        >
+          <h2>기간별 키워드 변화(Top 10)</h2>
           <BarCharts />
         </div>
         <Divider orientation="vertical" flexItem />
-        <div style={{ width: "45%" }}>
-          <br />
+        <div
+          style={{
+            margin: "2%",
+            width: "45%",
+            border: "1px solid #D8D8D8",
+          }}
+        >
+          <h2>T:LENS 핫 키워드(Top 30)</h2>
           <Wordcloud />
         </div>
       </div>
@@ -142,19 +154,39 @@ const MainChart = (props) => {
           style={{
             width: "65%",
             justifyContent: "center",
-            height: "90vh",
+            height: "100vh",
             overflowY: "auto",
           }}
         >
           <MainNewsCard />
         </div>
         <Divider orientation="vertical" flexItem />
-        <div style={{ width: "35%" }}>
-          <br />
-          <KeywordChart />
-          <br />
-          <br />
-          <SeearchResultChart2 />
+        <div style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          <div style={{ width: "100%", justifyContent: "center" }}>
+            <h2 style={{ marginBottom: 0 }}>시간별 핫 키워드(Top 10)</h2>
+            <br />
+            <div
+              style={{
+                margin: "0 4% 0 4%",
+                width: "110%",
+                border: "1px solid #D8D8D8",
+              }}
+            >
+              <KeywordChart />
+            </div>
+            <br />
+            <h2 style={{ marginBottom: 0 }}>시간별 핫 키워드(Top 10)</h2>
+            <br />
+            <div
+              style={{
+                margin: "0 4% 0 4%",
+                width: "110%",
+                border: "1px solid #D8D8D8",
+              }}
+            >
+              <SeearchResultChart2 />
+            </div>
+          </div>
         </div>
       </div>
     </div>
