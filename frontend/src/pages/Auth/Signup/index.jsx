@@ -20,17 +20,17 @@ const SignUp = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isMember, setIsMember] = useState(false);
 
-  // 생년월일 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    console.log(date)
-  };
+  // // 생년월일 
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  //   console.log(date)
+  // };
 
-  // 체크 박스
-  const handleCheckboxChange = (event) => {
-    setIsMember(event.target.checked);
-    console.log(isMember)
-  };
+  // // 체크 박스
+  // const handleCheckboxChange = (event) => {
+  //   setIsMember(event.target.checked);
+  //   console.log(isMember)
+  // };
 
   const submit = async (values) => {
     const { email, username, password, sex, birthday, membership } = values;
@@ -114,7 +114,7 @@ const SignUp = () => {
         password2: "",
         sex:"",
         birthday:"",
-        membership:"",
+        membership: false,
       }}
       validationSchema={validationSchema}
       onSubmit={submit}
@@ -232,10 +232,10 @@ const SignUp = () => {
                 <div className="input-label">생년월일 : </div>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                    value={selectedDate}
+                    value={values.birthday}
                     label="생년월일을 입력해주세요"
-                    onChange={handleDateChange}
-                    // onChange={handleChange}
+                    // onChange={handleDateChange}
+                    onChange={handleChange}
                     style={{ height: '100%' }} // 높이를 200px로 조정
                     slotProps={{
                       label: {
@@ -258,7 +258,11 @@ const SignUp = () => {
 
               <div className="membership-check" style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
                 <FormControlLabel
-                  control={<Checkbox checked={isMember} onChange={handleCheckboxChange} />}
+                  control={
+                  <Checkbox 
+                  checked={values.membership} 
+                  onChange={handleChange} />
+                }
                   label={<Typography style={{ fontWeight: "bold", marginLeft: "-5px", fontSize: "15px" }}>T:LENS 맴버쉽에 가입하시겠습니까?</Typography>}
                   labelPlacement="start"
                 />
