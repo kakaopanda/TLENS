@@ -21,7 +21,7 @@ public class NewsController {
 
     @Scheduled(cron = " * * * * * * ")
     public HttpResponseEntity.ResponseResult<?> insert() throws Exception {
-        newsService.getNewsData();
+        // newsService.getNewsData();
         return success();
     }
 }
