@@ -27,7 +27,7 @@ const SearchResult = () => {
           <MainNewsCard />
         </div>
         <Divider orientation="vertical" flexItem />
-        <div className="searchresult-h4">
+        <div className="searchresult-chart">
           <h4>"{keyword}" 연관 검색어 추천</h4>
           <SearchResultChart1 keyword={keyword} />
           <h4>"{keyword}" 연관 키워드</h4>

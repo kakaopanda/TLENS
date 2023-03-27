@@ -6,6 +6,7 @@ import Wordcloud from "../WordCloud";
 import MainNewsCard from "../MainNewsCard";
 import KeywordChart from "../KeywordChart";
 import HotKeywordChart from "../HotKeywordChart";
+import SeearchResultChart2 from "../../SearchResult-Components/SearchResultChart2";
 
 // MUI
 import Divider from "@mui/material/Divider";
@@ -15,7 +16,7 @@ const MainChart = (props) => {
   const [keyword, setKeyword] = useState("전체");
   const [articleField, setArticleField] = useState("28,467");
   const [totalArticle, setTotalArticle] = useState("2,846,710,200");
-  
+
   useEffect(() => {
     if (props?.value === "1") {
       setKeyword("전체(All)");
@@ -153,7 +154,7 @@ const MainChart = (props) => {
           <KeywordChart />
           <br />
           <br />
-          <HotKeywordChart />
+          <SeearchResultChart2 />
         </div>
       </div>
     </div>
