@@ -1,11 +1,12 @@
 import React from "react";
 import { useParams, useLocation } from "react-router-dom";
 import CompanyRecharts from "../CompanyRecharts";
-import CompanyForceDirected from "../CompanyForceDirected";
+import SearchResultChart2 from "../../SearchResult-Components/SearchResultChart2";
 import CompanyKeyword from "../CompanyKeyword";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
 import WordCloud from "../../Main-Components/WordCloud";
 import HotKeywordChart from "../../Main-Components/HotKeywordChart";
+import "./CompanyDetail.scss";
 
 import Divider from "@mui/material/Divider";
 
@@ -40,69 +41,32 @@ const CompanyDetail = () => {
     ],
   };
 
-  const config = {
-    node: {
-      color: "red",
-      size: 100, // 노드 크기 변경
-      fontColor: "white",
-      fontSize: 16,
-      labelProperty: "id", // 노드 내부에 id 보이도록 변경
-    },
-    link: {
-      strokeWidth: 5,
-    },
-    width: window.innerWidth,
-    height: window.innerHeight,
-    directed: true,
-  };
-
   return (
-    <div style={{ textAlign: "left" }}>
+    <div className="companydetail-wrapper">
       <h1>T:LENS 기업 분석 : {name}</h1>
-      <div style={{ backgroundColor: "#e2e2e2", borderRadius: "20px" }}>
-        <div style={{ display: "flex" }}>
-          <div
-            style={{
-              width: "50%",
-              backgroundColor: "white",
-              margin: "2% 0 2% 2%", // 위, 오른쪽, 아래, 왼쪽
-              borderTopLeftRadius: "20px",
-              borderBottomLeftRadius: "20px",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                textAlign: "left",
-              }}
-            >
-              <div
-                style={{ width: "40%", overflow: "hidden", margin: "0 auto" }}
-              >
+      <div className="companydetail-container">
+        <div className="companydetail-top" style={{ display: "flex" }}>
+          <div className="companydetail-top-left">
+            <div className="companydetail-top-left-1">
+              <div className="companydetail-top-left-2">
                 <img
-                  style={{
-                    margin: "auto",
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
+                  className="companydetail-top-left-img"
                   src={`/img/${state.index}.jpg`}
                   alt=""
                 />
               </div>
-              <div style={{ width: "70%", marginLeft: "3%" }}>
-                <h1 style={{ marginBottom: -10 }}>{name}</h1>
-                <h3 style={{ color: "#a2a2a2" }}>{state.ename}</h3>
+              <div className="companydetail-top-left-3">
+                <h1>{name}</h1>
+                <h3>{state.ename}</h3>
                 <Divider />
-                <div style={{ display: "flex" }}>
+                <div className="companydetail-top-left-4">
                   <div style={{ width: "20%" }}>
-                    <h3>업종</h3>
-                    <h4>설립일</h4>
-                    <h4>대표</h4>
+                    <h4>업종 : </h4>
+                    <h4>설립일 : </h4>
+                    <h4>대표 : </h4>
                   </div>
-                  <div>
-                    <h3>{state.category}</h3>
+                  <div style={{ width: "80%" }}>
+                    <h4>{state.category}</h4>
                     <h4>{state.birth}</h4>
                     <h4>{state.ceo}</h4>
                   </div>
@@ -111,41 +75,21 @@ const CompanyDetail = () => {
             </div>
           </div>
           <Divider orientation="vertical" />
-          <div
-            style={{
-              width: "50%",
-              backgroundColor: "white",
-              margin: "2% 2% 2% 0",
-              borderTopRightRadius: "20px",
-              borderBottomRightRadius: "20px",
-            }}
-          >
+          <div className="companydetail-top-right">
             <h2 style={{ marginLeft: "10px" }}>{name} 주가 그래프</h2>
             <CompanyRecharts data={data} />
           </div>
         </div>
-        <div style={{ display: "flex" }}>
-          <div style={{ width: "50%" }}>
+        <div className="companydetail-mid">
+          <div className="companydetail-mid-left">
             <h2 style={{ marginLeft: "2%" }}>연간 키워드 분석 : {name}</h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "20px",
-                margin: "5%",
-              }}
-            >
-              <CompanyKeyword />
+            <div className="companydetail-mid-left-1">
+              <SearchResultChart2 />
             </div>
           </div>
-          <div style={{ width: "50%" }}>
+          <div className="companydetail-mid-right">
             <h2 style={{ marginLeft: "2%" }}>키워드 통계 : {name} </h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "20px",
-                margin: "5%",
-              }}
-            >
+            <div className="companydetail-mid-right-1">
               <CompanyKeyword />
             </div>
           </div>

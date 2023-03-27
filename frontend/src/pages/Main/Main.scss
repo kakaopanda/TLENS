@@ -1,0 +1,31 @@
+.main-container {
+  display: flex;
+  flex-grow: 1;
+  max-width: 100%;
+  & .MuiTabs-root {
+    width: 100%;
+    background-color: white;
+  }
+
+  & .MuiTabs-scroller {
+    overflow-x: auto;
+  }
+
+  & .MuiTabs-flexContainer {
+    justify-content: flex-start;
+  }
+
+  & .MuiTab-root {
+    width: 10%;
+
+    & .MuiTab-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  & .MuiDivider-root {
+    margin-top: 1rem;
+  }
+}

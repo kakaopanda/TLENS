@@ -1,3 +1,94 @@
-.reporter-news::-webkit-scrollbar {
-    display: none;
-}
+.reporterdetail-wrapper {
+    background-color: #0066CC;
+    border-radius: 20px;
+    display: flex;
+    text-align: left;
+  
+    .reporterdetail-left {
+      width: 40%;
+      margin: 1.5% 0 1.5% 1.5%;
+  
+      .reporterdetail-left-top {
+        background-color: white;
+        border-radius: 20px;
+        width: 96%;
+        text-align: center;
+  
+        .reporterdetail-left-top-1 {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+  
+          img {
+            width: 20%;
+            height: 10%;
+          }
+        }
+  
+        .reporterdetail-left-top-2 {
+          display: flex;
+          justify-content: center;
+  
+          .reporterdetail-left-top-h2 {
+            margin-right: 10px;
+          }
+        }
+      }
+  
+      .reporterdetail-left-main {
+        background-color: white;
+        border-radius: 20px;
+        width: 96%;
+  
+        .reporterdetail-left-main-h3 {
+          margin-left: 3%;
+        }
+  
+        .reporterdetail-left-chart {
+          width: 90%;
+        }
+  
+        .reporterdetail-left-main-chart1 {
+          display: flex;
+  
+          .reporterdetail-left-main-chart1-1 {
+            width: 50%;
+  
+            .reporterdetail-left-main-h5 {
+              margin-left: 3%;
+            }
+          }
+  
+          .reporterdetail-left-main-chart2 {
+            width: 50%;
+            align-content: center;
+  
+            .reporterdetail-left-main-h5 {
+              margin-left: 3%;
+            }
+          }
+        }
+      }
+    }
+  
+    .reporterdetail-right {
+      width: 58%;
+      margin: 1.5% 1.5% 1.5% 0;
+      background: white;
+      border-radius: 20px;
+      text-align: left;
+  
+      .reporterdetail-right-h2 {
+        margin-left: 3%;
+      }
+  
+      .reporterdetail-right-news {
+        height: 66vh;
+        overflow-y: auto;
+      }
+      .reporterdetail-right-news::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+  

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import MainChart from "../../components/Main-Components/MainChart";
+import "./Main.scss";
 
 // MUI
 import Box from "@mui/material/Box";
@@ -32,13 +33,7 @@ const Main = () => {
 
   return (
     <TabContext value={value}>
-      <Box
-        sx={{
-          flexGrow: 1,
-          maxWidth: { xs: "100%" },
-          bgcolor: "background.paper",
-        }}
-      >
+      <Box className="main-container">
         <Tabs
           value={value}
           onChange={handleChange}
@@ -51,51 +46,31 @@ const Main = () => {
             },
           }}
         >
-          <Tab
-            icon={<AppsIcon fontSize="large" />}
-            sx={{ width: "10%" }}
-            label="전체"
-            value="1"
-          />
+          <Tab icon={<AppsIcon fontSize="large" />} label="전체" value="1" />
           <Tab
             icon={<HandshakeIcon fontSize="large" />}
-            sx={{ width: "10%" }}
             label="정치"
             value="2"
           />
           <Tab
             icon={<MonetizationOnIcon fontSize="large" />}
-            sx={{ width: "10%" }}
             label="경제"
             value="3"
           />
           <Tab
             icon={<LanguageIcon fontSize="large" />}
-            sx={{ width: "10%" }}
             label="국제"
             value="4"
           />
-          <Tab
-            icon={<GroupsIcon fontSize="large" />}
-            sx={{ width: "10%" }}
-            label="사회"
-            value="5"
-          />
-          <Tab
-            icon={<StarIcon fontSize="large" />}
-            sx={{ width: "10%" }}
-            label="문화"
-            value="6"
-          />
+          <Tab icon={<GroupsIcon fontSize="large" />} label="사회" value="5" />
+          <Tab icon={<StarIcon fontSize="large" />} label="문화" value="6" />
           <Tab
             icon={<AutoAwesomeOutlinedIcon fontSize="large" />}
-            sx={{ width: "10%" }}
             label="연예"
             value="7"
           />
           <Tab
             icon={<EmojiEventsOutlinedIcon fontSize="large" />}
-            sx={{ width: "10%" }}
             label="스포츠"
             value="8"
           />
