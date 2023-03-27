@@ -1,7 +1,9 @@
 import * as React from "react";
 import "./Header.scss";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setToken} from "../../redux/reducers/AuthReducer";
 
 //MUI
 import AppBar from "@mui/material/AppBar";

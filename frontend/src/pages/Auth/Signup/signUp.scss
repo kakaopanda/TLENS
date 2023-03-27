@@ -5,6 +5,9 @@
       width: 20vw;
       // margin-left: 10px;
     }
+    .input-label{
+      font-size: 15px;
+    }
   }
 
 }
@@ -12,7 +15,10 @@
   .input-forms {
 
     input{
-      width: 20vw;
+      width: 18vw;
+    }
+    .input-label{
+      font-size: 13px;
     }
   }
 }
@@ -21,7 +27,10 @@
   .input-forms {
 
     input{
-      width: 20vw;
+      width: 15vw;
+    }
+    .input-label{
+      font-size: 13px;
     }
   }
 }
@@ -35,8 +44,8 @@
   align-items: center;
   .container {
     border-radius: 3%;
-    width: 90%;
-    background-image: url("../../../public/img/paper-background.png");
+    width: 100%;
+    background-image: url("../../../../public/img/paper-background.png");
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -58,7 +67,7 @@
     .input-label {
       margin-right: 15%;
       margin-left: 10px;
-      font-size: 15px;
+      // font-size: 15px;
       font-weight: bold;
       color: #000000;
     }
@@ -78,8 +87,6 @@
   font-size: 13px;
   color: black;
 }
-
-
 
 
 .membership-check {
