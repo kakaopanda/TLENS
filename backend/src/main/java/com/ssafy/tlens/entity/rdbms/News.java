@@ -2,6 +2,7 @@ package com.ssafy.tlens.entity.rdbms;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -49,6 +50,7 @@ public class News extends BaseTimeEntity {
     @Column(name = "link" , length = 300)
     private String link;
 
+    @Builder.Default
     @OneToMany(mappedBy = "news")
     private List<Scrap> scraps = new ArrayList<>();
 

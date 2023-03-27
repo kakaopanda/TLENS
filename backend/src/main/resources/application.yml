@@ -78,7 +78,7 @@ server:
       enabled: 'true'
       force: 'true'
       charset: UTF-8
-    contextPath: /api
+    contextPath: /
   port: '8080'
   compression:
     enabled: 'true'
