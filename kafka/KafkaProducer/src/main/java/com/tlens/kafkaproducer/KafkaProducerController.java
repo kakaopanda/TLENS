@@ -17,8 +17,8 @@ public class KafkaProducerController {
     private KafkaProducerService kafkaProducerService;
 
     @GetMapping("/kafka/news")
-    public String publish(@RequestParam String message) {
-        kafkaProducerService.send(message);
-        return message;
+    public String publish(Message message) {
+        kafkaProducerService.sendJson(message);
+        return message.getName() + message.getMessage();
     }
 }
