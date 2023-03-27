@@ -1,30 +1,81 @@
 import React, {useState} from 'react'
 import {Formik} from "formik";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
+import { useNavigate } from 'react-router-dom';
+
 import {Button, TextField, FormControl, MenuItem, Select, Typography, FormControlLabel, Checkbox} from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import "./signUp.scss"
+import axios from 'axios';
 
 const SignUp = () => {
   
-  const [email, setEmail] = useState("")
+  const navigate = useNavigate()
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [isMember, setIsMember] = useState(false);
-  const [showMembershipInfo, setShowMembershipInfo] = useState('');
 
   // 생년월일 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    console.log(date)
   };
 
   // 체크 박스
   const handleCheckboxChange = (event) => {
     setIsMember(event.target.checked);
-    console.log("입력")
+    console.log(isMember)
   };
+
+  const submit = async (values) => {
+    const { email, username, password, sex, birthday, membership } = values;
+
+    //signup data
+
+    const signupData = {
+      email: email,
+      username: username,
+      password: password,
+      sex: sex,
+      birthday: birthday,
+      membership: membership,
+    };
+
+    try {
+      const response = await axios.post("/api/signup", signupData);
+
+      if (response.data.message === 0) {
+        toast.success(
+          <h3>
+            회원가입이 완료되었습니다.
+            <br />
+            로그인 하세요😎
+          </h3>,
+          {
+            position: "top-center",
+            autoClose: 2000,
+          }
+        );
+        setTimeout(() => {
+          navigate("/auth");
+        }, 2000);
+      } else {
+        toast.error(<h3>이미 있는 회원입니다.</h3>);
+      }
+    } catch (e) {
+      // 서버에서 받은 에러 메시지 출력
+      toast.error(e.response.data.message + "😭", {
+        position: "top-center",
+      });
+    }
+  };
+
+
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -57,7 +108,7 @@ const SignUp = () => {
   return (
     <Formik
       initialValues={{
-        email: email,
+        email: "",
         username: "",
         password: "",
         password2: "",
@@ -66,6 +117,7 @@ const SignUp = () => {
         membership:"",
       }}
       validationSchema={validationSchema}
+      onSubmit={submit}
       validateOnMount={true}
     >
     {({values, handleSubmit, handleChange, errors}) => (
@@ -183,10 +235,11 @@ const SignUp = () => {
                     value={selectedDate}
                     label="생년월일을 입력해주세요"
                     onChange={handleDateChange}
+                    // onChange={handleChange}
                     style={{ height: '100%' }} // 높이를 200px로 조정
                     slotProps={{
                       label: {
-                          style: { fontSize: "20px"}
+                          style: { fontSize: "10px"}
                       },
                       textField: {
                         helperText: 'MM / DD / YYYY',
@@ -203,17 +256,10 @@ const SignUp = () => {
               </div>
               
 
-              <div className='membership-check' style={{display: 'flex', alignItems: 'center', marginTop: '10px'}}>
+              <div className="membership-check" style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
                 <FormControlLabel
-                  value="start"
-                  control={
-                    <Checkbox style={{marginLeft: '15px' ,width: '13px', height: '13px'}} />
-                  }
-                  label={
-                    <Typography style={{fontWeight: 'bold', marginLeft: '-5px', fontSize:'15px'}}>
-                      T:LENS 맴버쉽에 가입하시겠습니까?
-                    </Typography>
-                  }
+                  control={<Checkbox checked={isMember} onChange={handleCheckboxChange} />}
+                  label={<Typography style={{ fontWeight: "bold", marginLeft: "-5px", fontSize: "15px" }}>T:LENS 맴버쉽에 가입하시겠습니까?</Typography>}
                   labelPlacement="start"
                 />
               </div>

@@ -16,6 +16,8 @@ import Statistics from "./pages/Statistics";
 import Mypage from "./pages/Mypage";
 import ReporterDetail from "./components/Reporter-Components/ReporterDetail";
 
+// 로그인한 경우에만 이용가능하게 하는 루트
+import PrivateRoute from "./routes/PrivateRoutes";
 
 function App() {
   const { pathname } = useLocation();
@@ -36,8 +38,9 @@ function App() {
           <Route path="/reporter" element={<Reporter />} />
           <Route path="/company/:name" element={<CompanyDetail />} />
           <Route path="/statistics" element={<Statistics />} />
-          <Route path="/mypage" element={<Mypage />} />
           <Route path="/reporter/:name" element={<ReporterDetail />} />
+
+          <Route path="/mypage" element={<Mypage />} />
         </Routes>
       </div>
     </React.Fragment>
