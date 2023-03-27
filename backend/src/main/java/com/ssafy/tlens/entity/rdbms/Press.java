@@ -28,9 +28,11 @@ public class Press {
     @Column(name = "thumbnail", length = 300)
     private String thumbnail;
 
+    @Builder.Default
     @OneToMany(mappedBy = "press")
     private List<PressTrend> trends = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "press")
     private List<Reporter> reporters = new ArrayList<>();
 }

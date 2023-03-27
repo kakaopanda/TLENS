@@ -39,12 +39,15 @@ public class User {
     @Column(name = "membership", nullable = false)
     private boolean membership;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Keyword> keywords = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Subscribe> subscribes = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Scrap> scraps = new ArrayList<>();
 }

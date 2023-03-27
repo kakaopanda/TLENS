@@ -34,6 +34,7 @@ public class Enterprise {
     @Column(name = "thumbnail", length= 300)
     private String thumbnail;
 
+    @Builder.Default
     @OneToMany(mappedBy = "enterprise")
     private List<EnterpriseTrend> trends = new ArrayList<>();
 }

@@ -32,6 +32,7 @@ public class Region {
     @OneToMany(mappedBy = "superRegion", fetch = FetchType.LAZY)
     private List<Region> subRegions;
 
+    @Builder.Default
     @OneToMany(mappedBy = "region")
     private List<RegionTrend> trends = new ArrayList<>();
 }
