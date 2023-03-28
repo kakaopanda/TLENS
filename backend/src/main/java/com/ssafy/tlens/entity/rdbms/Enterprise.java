@@ -26,7 +26,7 @@ public class Enterprise {
     private String type;
 
     @Column(name = "birthday")
-    private Date birthday;
+    private String birthday;
 
     @Column(name = "ceo", length = 50)
     private String ceo;

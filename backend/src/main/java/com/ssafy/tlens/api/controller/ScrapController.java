@@ -39,7 +39,7 @@ public class ScrapController {
         return success();
     }
 
-    @PostMapping
+    @GetMapping("/news")
     public ResponseEntity<?> getScrapNewsList(@RequestParam Long userId) {
         ListAndCntResponseDTO result = scrapService.getScrapNewsList(userId);
 

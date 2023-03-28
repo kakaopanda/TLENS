@@ -2,12 +2,18 @@ package com.ssafy.tlens.api.controller;
 
 
 import com.ssafy.tlens.api.request.TrendRequestDTO;
+import com.ssafy.tlens.api.response.MainCategoryDTO;
 import com.ssafy.tlens.api.service.CategoryService;
+import com.ssafy.tlens.common.ResponseDto;
+import com.ssafy.tlens.enums.ResponseEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -30,6 +36,13 @@ public class CategoryController {
     @DeleteMapping("/trend")
     public void deleteToCategory(@RequestParam Long id) {
         categoryService.deleteToCategory(id);
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> getMainCategory() {
+        List<MainCategoryDTO> result = categoryService.getMainCategory();
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
     }
 
 }

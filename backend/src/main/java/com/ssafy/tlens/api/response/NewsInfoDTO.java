@@ -10,10 +10,12 @@ public class NewsInfoDTO {
     private String title;
     private String summary;
     private String reporter;
+    private String link;
 
     public NewsInfoDTO(News news) {
         title = news.getTitle();
         summary = news.getSummary();
         reporter = news.getReporter();
+        link = news.getLink();
     }
 }
