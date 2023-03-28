@@ -7,6 +7,7 @@ const DonutChart = () => {
   const chartRef = useRef(null);
 
   useEffect(() => {
+    // public에서 값을 제거하면 값이 사라지는데 왜 그런거지 알아놓자
     axios.get('./chart-data.json')
       .then((response) => {
         setChartData(response.data.chartData);

@@ -4,47 +4,15 @@ import Link from "@mui/joy/Link";
 import Card from "@mui/joy/Card";
 import Chip from "@mui/joy/Chip";
 import Typography from "@mui/joy/Typography";
-
-import "./articleScrap.scss"
-
 import { Button } from "@mui/material";
+import data from "./articles.json";
+import "./articleScrap.scss";
 
-const ArticleScrap = () => {
-  const [data, setData] = React.useState([
-    [
-      "https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90",
-      "뉴스 타이틀",
-      "뉴스 본문",
-      "기자명",
-    ],
-    [
-      "https://www.adobe.com/content/dam/cc/us/en/creative-cloud/photography/discover/landscape-photography/CODERED_B1_landscape_P2d_714x348.jpg.img.jpg",
-      "뉴스 타이틀2",
-      "뉴스 본문2",
-      "기자명2",
-    ],
-    [
-      "https://cdn.pixabay.com/photo/2019/08/01/12/36/illustration-4377408_960_720.png",
-      "뉴스 타이틀3",
-      "뉴스 본문3",
-      "기자명3",
-    ],
-    [
-      "https://www.adobe.com/content/dam/cc/us/en/creative-cloud/photography/discover/landscape-photography/CODERED_B1_landscape_P2b_690x455.jpg.img.jpg",
-      "뉴스 타이틀4",
-      "뉴스 본문4",
-      "기자명4",
-    ],
-    [
-      "https://t1.daumcdn.net/cfile/tistory/9905E9455DE5D69813",
-      "뉴스 타이틀5",
-      "뉴스 본문5",
-      "기자명5",
-    ],
-  ]);
-
+const ArticleScrap = ({name}) => {
+  const [scrapData, setScrapData] = React.useState(data);
+  
   const handleDelete = (index) => {
-    setData((prevData) => {
+    setScrapData((prevData) => {
       const newData = [...prevData];
       newData.splice(index, 1);
       return newData;
@@ -53,75 +21,77 @@ const ArticleScrap = () => {
 
   return (
     <div>
-      <h2>"강김문배박이"의 스크랩 기사 : (총 {data.length} 건)</h2>
-      {data.map((V, index) => {
-        return (
-          <div className="scrap-card">
-          <Card
-            key={index}
-            variant="outlined"
-            orientation="horizontal"
-            sx={{
-              margin: "auto",
-              marginTop: "15px",
-              width: "90%",
-              gap: 2,
-              "&:hover": {
-                boxShadow: "md",
-                borderColor: "neutral.outlinedHoverBorder",
-              },
-            }}
-          >
-            <AspectRatio ratio="1" sx={{ width: 90 }}>
-              <img src={V[0]} loading="lazy" alt="" />
-            </AspectRatio>
-            <div>
-              <Typography
-                level="h2"
-                fontSize="lg"
-                id="card-description"
-                mb={0.5}
-              >
-                {V[1]}
-              </Typography>
-              <Typography
-                fontSize="sm"
-                aria-describedby="card-description"
-                mb={1}
-              >
-                <Link
-                  overlay
-                  underline="none"
-                  href="#interactive-card"
-                  sx={{ color: "text.tertiary" }}
-                >
-                  {V[2]}
-                </Link>
-              </Typography>
-              <Chip
+      {scrapData.map((V, index) => {
+        if (name === V.author) {
+          return (
+            <div className="scrap-card" key={index} >
+              <Card
                 variant="outlined"
-                color="primary"
-                size="sm"
-                sx={{ pointerEvents: "none" }}
+                orientation="horizontal"
+                sx={{
+                  margin: "auto",
+                  marginTop: "15px",
+                  width: "90%",
+                  gap: 2,
+                  "&:hover": {
+                    boxShadow: "md",
+                    borderColor: "neutral.outlinedHoverBorder",
+                  },
+                }}
               >
-                {V[3]}
-              </Chip>
-            </div>
+                <AspectRatio ratio="1" sx={{ width: 90}}>
+                  <img src={V.image} loading="lazy" alt="" />
+                </AspectRatio>
+                <div>
+                  <Typography
+                    level="h2"
+                    fontSize="lg"
+                    id="card-description"
+                    mb={0.5}
+                  >
+                    {V.title}
+                  </Typography>
+                  <Typography
+                    fontSize="sm"
+                    aria-describedby="card-description"
+                    mb={1}
+                  >
+                    <Link
+                      overlay
+                      underline="none"
+                      href="#interactive-card"
+                      sx={{ color: "text.tertiary" }}
+                    >
+                      {V.content}
+                    </Link>
+                  </Typography>
+                  <Chip
+                    variant="outlined"
+                    color="primary"
+                    size="sm"
+                    sx={{ pointerEvents: "none" }}
+                  >
+                    {V.author}
+                  </Chip>
+                </div>
+              </Card>
 
-          </Card>
-          <Button
-            sx={{
-            fontSize: "15px",
-            bgcolor: "red",
-            color: "white",
-            height: "60px",
-            width: "20px",
-            }}
-            onClick={() => handleDelete(index)}>
-            X
-            </Button>
-          </div>
-        );
+              <Button
+                sx={{
+                  bgcolor: "red",
+                  color: "white",
+                  height: "40px",
+                  width: "40px",
+                }}
+                onClick={() => handleDelete(index)}
+              >
+                X
+              </Button>
+            </div>
+          );
+        } else {
+          return null;
+        }
       })}
     </div>
   );

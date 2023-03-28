@@ -8,6 +8,7 @@ import KeywordChart from "../KeywordChart";
 import HotKeywordChart from "../HotKeywordChart";
 import SeearchResultChart2 from "../../SearchResult-Components/SearchResultChart2";
 
+
 // MUI
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
