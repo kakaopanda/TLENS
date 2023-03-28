@@ -4,13 +4,18 @@ package com.ssafy.tlens.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
+@EnableRedisRepositories
 public class RedisConfig {
 
     @Value("${spring.redis.host}")
@@ -18,11 +23,37 @@ public class RedisConfig {
 
     @Value("${spring.redis.port}")
     private int port;
+    @Value("${spring.redis.password}")
+    private String password;
 
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(host, port);
-    }
+//    @Bean
+//    public RedisConnectionFactory redisConnectionFactory() {
+//        return new LettuceConnectionFactory(host, port);
+//    }
+@Bean
+public RedisConnectionFactory redisConnectionFactory() {
+    RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+    redisStandaloneConfiguration.setHostName(host);
+    redisStandaloneConfiguration.setPort(port);
+    // 패스워드 있으면 설정
+    redisStandaloneConfiguration.setPassword(password);
+    LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
+    return lettuceConnectionFactory;
+}
+//    @Bean
+//    @Primary
+//    public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory(RedisConfiguration defaultRedisConfig) {
+//        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+//                .useSsl().build();
+//        return new LettuceConnectionFactory(defaultRedisConfig, clientConfig);
+//    }
+//    @Bean
+//    public LettuceClientConfiguration lettuceClientConfiguration() {
+//        LettuceClientConfiguration config = new LettuceClientConfiguration();
+//        config.setHostName(host);
+//        config.setPassword(RedisPassword.of());
+//        return config;
+//    }
 
     @Bean
     public RedisTemplate<String, String> redisTemplate() {

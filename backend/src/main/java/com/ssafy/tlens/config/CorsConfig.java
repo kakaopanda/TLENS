@@ -19,7 +19,7 @@ public class CorsConfig {
         config.addAllowedOrigin("*"); // e.g. http://domain1.com
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        config.setExposedHeaders(Arrays.asList("Content-Type", JwtProperties.HEADER_STRING, JwtProperties.HEADER_REFRESH_STRING));
+        config.setExposedHeaders(Arrays.asList("Content-Type", JwtProperties.HEADER_STRING));
 
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);

@@ -1,5 +1,6 @@
 package com.ssafy.tlens.config.jwt;
 
+import com.ssafy.tlens.common.RedisDao;
 import com.ssafy.tlens.config.auth.PrincipalDetails;
 import com.ssafy.tlens.entity.rdbms.User;
 import com.ssafy.tlens.repository.UserRepository;
@@ -8,12 +9,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 // 인가
@@ -21,11 +24,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
+    private final RedisDao redisDao;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, JwtProvider jwtProvider) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, JwtProvider jwtProvider, RedisDao redisDao) {
         super(authenticationManager);
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
+        this.redisDao = redisDao;
     }
 
     @Override
@@ -35,17 +40,60 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
         System.out.println("doFilterInternal");
         String header = request.getHeader(JwtProperties.HEADER_STRING);
         if(header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
+            System.out.println("header 인증에서 실패함");
             chain.doFilter(request, response);
             return;
         }
         System.out.println("header : "+header);
+
         String token = request.getHeader(JwtProperties.HEADER_STRING)
                 .replace(JwtProperties.TOKEN_PREFIX, "");
 
-        // 토큰 검증 (이게 인증이기 때문에 AuthenticationManager도 필요 없음)
+        // (추가) Redis 에 해당 accessToken logout 여부 확인
+        //블랙리스트에 추가된 토큰이라면 리턴함
+        String isLogout = (String)redisDao.getValues(token);
+        if (!ObjectUtils.isEmpty(isLogout)){
+            System.out.println("블랙리스트에 걸림");
+            chain.doFilter(request, response);
+            return;
+        }
+
+            // 토큰 검증 (이게 인증이기 때문에 AuthenticationManager도 필요 없음)
         // 내가 SecurityContext에 직접 접근해서 세션을 만들때 자동으로 UserDetailsService에 있는 loadByUsername이 호출됨.
 
         String userEmail = jwtProvider.getUserEmail(token);
+        System.out.println("userEmail : "+ userEmail);
+        String type = jwtProvider.getType(token);
+        String requestURI = request.getRequestURI();
+
+        if (type.equals("RTK") && !requestURI.equals("/users/reissue")) {
+            System.out.println("RTK 타입일 땐 /reissue 요청만 받을 수 있다.");
+            chain.doFilter(request, response);
+            return;
+        }
+
+
+
+
+//        String userEmail = null;
+//
+//        userEmail = loginRequestDto.getEmail();
+
+//        if(loginRequestDto.getLoginType().equals(LoginType.LOGIN)){
+//            // 로그인
+////            KakaoUserInfoDto kakaoUserInfoDto = kakaoProvider.login(loginRequestDto.getToken());
+////            if(kakaoUserInfoDto == null){
+////                throw new CustomAuthenticationException(ResponseEnum.AUTH_INVALID_TOKEN);
+////            }
+//            userEmail = loginRequestDto.getEmail();
+//        }else{
+//            // refresh
+//            String refreshToken = redisTemplate.opsForValue().getAndDelete(loginRequestDto.getToken());
+//            if(refreshToken == null){
+//                throw new CustomAuthenticationException(ResponseEnum.AUTH_REFRESH_DOES_NOT_EXIST);
+//            }
+//            userEmail = jwtProvider.getUserEmail(refreshToken);
+//        }
 
         if(userEmail != null) {
             Optional<User> user = userRepository.findByEmail(userEmail);

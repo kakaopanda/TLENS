@@ -21,8 +21,10 @@ public class PrincipalDetailsService implements UserDetailsService {
 
         Optional<User> user = userRepository.findByEmail(email);
         if(user.isPresent()){
+            System.out.println("loadUserByUsername user를 찾았습니다.");
             return new PrincipalDetails(user.get());
         }
+        System.out.println("loadUserByUsername null을 반환합니다.");
         return null;
     }
 }
