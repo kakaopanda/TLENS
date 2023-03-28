@@ -1,8 +1,12 @@
 package com.ssafy.tlens.api.service;
 
 import com.ssafy.tlens.api.request.SubscribeRequestDTO;
+import com.ssafy.tlens.api.response.ListAndCntResponseDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
+import com.ssafy.tlens.api.response.ReporterInfoDTO;
 import com.ssafy.tlens.common.exception.handler.DuplicateResourceException;
 import com.ssafy.tlens.common.exception.handler.NotFoundException;
+import com.ssafy.tlens.entity.rdbms.News;
 import com.ssafy.tlens.entity.rdbms.Reporter;
 import com.ssafy.tlens.entity.rdbms.User;
 import com.ssafy.tlens.entity.rdbms.Subscribe;
@@ -12,6 +16,9 @@ import com.ssafy.tlens.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,4 +65,29 @@ public class SubscribeServiceImpl implements SubscribeService {
 
         subscribeRepository.delete(subscribe);
     };
+
+    @Override
+    @Transactional
+    public ListAndCntResponseDTO getSubscribeReporter(Long userId) {
+        List<Reporter> reporterList = reporterRepository.findSubscribeReporterByUserId(userId);
+
+        List<ReporterInfoDTO> reporterInfoList = reporterList.stream()
+                .map(reporter -> new ReporterInfoDTO(reporter))
+                .collect(Collectors.toList());
+
+        return new ListAndCntResponseDTO(reporterList, reporterList.size());
+    }
+
+    @Override
+    @Transactional
+    public ListAndCntResponseDTO getNewsBySubscribeReporter(Long userId) {
+        List<Reporter> reporterList = reporterRepository.findSubscribeReporterByUserId(userId);
+
+        List<ReporterInfoDTO> reporterInfoList = reporterList.stream()
+                .map(reporter -> new ReporterInfoDTO(reporter))
+                .collect(Collectors.toList());
+
+        return new ListAndCntResponseDTO(reporterList, reporterList.size());
+    }
+
 }
