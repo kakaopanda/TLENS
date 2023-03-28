@@ -9,6 +9,7 @@ import {Button, TextField, FormControl, MenuItem, Select, Typography, FormContro
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { format } from "date-fns";
 
 import "./signUp.scss"
 import axios from 'axios';
@@ -16,9 +17,6 @@ import axios from 'axios';
 const SignUp = () => {
   
   const navigate = useNavigate()
-
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [isMember, setIsMember] = useState(false);
 
   // // 생년월일 
   // const handleDateChange = (date) => {
@@ -113,14 +111,20 @@ const SignUp = () => {
         password: "",
         password2: "",
         sex:"",
-        birthday:"",
+        birthday:null,
         membership: false,
       }}
       validationSchema={validationSchema}
+      
+      // 확인용
+      // onSubmit={(values) => {
+      //   console.log(values);
+      // }}
+      
       onSubmit={submit}
       validateOnMount={true}
     >
-    {({values, handleSubmit, handleChange, errors}) => (
+    {({values, handleSubmit, handleChange, errors, setFieldValue}) => (
     <div className="signup-wrapper">
       <div className="container">
         <form 
@@ -228,18 +232,18 @@ const SignUp = () => {
                 </FormControl>
               </div>
               <div className="error-message">{errors.sex}</div>
+
               <div className="input-datepicker">
                 <div className="input-label">생년월일 : </div>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     value={values.birthday}
                     label="생년월일을 입력해주세요"
-                    // onChange={handleDateChange}
-                    onChange={handleChange}
+                    onChange={(date) => setFieldValue("birthday", date)}
                     style={{ height: '100%' }} // 높이를 200px로 조정
                     slotProps={{
                       label: {
-                          style: { fontSize: "10px"}
+                        style: { fontSize: "10px"}
                       },
                       textField: {
                         helperText: 'MM / DD / YYYY',
@@ -255,11 +259,11 @@ const SignUp = () => {
                 </LocalizationProvider>
               </div>
               
-
               <div className="membership-check" style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
                 <FormControlLabel
                   control={
-                  <Checkbox 
+                  <Checkbox
+                  name="membership" 
                   checked={values.membership} 
                   onChange={handleChange} />
                 }
