@@ -7,8 +7,8 @@ import TabPanel from '@mui/lab/TabPanel';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import SignUp from '../Signup';
-import Login from '../Login';
+import SignUp from '../Auth/Signup';
+import Login from '../Auth/Login';
 
 import './auth.scss';
 

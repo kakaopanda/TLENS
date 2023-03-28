@@ -31,4 +31,9 @@ public abstract class BaseTrendEntity {
     @Column(name = "created_at")
     private Timestamp date;
 
+    public void update(String keyword, int count, Timestamp date) {
+        this.keyword = keyword;
+        this.count = count;
+        this.date = date;
+    }
 }

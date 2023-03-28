@@ -25,6 +25,7 @@ public class Category {
     @Column(name = "name", length = 50)
     private String name;
 
+    @Builder.Default
     @OneToMany(mappedBy = "category")
     private List<CategoryTrend> trends = new ArrayList<>();
 }

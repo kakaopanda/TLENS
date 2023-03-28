@@ -19,7 +19,7 @@
         margin-top: 1%;
         width: 65%;
         justify-content: center;
-        height: 90vh;
+        height: 115vh;
         overflow-y: auto;
       }
 
@@ -27,13 +27,10 @@
         display: none;
       }
 
-      .searchresult-h4 {
+      .searchresult-chart {
         width: 35%;
         text-align: left;
-  
-        h4 {
-          margin-left: 3%;
-        }
+        margin: 2%;
       }
     }
   }

@@ -1,7 +1,15 @@
 import * as React from "react";
 import "./Header.scss";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setToken} from "../../redux/reducers/AuthReducer";
+
+// 로그아웃 : 토큰 유효화 과정에 따라서 다르게 설정할 것
+import {jwtUtils} from "../../utils/jwtUtils"
+
+//Component
+import SubReportList from "../../components/MyPage-Components/MySubscribe/Sub-ReportList";
 
 //MUI
 import AppBar from "@mui/material/AppBar";
@@ -28,10 +36,29 @@ import TextFieldsIcon from "@mui/icons-material/TextFields";
 import SouthAmericaIcon from "@mui/icons-material/SouthAmerica";
 
 const Header = () => {
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = useSelector(state => state.Auth.token);
+  const [isAuth, setIsAuth] = useState(false);
+  useEffect(() => {
+    if (jwtUtils.isAuth(token)) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }, [token]);
+  // 비동기로 처리!
+  const logout = async () => {
+    await dispatch(setToken(""));
+    alert("로그아웃 되었습니다😎");
+    navigate("/main");
+  };
+
   const [state, setState] = useState({
     top: false,
     left: false,
+    right: false
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -52,7 +79,7 @@ const Header = () => {
 
   const handleNavigate = (text) => {
     if (text === "분야별") {
-      navigate("/");
+      navigate("/main");
     } else if (text === "지역별") {
       navigate("/region");
     } else if (text === "언론사 분석") {
@@ -63,6 +90,8 @@ const Header = () => {
       navigate("/statistics");
     }
   };
+
+
 
   const list = (anchor) => (
     <Box
@@ -75,7 +104,7 @@ const Header = () => {
         <ListItem>
           <ListItemButton
             onClick={() => {
-              navigate("/");
+              navigate("/main");
             }}
           >
             <img src={"/images/tlens_logo.png"} alt="" />
@@ -141,6 +170,45 @@ const Header = () => {
           </ListItem>
         ))}
       </List>
+    </Box>
+  );
+
+  const personalInfo = (anchor) => (
+    <Box
+    sx={{ width: 300 }}
+    role="presentation"
+    onClick={toggleDrawer(anchor, false)}
+    onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <div>
+        <h4>안녕하세요!! "강김박배문이" 님</h4>
+        <Button
+          color="primary"
+          variant="contained"
+          fullWidth
+          type="submit"
+          sx={{
+            width: "150px",
+            marginTop: '10px',
+            marginBottom: "10px"
+          }}
+          onClick={logout}
+        >
+          로그아웃
+        </Button>
+
+      </div>
+      <Divider />
+      <div>
+        <h4>내가 구독한 기자</h4>
+        <Divider />
+      </div>
+        <SubReportList />
+      <div>
+        <Button style={{fontWeight:"bold"}} onClick={() => navigate("/mypage")}> 
+          내가 구독한 기자의 최신기사 확인하기 >>
+        </Button>
+      </div>
     </Box>
   );
 
@@ -240,7 +308,27 @@ const Header = () => {
                 {search("top")}
               </Drawer>
             </React.Fragment>
-            <IconButton
+
+            <React.Fragment key={"right"}>
+              <IconButton
+                size="large"
+                edge="start"
+                color="primary"
+                sx={{ marginRight: "10px" }}
+                onClick={toggleDrawer("right", true)}
+              >
+                <PersonIcon />
+              </IconButton>
+              <Drawer
+                anchor={"right"}
+                open={state["right"]}
+                onClose={toggleDrawer("right", false)}
+              >
+                {personalInfo("right")}
+              </Drawer>
+            </React.Fragment>
+
+            {/* <IconButton
               onClick={() => {
                 navigate("/auth");
               }}
@@ -249,7 +337,8 @@ const Header = () => {
               color="primary"
             >
               <PersonIcon />
-            </IconButton>
+            </IconButton> */}
+
           </Box>
         </Toolbar>
       </AppBar>

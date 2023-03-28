@@ -26,7 +26,7 @@ public class Enterprise {
     private String type;
 
     @Column(name = "birthday")
-    private Date birthday;
+    private String birthday;
 
     @Column(name = "ceo", length = 50)
     private String ceo;
@@ -34,6 +34,7 @@ public class Enterprise {
     @Column(name = "thumbnail", length= 300)
     private String thumbnail;
 
+    @Builder.Default
     @OneToMany(mappedBy = "enterprise")
     private List<EnterpriseTrend> trends = new ArrayList<>();
 }

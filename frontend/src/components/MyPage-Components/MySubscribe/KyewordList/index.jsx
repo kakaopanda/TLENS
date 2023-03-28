@@ -97,7 +97,7 @@ function App() {
       <KeywordDetail selectedKeyword={selectedKeyword} />
       {selectedKeyword && (
         <Link to={`/search/${selectedKeyword}`} className="keyword-search">
-          {selectedKeyword}에 대한 키워드 검색
+          {selectedKeyword}에 대한 키워드 검색 >>
         </Link>
       )}
     </div>

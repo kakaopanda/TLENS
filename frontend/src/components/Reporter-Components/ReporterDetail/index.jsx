@@ -16,92 +16,53 @@ const ReporterDetail = () => {
   console.log(state[1]);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#0066CC",
-        borderRadius: "20px",
-        display: "flex",
-        textAlign: "left",
-      }}
-    >
-      <div
-        style={{
-          width: "40%",
-          margin: "1.5% 0 1.5% 1.5%",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "white",
-            borderRadius: "20px",
-            width: "96%",
-            textAlign: "center",
-          }}
-        >
-          <div
-            style={{ display: "flex", justifyContent: "center", width: "100%" }}
-          >
+    <div className="reporterdetail-wrapper">
+      <div className="reporterdetail-left">
+        <div className="reporterdetail-left-top">
+          <div className="reporterdetail-left-top-1">
             <img src={state[4]} alt="" />
-            <img
-              style={{ width: "20%", height: "10%" }}
-              src={`/${state[1]}`}
-              alt=""
-            />
+            <img src={`/${state[1]}`} alt="" />
           </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <h2>
+          <div className="reporterdetail-left-top-2">
+            <h2 className="reporterdetail-left-top-h2">
               {state[0]} : {state[2]}
             </h2>
             <Button>구독하기</Button>
           </div>
         </div>
-        <div
-          style={{
-            backgroundColor: "white",
-            borderRadius: "20px",
-            width: "96%",
-          }}
-        >
-          <h3 style={{ marginLeft: "3%" }}>{state[2]} 기자의 취재 분야</h3>
-          <div style={{ width: "90%" }}>
+        <div className="reporterdetail-left-main">
+          <h3 className="reporterdetail-left-main-h3">
+            {state[2]} 기자의 취재 분야
+          </h3>
+          <div className="reporterdetail-left-chart">
             <ReporterPieChart />
           </div>
           <Divider />
-          <h3 style={{ marginLeft: "3%" }}>{state[2]} 기자의 구독 현황</h3>
-          <div style={{ display: "flex" }}>
-            <div style={{ width: "50%" }}>
-              <h5 style={{ marginLeft: "3%" }}>나이 통계</h5>
+          <h3 className="reporterdetail-left-main-h3">
+            {state[2]} 기자의 구독 현황
+          </h3>
+          <div className="reporterdetail-left-main-chart1">
+            <div className="reporterdetail-left-main-chart1-1">
+              <h5 className="reporterdetail-left-main-h5">나이 통계</h5>
               <ReporterColumnChart />
             </div>
-            <div style={{ width: "50%", alignContent: "center" }}>
-              <h5 style={{ marginLeft: "3%" }}>성별 통계</h5>
+            <div className="reporterdetail-left-main-chart2">
+              <h5 className="reporterdetail-left-main-h5">성별 통계</h5>
               <ReporterPieChart2 />
             </div>
           </div>
         </div>
       </div>
-      <div
-        style={{
-          width: "58%",
-          margin: "1.5% 1.5% 1.5% 0",
-          background: "white",
-          borderRadius: "20px",
-          textAlign: "left",
-        }}
-      >
-        <h2 style={{ marginLeft: "3%" }}>T:LENS 키워드 : {state[2]} 기자</h2>
+      <div className="reporterdetail-right">
+        <h2 className="reporterdetail-right-h2">
+          T:LENS 키워드 : {state[2]} 기자
+        </h2>
         <ReporterWordCloud />
         <Divider />
-        <h2 style={{ marginLeft: "3%" }}>
+        <h2 className="reporterdetail-right-h2">
           T:LENS 키워드 뉴스 : {state[2]} 기자
         </h2>
-        <div
-          className="reporter-news"
-          style={{
-            height: "68vh",
-            overflowY: "auto",
-          }}
-        >
+        <div className="reporterdetail-right-news">
           <MainNewsCard />
         </div>
       </div>

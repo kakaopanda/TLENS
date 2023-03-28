@@ -14,7 +14,7 @@ const ReporterCard2 = ({ V }) => {
   };
 
   return (
-    <div style={{ margin: "2%" }}>
+    <div style={{ margin: "0.5%" }}>
       <Card
         onClick={() => {
           handlenavigate(V);
@@ -23,7 +23,7 @@ const ReporterCard2 = ({ V }) => {
         orientation="horizontal"
         sx={{
           display: "flex",
-          width: 320,
+          width: 250,
           gap: 2,
           "&:hover": {
             boxShadow: "md",

@@ -30,7 +30,7 @@ const MenuDrawer = ({ anchor, toggleDrawer }) => {
         onClick={toggleDrawer(anchor, false)}
         onKeyDown={toggleDrawer(anchor, false)}
       >
-        <Button onClick={navigate("/")}>
+        <Button onClick={navigate("/main")}>
           <img src={process.env.PUBLIC_URL + "tlens_logo.png"} alt="" />
         </Button>
         <Divider sx={{ backgroundColor: "#0066CC", height: "3px" }} />

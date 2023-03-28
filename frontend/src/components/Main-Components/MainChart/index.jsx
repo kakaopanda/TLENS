@@ -6,6 +6,7 @@ import Wordcloud from "../WordCloud";
 import MainNewsCard from "../MainNewsCard";
 import KeywordChart from "../KeywordChart";
 import HotKeywordChart from "../HotKeywordChart";
+import SeearchResultChart2 from "../../SearchResult-Components/SearchResultChart2";
 
 // MUI
 import Divider from "@mui/material/Divider";
@@ -15,7 +16,7 @@ const MainChart = (props) => {
   const [keyword, setKeyword] = useState("전체");
   const [articleField, setArticleField] = useState("28,467");
   const [totalArticle, setTotalArticle] = useState("2,846,710,200");
-  
+
   useEffect(() => {
     if (props?.value === "1") {
       setKeyword("전체(All)");
@@ -119,16 +120,27 @@ const MainChart = (props) => {
         style={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-between",
         }}
       >
-        <div style={{ width: "45%" }}>
-          <br />
+        <div
+          style={{
+            margin: "2%",
+            width: "50%",
+            border: "1px solid #D8D8D8",
+          }}
+        >
+          <h2>기간별 키워드 변화(Top 10)</h2>
           <BarCharts />
         </div>
         <Divider orientation="vertical" flexItem />
-        <div style={{ width: "45%" }}>
-          <br />
+        <div
+          style={{
+            margin: "2%",
+            width: "50%",
+            border: "1px solid #D8D8D8",
+          }}
+        >
+          <h2>T:LENS 핫 키워드(Top 30)</h2>
           <Wordcloud />
         </div>
       </div>
@@ -141,19 +153,39 @@ const MainChart = (props) => {
           style={{
             width: "65%",
             justifyContent: "center",
-            height: "90vh",
+            height: "100vh",
             overflowY: "auto",
           }}
         >
           <MainNewsCard />
         </div>
         <Divider orientation="vertical" flexItem />
-        <div style={{ width: "35%" }}>
-          <br />
-          <KeywordChart />
-          <br />
-          <br />
-          <HotKeywordChart />
+        <div style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          <div style={{ width: "100%", justifyContent: "center" }}>
+            <h2 style={{ marginBottom: 0 }}>시간별 핫 키워드(Top 10)</h2>
+            <br />
+            <div
+              style={{
+                margin: "0 4% 0 4%",
+                width: "110%",
+                border: "1px solid #D8D8D8",
+              }}
+            >
+              <KeywordChart />
+            </div>
+            <br />
+            <h2 style={{ marginBottom: 0 }}>시간별 핫 키워드(Top 10)</h2>
+            <br />
+            <div
+              style={{
+                margin: "0 4% 0 4%",
+                width: "110%",
+                border: "1px solid #D8D8D8",
+              }}
+            >
+              <SeearchResultChart2 />
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import "./CompanyCard.scss";
 
 // MUI
 import Card from "@mui/joy/Card";
@@ -23,15 +24,11 @@ const CompanyCard = ({ name, ename, category, ceo, birth, index }) => {
   };
   return (
     <div>
-      <Card variant="outlined" sx={{ width: 230, margin: 2 }}>
+      <Card className="company-card" variant="outlined">
         <CardOverflow>
-          <img
-            style={{ width: "100%", height: 130, objectFit: "cover" }}
-            src={`/img/${index}.jpg`}
-            alt=""
-          />
+          <img src={`/img/${index}.jpg`} alt="" width="150" height="80" />
         </CardOverflow>
-        <Typography level="h2" sx={{ fontSize: "md", mt: 1 }}>
+        <Typography level="h2" sx={{ fontSize: "md" }}>
           <Link
             sx={{ color: "black" }}
             onClick={() => {
@@ -54,22 +51,8 @@ const CompanyCard = ({ name, ename, category, ceo, birth, index }) => {
           </Link>
         </Typography>
         <Divider inset="context" />
-        <CardOverflow
-          variant="soft"
-          sx={{
-            display: "flex",
-            gap: 1.5,
-            py: 1.5,
-            px: "var(--Card-padding)",
-            bgcolor: "background.level1",
-          }}
-        >
-          <Typography
-            level="body3"
-            sx={{ fontWeight: "md", color: "text.secondary" }}
-          >
-            대표 : {ceo}
-          </Typography>
+        <CardOverflow className="company-card-overflow" variant="soft">
+          <Typography level="body3">대표 : {ceo}</Typography>
         </CardOverflow>
       </Card>
     </div>

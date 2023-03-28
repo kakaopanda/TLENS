@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import WordCloud from "react-wordcloud";
 
 const data = [
@@ -30,6 +30,14 @@ const data = [
 ];
 
 const WordCloudContainer = () => {
+  const [check, setCheck] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCheck(true);
+    }, 2000);
+  }, []);
+
   const fontSizeMapper = (word) => Math.log2(word.value) * 10;
   const rotate = (word) => word.value % 360;
 
@@ -41,13 +49,21 @@ const WordCloudContainer = () => {
   };
 
   return (
-    <div>
-      <WordCloud
-        words={data}
-        fontSizeMapper={fontSizeMapper}
-        rotate={rotate}
-        options={options}
-      />
+    <div style={{ maxWidth: "400px", justifyContent: "center" }}>
+      {check ? (
+        <WordCloud
+          words={data}
+          fontSizeMapper={fontSizeMapper}
+          rotate={rotate}
+          options={options}
+        />
+      ) : (
+        <img
+          style={{ width: "100%", height: "100%" }}
+          src="/images/loading.gif"
+          alt="loading"
+        />
+      )}
     </div>
   );
 };
