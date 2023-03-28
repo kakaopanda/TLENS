@@ -15,7 +15,7 @@ function StockChart({ keyName }) {
     const params = {
       serviceKey:
         "ERifINcaqI/MKEa0+o15ZnvcLbu2m2py9mvF3UhczTq4Mf+ZR9O4sSPclr6/g8IhwGmDRxLQX8YExauSPSIomA==",
-      numOfRows: 350,
+      numOfRows: 600,
       resultType: "json",
       itmsNm: keyName,
     };
