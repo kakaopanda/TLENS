@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/press")
+@RequestMapping("/press")
 public class PressController {
 
     private final PressService pressService;

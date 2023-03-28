@@ -18,7 +18,7 @@ import static com.ssafy.tlens.common.model.response.HttpResponseEntity.success;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/subscribe")
+@RequestMapping("/subscribe")
 public class SubscribeController {
 
     private final SubscribeService subscribeService;
