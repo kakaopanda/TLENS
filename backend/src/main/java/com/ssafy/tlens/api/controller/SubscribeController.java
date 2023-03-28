@@ -35,14 +35,14 @@ public class SubscribeController {
         return success();
     }
 
-    @PostMapping("/reporter")
+    @GetMapping("/reporter")
     public ResponseEntity<?> getSubscribeReporter(@RequestParam Long userId) {
         ListAndCntResponseDTO result = subscribeService.getSubscribeReporter(userId);
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_MY_INFO_SUCCESS, result), HttpStatus.OK);
     }
 
-    @PostMapping("/reporter/news")
+    @GetMapping("/reporter/news")
     public ResponseEntity<?> getNewsBySubscribeReporter(@RequestParam Long userId) {
         ListAndCntResponseDTO result = subscribeService.getNewsBySubscribeReporter(userId);
 

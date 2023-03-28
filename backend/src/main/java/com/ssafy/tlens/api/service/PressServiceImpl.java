@@ -1,6 +1,8 @@
 package com.ssafy.tlens.api.service;
 
 import com.ssafy.tlens.api.request.TrendRequestDTO;
+import com.ssafy.tlens.api.response.MainPressDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.common.exception.handler.NotFoundException;
 import com.ssafy.tlens.entity.rdbms.Press;
 import com.ssafy.tlens.entity.rdbms.PressTrend;
@@ -8,6 +10,9 @@ import com.ssafy.tlens.repository.PressRepository;
 import com.ssafy.tlens.repository.PressTrendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,4 +51,16 @@ public class PressServiceImpl implements PressService {
 
         pressTrendRepository.delete(trend);
     }
+
+    public List<MainPressDTO> getMainPress() {
+
+        List<Press> presses = pressRepository.findAll();
+
+        List<MainPressDTO> pressInfoList = presses.stream()
+                .map(press -> new MainPressDTO(press))
+                .collect(Collectors.toList());
+
+        return pressInfoList;
+    }
+
 }

@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,14 +20,14 @@ public class MypageController {
 
     private MypageService mypageService;
 
-    @PostMapping("/userinfo")
+    @GetMapping("/userinfo")
     public ResponseEntity<?> getUserInfo(@RequestParam Long id) {
         UserInfoResponseDTO result = mypageService.getUserInfo(id);
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_MY_INFO_SUCCESS, result), HttpStatus.OK);
     }
 
-    @PostMapping("/keyword")
+    @GetMapping("/keyword")
     public ResponseEntity<?> getUserKeyword(@RequestParam Long id) {
         List<String> result = mypageService.getUserKeyword(id);
 
