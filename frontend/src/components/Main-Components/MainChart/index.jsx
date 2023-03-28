@@ -8,7 +8,6 @@ import KeywordChart from "../KeywordChart";
 import HotKeywordChart from "../HotKeywordChart";
 import SeearchResultChart2 from "../../SearchResult-Components/SearchResultChart2";
 
-
 // MUI
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
@@ -121,13 +120,12 @@ const MainChart = (props) => {
         style={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-between",
         }}
       >
         <div
           style={{
             margin: "2%",
-            width: "45%",
+            width: "50%",
             border: "1px solid #D8D8D8",
           }}
         >
@@ -138,7 +136,7 @@ const MainChart = (props) => {
         <div
           style={{
             margin: "2%",
-            width: "45%",
+            width: "50%",
             border: "1px solid #D8D8D8",
           }}
         >

@@ -15,7 +15,7 @@ const CompanyDetail = () => {
   const { state } = useLocation();
 
   const [keyName, setKeyName] = useState("");
-  const [loding, setLoding] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (name === "현대자동차") {
@@ -35,9 +35,9 @@ const CompanyDetail = () => {
     }
     setTimeout(() => {
       // 2초 뒤에 실행되는 코드
-      setLoding(true);
-    }, 2000);
-  }, []);
+      setLoading(true);
+    }, 3000);
+  }, [name]);
 
   return (
     <div className="companydetail-wrapper">
@@ -75,7 +75,13 @@ const CompanyDetail = () => {
           <Divider orientation="vertical" />
           <div className="companydetail-top-right">
             <h2 style={{ marginLeft: "10px" }}>{name} 주가 그래프</h2>
-            {loding ? <CompanyStock keyName={keyName} /> : null}
+            {loading ? (
+              <CompanyStock keyName={keyName} />
+            ) : (
+              <div>
+                <img src="/images/loading.gif" alt="" />
+              </div>
+            )}
           </div>
         </div>
         <div className="companydetail-mid">

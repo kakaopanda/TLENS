@@ -49,7 +49,7 @@ const WordCloudContainer = () => {
   };
 
   return (
-    <div style={{ maxWidth: "400px" }}>
+    <div style={{ maxWidth: "400px", justifyContent: "center" }}>
       {check ? (
         <WordCloud
           words={data}
@@ -58,7 +58,11 @@ const WordCloudContainer = () => {
           options={options}
         />
       ) : (
-        <img src={"/images/loading.gif"} alt="loading" />
+        <img
+          style={{ width: "100%", height: "100%" }}
+          src="/images/loading.gif"
+          alt="loading"
+        />
       )}
     </div>
   );
