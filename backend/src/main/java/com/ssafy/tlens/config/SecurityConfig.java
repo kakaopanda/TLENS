@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()// httpservletrequest로 접근하는 것을 제한하겠다.
                 // "/api/user/test" permitAll 을 "/api/user/**" .hasRole("USER") 뒤에 하면 안먹힘!
-                .antMatchers( "/swagger-ui.html", "/swagger/**", "/swagger-resources" ,"/swagger-resources/**","/webjars/**", "/swagger-ui/**", "/api-docs/**").permitAll()
+                .antMatchers( "/swagger-ui.html", "/swagger/**", "/swagger-resources" ,"/swagger-resources/**","/webjars/**", "/swagger-ui/**", "/api-docs/**", "/v3/api-docs/**").permitAll()
                 .antMatchers("/users", "/users/login").permitAll()
                 .antMatchers("/users/join","/user/nicknameCk").permitAll()
 //                .antMatchers("/api/user/**").hasRole(UserRoleType.USER.getValue())

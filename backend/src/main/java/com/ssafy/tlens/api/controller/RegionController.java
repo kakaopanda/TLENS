@@ -11,7 +11,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/region")
+@RequestMapping("/region")
 public class RegionController {
 
     private final RegionService regionService;

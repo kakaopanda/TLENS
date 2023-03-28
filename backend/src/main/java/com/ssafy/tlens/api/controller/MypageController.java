@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/mypage")
+@RequestMapping("/mypage")
 public class MypageController {
 
     private MypageService mypageService;

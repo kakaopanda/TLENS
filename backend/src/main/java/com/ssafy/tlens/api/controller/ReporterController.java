@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/reporter")
+@RequestMapping("/reporter")
 public class ReporterController {
 
     private final ReporterService reporterService;

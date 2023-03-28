@@ -22,7 +22,7 @@ import static com.ssafy.tlens.common.model.response.HttpResponseEntity.success;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/scrap")
+@RequestMapping("/scrap")
 public class ScrapController {
 
     private final ScrapService scrapService;
