@@ -10,6 +10,7 @@ import "./signUp.scss"
 
 const SignUp = () => {
   
+  const [email, setEmail] = useState("")
   const [selectedDate, setSelectedDate] = useState(null);
   const [isMember, setIsMember] = useState(false);
   const [showMembershipInfo, setShowMembershipInfo] = useState('');
@@ -22,6 +23,7 @@ const SignUp = () => {
   // 체크 박스
   const handleCheckboxChange = (event) => {
     setIsMember(event.target.checked);
+    console.log("입력")
   };
 
   const validationSchema = Yup.object().shape({
@@ -55,7 +57,7 @@ const SignUp = () => {
   return (
     <Formik
       initialValues={{
-        email: "",
+        email: email,
         username: "",
         password: "",
         password2: "",
@@ -69,179 +71,165 @@ const SignUp = () => {
     {({values, handleSubmit, handleChange, errors}) => (
     <div className="signup-wrapper">
       <div className="container">
-        <div className="box1">
-          <div className='logo'>
-            <img src="img/logo.png" alt="로고"/>
-          </div>
-          <div className='description'>
-            <h2>· 가치 중립적 정보 제공</h2>
-            <h2>· 뉴스 트랜드 분석 및 시각화</h2>
-            <h2>· 기사 작성 패턴 분석</h2>
-            {/* 빈 공간을 위해서 한 칸 비워두자 */}
-            <div></div>
-          </div>
-        </div>
-        <div className="box2">
-          <form 
-          onSubmit={handleSubmit} autoComplete="off"
-          >
-            <div className="input-forms">
+        <form 
+        onSubmit={handleSubmit} autoComplete="off"
+        >
+          <div className="input-forms">
+            <div className="input-forms-item">
+              <div className="input-label">
+                이메일 : 
+              </div>
+              <TextField
+                className="input-text"
+                value={values.email}
+                name="email"
+                variant="outlined"
+                onChange={handleChange}
+                InputProps={{
+                  style: {
+                    borderRadius: '50px',
+                    height:'35px',
+                    borderBlockColor: "#0066cc",
+                  }
+                }}
+              />
+            </div>
+            <div className="error-message">
+              {errors.email}
+            </div>
               <div className="input-forms-item">
-                <div className="input-label">
-                  이메일 : 
-                </div>
+                <div className="input-label">비밀번호 : </div>
                 <TextField
-                  className="input-text"
-                  value={values.email}
-                  name="email"
+                  sx={{
+                    borderRadius: '50px',
+                  }}
+                  value={values.password}
+                  name="password"
+                  variant="outlined"
+                  type="password"
+                  onChange={handleChange}
+                  InputProps={{
+                    style: {
+                      borderRadius: '50px',
+                      height:'35px',
+                    }
+                  }}
+                />
+                </div>
+                <div className="error-message">
+                  {errors.password}
+                </div>
+              <div className="input-forms-item">
+                <div className="input-label">비밀번호 확인 : </div>
+                <TextField
+                  value={values.password2}
+                  name="password2"
+                  variant="outlined"
+                  type="password"
+                  onChange={handleChange}
+                  InputProps={{
+                    style: {
+                      borderRadius: '50px',
+                      height:'35px',
+                    }
+                  }}
+                />
+                </div>
+        
+                <div className="error-message">
+                  {errors.password2}
+                </div>
+
+              <div className="input-forms-item">
+                <div className="input-label">닉네임 : </div>
+                <TextField
+                  value={values.username}
+                  name="username"
                   variant="outlined"
                   onChange={handleChange}
                   InputProps={{
                     style: {
                       borderRadius: '50px',
                       height:'35px',
-                      borderBlockColor: "#0066cc",
                     }
                   }}
                 />
-              </div>
-              <div className="error-message">
-                {errors.email}
-              </div>
-                <div className="input-forms-item">
-                  <div className="input-label">비밀번호 : </div>
-                  <TextField
-                    sx={{
-                      borderRadius: '50px',
-                    }}
-                    value={values.password}
-                    name="password"
-                    variant="outlined"
-                    type="password"
-                    onChange={handleChange}
-                    InputProps={{
-                      style: {
-                        borderRadius: '50px',
-                        height:'35px',
-                      }
-                    }}
-                  />
-                  </div>
-                  <div className="error-message">
-                    {errors.password}
-                  </div>
-                <div className="input-forms-item">
-                  <div className="input-label">비밀번호 확인 : </div>
-                  <TextField
-                    value={values.password2}
-                    name="password2"
-                    variant="outlined"
-                    type="password"
-                    onChange={handleChange}
-                    InputProps={{
-                      style: {
-                        borderRadius: '50px',
-                        height:'35px',
-                      }
-                    }}
-                  />
-                  </div>
-          
-                  <div className="error-message">
-                    {errors.password2}
-                  </div>
-
-                <div className="input-forms-item">
-                  <div className="input-label">닉네임 : </div>
-                  <TextField
-                    value={values.username}
-                    name="username"
-                    variant="outlined"
-                    onChange={handleChange}
-                    InputProps={{
-                      style: {
-                        borderRadius: '50px',
-                        height:'35px',
-                      }
-                    }}
-                  />
-                  </div>
-                  <div className="error-message">
-                    {errors.username}
-                  </div>
-
-                <div className="input-combo">
-                  <div className="input-label">성별 : </div>
-                  <FormControl>
-                    <Select
-                      value={values.sex}
-                      name="sex"
-                      label="성별"
-                      variant="outlined"
-                      onChange={handleChange}
-                      style={{ height: '35px', width: '100%' }}
-                    >
-                      <MenuItem value={"male"}>남성</MenuItem>
-                      <MenuItem value={"female"}>여성</MenuItem>
-                    </Select>
-                  </FormControl>
                 </div>
-                <div className="error-message">{errors.sex}</div>
-
-                <div className="input-datepicker">
-                  <div className="input-label">생년월일 : </div>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      value={selectedDate}
-                      label="생년월일을 입력해주세요"
-                      onChange={handleDateChange}
-                      style={{ height: '100%' }} // 높이를 200px로 조정
-                      slotProps={{
-                        label: {
-                            style: { fontSize: "20px"}
-                        },
-                        textField: {
-                          helperText: 'MM / DD / YYYY',
-                          style: { width: '320px' }
-                        },
-                      }}      
-                      TextFieldProps={{
-                        InputProps: {
-                          style: { height: '5px' } // 높이를 auto로 설정하여 자동으로 조정하도록 합니다.
-                        }
-                      }}
-                    />
-                  </LocalizationProvider>
+                <div className="error-message">
+                  {errors.username}
                 </div>
 
-                <div className='membership-check' style={{display: 'flex', alignItems: 'center', marginTop: '10px'}}>
-                  <FormControlLabel
-                    value="start"
-                    control={
-                      <Checkbox style={{marginLeft: '15px' ,width: '13px', height: '13px'}} />
-                    }
-                    label={
-                      <Typography style={{fontWeight: 'bold', marginLeft: '-5px', fontSize:'15px'}}>
-                        T:LENS 맴버쉽에 가입하시겠습니까?
-                      </Typography>
-                    }
-                    labelPlacement="start"
-                  />
-                </div>
-
-                <div className='submit-button'>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                    style={{width:'250px'}}
+              <div className="input-combo">
+                <div className="input-label">성별 : </div>
+                <FormControl>
+                  <Select
+                    value={values.sex}
+                    name="sex"
+                    label="성별"
+                    variant="outlined"
+                    onChange={handleChange}
+                    style={{ height: '35px', width: '100%' }}
                   >
-                    회원가입
-                  </Button>
-                </div>
+                    <MenuItem value={"male"}>남성</MenuItem>
+                    <MenuItem value={"female"}>여성</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
-            </form>
-          </div>
+              <div className="error-message">{errors.sex}</div>
+              <div className="input-datepicker">
+                <div className="input-label">생년월일 : </div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={selectedDate}
+                    label="생년월일을 입력해주세요"
+                    onChange={handleDateChange}
+                    style={{ height: '100%' }} // 높이를 200px로 조정
+                    slotProps={{
+                      label: {
+                          style: { fontSize: "20px"}
+                      },
+                      textField: {
+                        helperText: 'MM / DD / YYYY',
+                        style: { width: '320px' }
+                      },
+                    }}      
+                    TextFieldProps={{
+                      InputProps: {
+                        style: { height: '5px' } // 높이를 auto로 설정하여 자동으로 조정하도록 합니다.
+                      }
+                    }}
+                  />
+                </LocalizationProvider>
+              </div>
+              
+
+              <div className='membership-check' style={{display: 'flex', alignItems: 'center', marginTop: '10px'}}>
+                <FormControlLabel
+                  value="start"
+                  control={
+                    <Checkbox style={{marginLeft: '15px' ,width: '13px', height: '13px'}} />
+                  }
+                  label={
+                    <Typography style={{fontWeight: 'bold', marginLeft: '-5px', fontSize:'15px'}}>
+                      T:LENS 맴버쉽에 가입하시겠습니까?
+                    </Typography>
+                  }
+                  labelPlacement="start"
+                />
+              </div>
+
+              <div className='submit-button'>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                  style={{width:'250px'}}
+                >
+                  회원가입
+                </Button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
       )}

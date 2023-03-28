@@ -2,13 +2,14 @@ package com.ssafy.tlens.config.jwt;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.tlens.common.RedisDao;
 import com.ssafy.tlens.common.ResponseDto;
 import com.ssafy.tlens.config.auth.PrincipalDetails;
 import com.ssafy.tlens.dto.LoginRequestDto;
-import com.ssafy.tlens.enums.LoginType;
 import com.ssafy.tlens.enums.ResponseEnum;
 import com.ssafy.tlens.handler.exception.CustomAuthenticationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,14 +22,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Duration;
+import java.util.Date;
 
 // 로그인 인증과정
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final RedisTemplate<String, String> redisTemplate;
+    private final RedisDao redisDao;
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtProvider jwtProvider, RedisTemplate<String, String> redisTemplate, RedisDao redisDao) {
+        this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
+        this.redisTemplate = redisTemplate;
+        this.redisDao = redisDao;
+
+    }
 
     // Authentication 객체 만들어서 리턴 => 의존 : AuthenticationManager
     // 인증 요청시에 실행되는 함수 => /login
@@ -50,28 +62,30 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         System.out.println("JwtAuthenticationFilter : "+loginRequestDto);
 
-        String userEmail = null;
+//        String userEmail = null;
+//
+//        userEmail = loginRequestDto.getEmail();
 
-        if(loginRequestDto.getLoginType().equals(LoginType.LOGIN)){
-            // 로그인
-//            KakaoUserInfoDto kakaoUserInfoDto = kakaoProvider.login(loginRequestDto.getToken());
-//            if(kakaoUserInfoDto == null){
-//                throw new CustomAuthenticationException(ResponseEnum.AUTH_INVALID_TOKEN);
+//        if(loginRequestDto.getLoginType().equals(LoginType.LOGIN)){
+//            // 로그인
+////            KakaoUserInfoDto kakaoUserInfoDto = kakaoProvider.login(loginRequestDto.getToken());
+////            if(kakaoUserInfoDto == null){
+////                throw new CustomAuthenticationException(ResponseEnum.AUTH_INVALID_TOKEN);
+////            }
+//            userEmail = loginRequestDto.getEmail();
+//        }else{
+//            // refresh
+//            String refreshToken = redisTemplate.opsForValue().getAndDelete(loginRequestDto.getToken());
+//            if(refreshToken == null){
+//                throw new CustomAuthenticationException(ResponseEnum.AUTH_REFRESH_DOES_NOT_EXIST);
 //            }
-            userEmail = loginRequestDto.getEmail();
-        }else{
-            // refresh
-            String refreshToken = redisTemplate.opsForValue().getAndDelete(loginRequestDto.getToken());
-            if(refreshToken == null){
-                throw new CustomAuthenticationException(ResponseEnum.AUTH_REFRESH_DOES_NOT_EXIST);
-            }
-            userEmail = jwtProvider.getUserEmail(refreshToken);
-        }
+//            userEmail = jwtProvider.getUserEmail(refreshToken);
+//        }
 
         // 유저네임패스워드 토큰 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
-                        userEmail,
+                        loginRequestDto.getEmail(),
                         loginRequestDto.getPassword());
 
         System.out.println("JwtAuthenticationFilter : 토큰생성완료");
@@ -118,9 +132,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         String accessToken = jwtProvider.createAccessToken(principalDetails.getUser().getUserId(),principalDetails.getUser().getEmail());
         String refreshToken = jwtProvider.createRefreshToken(principalDetails.getUser().getUserId(),principalDetails.getUser().getEmail());
-        redisTemplate.opsForValue().set(accessToken, refreshToken);
+//        redisTemplate.opsForValue().set(accessToken, refreshToken);
 
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+accessToken);
+        long now = (new Date()).getTime();
+        Date refreshTokenExpiresIn = new Date(now + JwtProperties.EXPIRATION_TIME_REFRESH);
+//        System.out.println("DATE refreshTokenExpiresIn : " + refreshTokenExpiresIn);
+//        System.out.println("refreshTokenExpiresIn.getTime() : " + (refreshTokenExpiresIn.getTime()));
+//        System.out.println("Duration.ofMillis(refreshTokenExpiresIn.getTime()) : " + Duration.ofMillis(refreshTokenExpiresIn.getTime()));
+        redisDao.setValues(principalDetails.getUser().getEmail(), refreshToken, refreshTokenExpiresIn.getTime());
+
+        response.addHeader(JwtProperties.ACCESS_TOKEN, JwtProperties.TOKEN_PREFIX+accessToken);
+        response.addHeader(JwtProperties.REFRESH_TOKEN, JwtProperties.TOKEN_PREFIX+refreshToken);
     }
 
 }

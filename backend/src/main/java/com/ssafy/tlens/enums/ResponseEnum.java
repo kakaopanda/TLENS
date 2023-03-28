@@ -28,7 +28,7 @@ public enum ResponseEnum {
 
     USER_MY_INFO_SUCCESS(200,"조회 성공"),
     USER_NOT_FOUND(401,"회원이 존재하지 않습니다"),
-
+    USER_LOGOUT_SUCCESS(200,"로그아웃 성공"),
     USER_PROFILE_CHANGE_SUCCESS(200, "변경이 완료되었습니다"),
     USER_PROFILE_CHANGE_YET(200, "마지막 변경일로부터 30일 이후 변경 가능합니다"),
 
@@ -68,7 +68,12 @@ public enum ResponseEnum {
     PRODUCT_UPDATE_TIME_SUCCESS(200,"성공"),
     PRODUCT_UPDATE_TIME_FAIL(400,"횟수초과"),
 
-    PRODUCT_DELETE_SUCCESS(200,"삭제 성공");
+    PRODUCT_DELETE_SUCCESS(200,"삭제 성공"),
+
+    REDIS_USER_NOT_FOUND(401,"Redis에 해당 USER가 존재하지 않습니다."),
+    RTK_NOT_MATCHED(401,"Redis에 저장된 해당 USER의 RTK와 요청 받은 RTK가 일치하지 않습니다."),
+    ATK_REISSUE_SUCCESS(200,"ATK 재발급 성공"),
+    TOKEN_TYPE_NOT_FOUND(401,"토큰의 타입이 존재하지 않습니다");
 
 
     private final int code;
