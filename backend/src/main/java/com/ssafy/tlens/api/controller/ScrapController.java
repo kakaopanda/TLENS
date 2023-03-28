@@ -1,13 +1,21 @@
 package com.ssafy.tlens.api.controller;
 
 import com.ssafy.tlens.api.request.ScrapRequestDTO;
+import com.ssafy.tlens.api.response.ListAndCntResponseDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.api.service.ScrapService;
+import com.ssafy.tlens.common.ResponseDto;
 import com.ssafy.tlens.common.model.response.HttpResponseEntity.ResponseResult;
+import com.ssafy.tlens.enums.ResponseEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static com.ssafy.tlens.common.model.response.HttpResponseEntity.success;
 
@@ -29,5 +37,12 @@ public class ScrapController {
     public ResponseResult<?> delete(@RequestBody @Valid ScrapRequestDTO scrapRequestDTO) {
         scrapService.delete(scrapRequestDTO);
         return success();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> getScrapNewsList(@RequestParam Long userId) {
+        ListAndCntResponseDTO result = scrapService.getScrapNewsList(userId);
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_MY_INFO_SUCCESS, result), HttpStatus.OK);
     }
 }

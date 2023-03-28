@@ -1,6 +1,8 @@
 package com.ssafy.tlens.api.service;
 
 import com.ssafy.tlens.api.request.ScrapRequestDTO;
+import com.ssafy.tlens.api.response.ListAndCntResponseDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.common.exception.handler.DuplicateResourceException;
 import com.ssafy.tlens.common.exception.handler.NotFoundException;
 import com.ssafy.tlens.entity.rdbms.*;
@@ -8,6 +10,9 @@ import com.ssafy.tlens.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,4 +59,16 @@ public class ScrapServiceImpl implements ScrapService {
 
         scrapRepository.delete(scrap);
     };
+
+    @Override
+    @Transactional
+    public ListAndCntResponseDTO getScrapNewsList(Long userId){
+        List<News> newsList = newsrepository.findScrapNewsByUserId(userId);
+
+        List<NewsInfoDTO> newsInfoList = newsList.stream()
+                .map(news -> new NewsInfoDTO(news))
+                .collect(Collectors.toList());
+
+        return new ListAndCntResponseDTO(newsInfoList, newsInfoList.size());
+    }
 }

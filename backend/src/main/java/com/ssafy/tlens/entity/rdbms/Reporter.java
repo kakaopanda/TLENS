@@ -26,6 +26,9 @@ public class Reporter {
     @Column(name = "department", nullable = false, length = 50)
     private String department;
 
+    @Column(name = "thumbnail", length= 300)
+    private String thumbnail;
+
     @Builder.Default
     @OneToMany(mappedBy = "reporter")
     private List<ReporterTrend> trends = new ArrayList<>();
