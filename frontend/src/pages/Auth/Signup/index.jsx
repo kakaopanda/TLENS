@@ -31,21 +31,21 @@ const SignUp = () => {
   // };
 
   const submit = async (values) => {
-    const { email, username, password, sex, birthday, membership } = values;
+    const { email, nickname, password, gender, birthday, membership } = values;
 
     //signup data
 
     const signupData = {
       email: email,
-      username: username,
+      nickname: nickname,
       password: password,
-      sex: sex,
+      gender: gender,
       birthday: birthday,
       membership: membership,
     };
 
     try {
-      const response = await axios.post("/api/signup", signupData);
+      const response = await axios.post("http://localhost:8080/api/v1/users", signupData);
 
       if (response.data.message === 0) {
         toast.success(
@@ -79,7 +79,7 @@ const SignUp = () => {
     email: Yup.string()
       .email("올바른 이메일 형식이 아닙니다!")
       .required("이메일을 입력하세요!"),
-    username: Yup.string()
+    nickname: Yup.string()
       .min(2, "닉네임은 최소 2글자 이상입니다!")
       .max(10, "닉네임은 최대 10글자입니다!")
       .matches(
@@ -98,7 +98,7 @@ const SignUp = () => {
     password2: Yup.string()
       .oneOf([Yup.ref("password"), null], "비밀번호가 일치하지 않습니다!")
       .required("필수 입력 값입니다!"),
-    sex: Yup.string()
+    gender: Yup.string()
       .required("필수 입력 값입니다!"),
   });
 
@@ -107,10 +107,10 @@ const SignUp = () => {
     <Formik
       initialValues={{
         email: "",
-        username: "",
+        nickname: "",
         password: "",
         password2: "",
-        sex:"",
+        gender:"",
         birthday:null,
         membership: false,
       }}
@@ -199,8 +199,8 @@ const SignUp = () => {
               <div className="input-forms-item">
                 <div className="input-label">닉네임 : </div>
                 <TextField
-                  value={values.username}
-                  name="username"
+                  value={values.nickname}
+                  name="nickname"
                   variant="outlined"
                   onChange={handleChange}
                   InputProps={{
@@ -212,15 +212,15 @@ const SignUp = () => {
                 />
                 </div>
                 <div className="error-message">
-                  {errors.username}
+                  {errors.nickname}
                 </div>
 
               <div className="input-combo">
                 <div className="input-label">성별 : </div>
                 <FormControl>
                   <Select
-                    value={values.sex}
-                    name="sex"
+                    value={values.gender}
+                    name="gender"
                     label="성별"
                     variant="outlined"
                     onChange={handleChange}
@@ -231,7 +231,7 @@ const SignUp = () => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="error-message">{errors.sex}</div>
+              <div className="error-message">{errors.gender}</div>
 
               <div className="input-datepicker">
                 <div className="input-label">생년월일 : </div>

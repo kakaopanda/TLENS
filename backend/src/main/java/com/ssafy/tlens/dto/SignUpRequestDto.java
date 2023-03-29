@@ -2,11 +2,15 @@ package com.ssafy.tlens.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ApiModel
 public class SignUpRequestDto {
     @ApiModelProperty(name = "이메일", required = true)
@@ -19,5 +23,7 @@ public class SignUpRequestDto {
     private String gender;
     @ApiModelProperty(name = "나이", required = true)
     private int age;
+    @ApiModelProperty(name = "멤버십", required = true)
+    private boolean membership;
 
 }

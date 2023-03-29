@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .formLogin().disable()
+                .formLogin().disable()
                 .httpBasic().disable()
                 .apply(jwtFilterConfig)
                 .and()

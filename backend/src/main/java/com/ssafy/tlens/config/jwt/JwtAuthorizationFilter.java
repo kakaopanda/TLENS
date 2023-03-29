@@ -40,7 +40,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
         System.out.println("doFilterInternal");
         String header = request.getHeader(JwtProperties.HEADER_STRING);
         if(header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
-            System.out.println("header 인증에서 실패함");
+            System.out.println("header 인증x -> doFilter");
             chain.doFilter(request, response);
             return;
         }
