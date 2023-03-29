@@ -33,8 +33,10 @@ const Login = () => {
 
     //console.log(loginData);
 
-    const { data } = await axios.post("http://localhost:8080/api/v1/users/login", loginData);
-
+    const data = await axios.post("http://localhost:8080/api/v1/users/login", loginData);
+    console.log(data);
+    console.log(data.content);
+    
     if (data.message === 0) {
       localStorage.setItem("userid", JSON.stringify(data.result[0].id));
       dispatch(setToken(data.jwt));
