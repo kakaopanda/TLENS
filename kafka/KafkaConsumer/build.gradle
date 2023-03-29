@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.10'
+    id 'org.springframework.boot' version '2.7.7'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -27,6 +27,15 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
+    // https://mvnrepository.com/artifact/org.apache.spark/spark-core
+    implementation 'org.apache.spark:spark-core_2.13:3.3.2'
+    // https://mvnrepository.com/artifact/org.apache.spark/spark-mllib
+    compileOnly 'org.apache.spark:spark-mllib_2.13:3.3.2'
+    // https://mvnrepository.com/artifact/org.apache.spark/spark-sql
+    compileOnly 'org.apache.spark:spark-sql_2.13:3.3.2'
+    // https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-kafka-0-10
+    implementation 'org.apache.spark:spark-streaming-kafka-0-10_2.13:3.3.2'
+
 }
 
 tasks.named('test') {
