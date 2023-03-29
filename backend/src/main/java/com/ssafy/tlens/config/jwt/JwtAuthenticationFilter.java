@@ -6,6 +6,7 @@ import com.ssafy.tlens.common.RedisDao;
 import com.ssafy.tlens.common.ResponseDto;
 import com.ssafy.tlens.config.auth.PrincipalDetails;
 import com.ssafy.tlens.dto.LoginRequestDto;
+import com.ssafy.tlens.dto.LoginRespDto;
 import com.ssafy.tlens.enums.ResponseEnum;
 import com.ssafy.tlens.handler.exception.CustomAuthenticationException;
 import lombok.RequiredArgsConstructor;
@@ -136,6 +137,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.debug("디버그 : successfulAuthentication 호출됨");
         System.out.println("successfulAuthentication");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+        LoginRespDto loginRespDto = new LoginRespDto(principalDetails.getUser());
+
         String accessToken = jwtProvider.createAccessToken(principalDetails.getUser().getUserId(),principalDetails.getUser().getEmail());
         String refreshToken = jwtProvider.createRefreshToken(principalDetails.getUser().getUserId(),principalDetails.getUser().getEmail());
 //        redisTemplate.opsForValue().set(accessToken, refreshToken);
@@ -149,6 +152,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.addHeader(JwtProperties.ACCESS_TOKEN, JwtProperties.TOKEN_PREFIX+accessToken);
         response.addHeader(JwtProperties.REFRESH_TOKEN, JwtProperties.TOKEN_PREFIX+refreshToken);
+
+        try {
+            ObjectMapper om = new ObjectMapper();
+            ResponseDto<?> responseDto = new ResponseDto<>(1, "로그인성공", loginRespDto);
+            String responseBody = om.writeValueAsString(responseDto);
+            response.setContentType("application/json; charset=utf-8");
+            response.setStatus(200);
+            response.getWriter().println(responseBody); // 예쁘게 메시지를 포장하는 공통적인 응답 DTO를 만들어보자!!
+        } catch (Exception e) {
+            log.error("서버 파싱 에러");
+        }
+
+
+
     }
 
 }

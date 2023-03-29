@@ -22,7 +22,7 @@ public class CorsConfig {
 //        config.addAllowedOrigin("*"); // e.g. http://domain1.com
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        config.setExposedHeaders(Arrays.asList("Content-Type", JwtProperties.HEADER_STRING));
+        config.setExposedHeaders(Arrays.asList("Content-Type", JwtProperties.HEADER_STRING, "ATK", "RTK"));
 
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
