@@ -146,7 +146,7 @@ const Header = () => {
           style={{ fontWeight: "bold" }}
           onClick={() => navigate("/mypage")}
         >
-          내가 구독한 기자의 최신기사 확인하기 =>
+          내가 구독한 기자의 최신기사 확인하기
         </Button>
       </div>
     </Box>
