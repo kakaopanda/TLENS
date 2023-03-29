@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import CompanyStock from "../CompanyStock";
-import SearchResultChart2 from "../../SearchResult-Components/SearchResultChart2";
-import CompanyKeyword from "../CompanyKeyword";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
-import WordCloud from "../../Main-Components/WordCloud";
-import HotKeywordChart from "../../Main-Components/HotKeywordChart";
 import "./CompanyDetail.scss";
 
+// Charts
+import CompanyStock from "../../Charts-Components/CompanyStock";
+import SearchResultChart2 from "../../Charts-Components/SearchResultChart2";
+import CompanyKeyword from "../../Charts-Components/CompanyKeyword";
+import WordCloud from "../../Charts-Components/WordCloud";
+import HotKeywordChart from "../../Charts-Components/HotKeywordChart";
+
+// MUI
 import Divider from "@mui/material/Divider";
 
 const CompanyDetail = () => {
@@ -36,7 +39,7 @@ const CompanyDetail = () => {
     setTimeout(() => {
       // 2초 뒤에 실행되는 코드
       setLoading(true);
-    }, 3000);
+    }, 50);
   }, [name]);
 
   return (
@@ -75,24 +78,19 @@ const CompanyDetail = () => {
           <Divider orientation="vertical" />
           <div className="companydetail-top-right">
             <h2 style={{ marginLeft: "10px" }}>{name} 주가 그래프</h2>
-            {loading ? (
-              <CompanyStock keyName={keyName} />
-            ) : (
-              <div>
-                <img src="/images/loading.gif" alt="" />
-              </div>
-            )}
+            {loading ? <CompanyStock keyName={keyName} /> : null}
           </div>
         </div>
         <div className="companydetail-mid">
           <div className="companydetail-mid-left">
-            <h2 style={{ marginLeft: "2%" }}>연간 키워드 분석 : {name}</h2>
+            <h2 style={{ marginLeft: "4%" }}>키워드 관계도 : {name}</h2>
             <div className="companydetail-mid-left-1">
               <SearchResultChart2 />
             </div>
           </div>
+          <Divider />
           <div className="companydetail-mid-right">
-            <h2 style={{ marginLeft: "2%" }}>키워드 통계 : {name} </h2>
+            <h2 style={{ marginLeft: "4%" }}>키워드 통계 : {name} </h2>
             <div className="companydetail-mid-right-1">
               <CompanyKeyword />
             </div>
@@ -107,7 +105,7 @@ const CompanyDetail = () => {
             style={{
               width: "65%",
               justifyContent: "center",
-              height: "90vh",
+              height: "95vh",
               overflowY: "auto",
             }}
           >
@@ -116,14 +114,14 @@ const CompanyDetail = () => {
           <Divider orientation="vertical" flexItem />
           <div style={{ width: "35%" }}>
             <br />
-            <br />
-            <br />
-            <HotKeywordChart />
-
-            <br />
-            <br />
-            <h3>{name} HOT Keyword</h3>
-            <WordCloud />
+            <h3 style={{ marginLeft: "5%" }}>차트 뭐 들어가야되나</h3>
+            <div style={{ margin: "5%", border: "1px solid #D8D8D8" }}>
+              <HotKeywordChart />
+            </div>
+            <h3 style={{ marginLeft: "5%" }}>{name} HOT Keyword</h3>
+            <div style={{ margin: "5%", border: "1px solid #D8D8D8" }}>
+              <WordCloud />
+            </div>
           </div>
         </div>
       </div>

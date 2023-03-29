@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import MainChart from "../../components/Main-Components/MainChart";
+import MainComponent from "../../components/Main-Components/Main";
 import "./Main.scss";
 
 // MUI
@@ -96,7 +96,7 @@ const Main = () => {
         <Divider />
       </Box>
       <TabPanel value={value}>
-        <MainChart value={value} />
+        <MainComponent value={value} />
       </TabPanel>
     </TabContext>
   );

@@ -1,11 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import ReporterPieChart from "../ReporterPieChart";
-import ReporterPieChart2 from "../ReporterPieChart2";
-import ReporterColumnChart from "../ReporterColumnChart";
-import ReporterWordCloud from "../ReporterWordCloud";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
 import "./ReporterDetail.scss";
+
+// Charts
+import ReporterPieChart from "../../Charts-Components/ReporterPieChart";
+import ReporterPieChart2 from "../../Charts-Components/ReporterPieChart2";
+import ReporterColumnChart from "../../Charts-Components/ReporterColumnChart";
+import WordCloud from "../../Charts-Components/WordCloud";
 
 // MUI
 import Divider from "@mui/material/Divider";
@@ -57,7 +59,7 @@ const ReporterDetail = () => {
         <h2 className="reporterdetail-right-h2">
           T:LENS 키워드 : {state[2]} 기자
         </h2>
-        <ReporterWordCloud />
+        <WordCloud />
         <Divider />
         <h2 className="reporterdetail-right-h2">
           T:LENS 키워드 뉴스 : {state[2]} 기자

@@ -34,9 +34,6 @@ const HotKeywordChart = () => {
               top: 1,
             },
           },
-          title: {
-            text: "T:LENS 핫 키워드",
-          },
           stroke: {
             width: 2,
           },
