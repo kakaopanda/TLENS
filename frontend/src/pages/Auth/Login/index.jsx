@@ -33,7 +33,7 @@ const Login = () => {
 
     //console.log(loginData);
 
-    const { data } = await axios.post("/api/login", loginData);
+    const { data } = await axios.post("http://localhost:8080/api/v1/users/login", loginData);
 
     if (data.message === 0) {
       localStorage.setItem("userid", JSON.stringify(data.result[0].id));

@@ -9,6 +9,8 @@ import com.ssafy.tlens.dto.LoginRequestDto;
 import com.ssafy.tlens.enums.ResponseEnum;
 import com.ssafy.tlens.handler.exception.CustomAuthenticationException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,29 +28,32 @@ import java.time.Duration;
 import java.util.Date;
 
 // 로그인 인증과정
-//@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final RedisTemplate<String, String> redisTemplate;
     private final RedisDao redisDao;
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtProvider jwtProvider, RedisTemplate<String, String> redisTemplate, RedisDao redisDao) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
         this.redisTemplate = redisTemplate;
         this.redisDao = redisDao;
-
+        setFilterProcessesUrl("/users/login");
+//        setFilterProcessesUrl("/api/v1/login"); 일 때 포스트맨
+//        http://localhost:8080/api/v1/api/v1/login 작동함
     }
 
     // Authentication 객체 만들어서 리턴 => 의존 : AuthenticationManager
     // 인증 요청시에 실행되는 함수 => /login
     // refresh, login
+    // Post : /api/v1/login
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-
+        log.debug("디버그 : attemptAuthentication 호출됨");
         System.out.println("JwtAuthenticationFilter : 진입");
 
         // request에 있는 username과 password를 파싱해서 자바 Object로 받기
@@ -108,9 +113,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        System.out.println("Authentication : "+principalDetails.getUser().getEmail());
+        System.out.println("Authentication getEmail : "+principalDetails.getUser().getEmail());
         return authentication;
     }
+
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
@@ -127,8 +133,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
+        log.debug("디버그 : successfulAuthentication 호출됨");
         System.out.println("successfulAuthentication");
-
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         String accessToken = jwtProvider.createAccessToken(principalDetails.getUser().getUserId(),principalDetails.getUser().getEmail());
         String refreshToken = jwtProvider.createRefreshToken(principalDetails.getUser().getUserId(),principalDetails.getUser().getEmail());
