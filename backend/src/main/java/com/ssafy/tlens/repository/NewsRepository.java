@@ -11,4 +11,6 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     @Query("SELECT n FROM News n WHERE n.newsId in (SELECT w.news.newsId FROM Scrap w WHERE w.user.userId = :id)")
     List<News> findScrapNewsByUserId(@Param("id") long id);
+
+
 }
