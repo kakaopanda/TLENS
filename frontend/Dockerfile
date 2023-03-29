@@ -1,8 +1,8 @@
-FROM node:16 as build-stage
+FROM node:16.16 as build-stage
 WORKDIR /var/jenkins_home/workspace/gitlab/frontend
 COPY package*.json ./
 # ARG DISABLE_CACHE
-RUN npm install
+RUN npm install -g npm@9.6.2
 COPY . .
 RUN npm run build
 
