@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 import "./ReporterCarousel.scss";
 import ReporterCard from "../ReporterCard";
-import reporter from "../../../pages/Reporter/Reporter.json";
 import ReporterCard2 from "../ReporterCard2";
+
+// Data
+import reporter from "../../../pages/Reporter/Reporter.json";
 
 // MUI
 import Divider from "@mui/material/Divider";

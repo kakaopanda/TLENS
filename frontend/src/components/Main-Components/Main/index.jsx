@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./MainChart.scss";
 
-import BarCharts from "../BarCharts";
-import Wordcloud from "../WordCloud";
+// Charts
 import MainNewsCard from "../MainNewsCard";
-import KeywordChart from "../KeywordChart";
-import HotKeywordChart from "../HotKeywordChart";
-import SeearchResultChart2 from "../../SearchResult-Components/SearchResultChart2";
+import BarCharts from "../../Charts-Components/BarCharts";
+import Wordcloud from "../../Charts-Components/WordCloud";
+import KeywordChart from "../../Charts-Components/KeywordChart";
+import SearchResultChart2 from "../../Charts-Components/SearchResultChart2";
 
 // MUI
 import Divider from "@mui/material/Divider";
@@ -125,18 +125,18 @@ const MainChart = (props) => {
         <div
           style={{
             margin: "2%",
-            width: "50%",
+            width: "48%",
             border: "1px solid #D8D8D8",
           }}
         >
-          <h2>기간별 키워드 변화(Top 10)</h2>
+          <h2>키워드 Top 10</h2>
           <BarCharts />
         </div>
         <Divider orientation="vertical" flexItem />
         <div
           style={{
             margin: "2%",
-            width: "50%",
+            width: "48%",
             border: "1px solid #D8D8D8",
           }}
         >
@@ -183,7 +183,7 @@ const MainChart = (props) => {
                 border: "1px solid #D8D8D8",
               }}
             >
-              <SeearchResultChart2 />
+              <SearchResultChart2 />
             </div>
           </div>
         </div>

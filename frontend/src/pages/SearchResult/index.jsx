@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import MainNewsCard from "../../components/Main-Components/MainNewsCard";
-import SearchResultChart1 from "../../components/SearchResult-Components/SearchResultChart1/";
-import SearchResultChart2 from "../../components/SearchResult-Components/SearchResultChart2/";
 import "./SearchResult.scss";
+
+// Charts
+import SearchResultChart1 from "../../components/Charts-Components/SearchResultChart1";
+import SearchResultChart2 from "../../components/Charts-Components/SearchResultChart2";
 
 // MUI
 import Divider from "@mui/material/Divider";

@@ -2,14 +2,16 @@ import * as React from "react";
 import "./Header.scss";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {setToken} from "../../redux/reducers/AuthReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../../redux/reducers/AuthReducer";
 
 // 로그아웃 : 토큰 유효화 과정에 따라서 다르게 설정할 것
-import {jwtUtils} from "../../utils/jwtUtils"
+import { jwtUtils } from "../../utils/jwtUtils";
 
 //Component
 import SubReportList from "../../components/MyPage-Components/MySubscribe/Sub-ReportList";
+import MenuDrawer from "../../components/Drawer-Components/MenuDrawer";
+import SearchDrawer from "../../components/Drawer-Components/SearchDrawer";
 
 //MUI
 import AppBar from "@mui/material/AppBar";
@@ -22,24 +24,12 @@ import PersonIcon from "@mui/icons-material/Person";
 import SearchIcon from "@mui/icons-material/Search";
 import Drawer from "@mui/material/Drawer";
 import UploadIcon from "@mui/icons-material/Upload";
-import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Input from "@mui/joy/Input";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import WebhookIcon from "@mui/icons-material/Webhook";
-import WorkIcon from "@mui/icons-material/Work";
-import TextFieldsIcon from "@mui/icons-material/TextFields";
-import SouthAmericaIcon from "@mui/icons-material/SouthAmerica";
 
 const Header = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = useSelector(state => state.Auth.token);
+  const token = useSelector((state) => state.Auth.token);
   const [isAuth, setIsAuth] = useState(false);
   useEffect(() => {
     if (jwtUtils.isAuth(token)) {
@@ -58,7 +48,7 @@ const Header = () => {
   const [state, setState] = useState({
     top: false,
     left: false,
-    right: false
+    right: false,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -91,125 +81,12 @@ const Header = () => {
     }
   };
 
-
-
   const list = (anchor) => (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <List>
-        <ListItem>
-          <ListItemButton
-            onClick={() => {
-              navigate("/main");
-            }}
-          >
-            <img src={"/images/tlens_logo.png"} alt="" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <Divider sx={{ backgroundColor: "#0066CC", height: "3px" }} />
-      <List>
-        {["분야별", "지역별"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              onClick={() => {
-                handleNavigate(text);
-              }}
-            >
-              <ListItemIcon>
-                {index % 2 === 0 ? (
-                  <TextFieldsIcon color="primary" />
-                ) : (
-                  <SouthAmericaIcon color="primary" />
-                )}
-              </ListItemIcon>
-              <ListItemText sx={{ color: "#0066CC" }} primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["기업 분석", "언론사 분석"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              onClick={() => {
-                handleNavigate(text);
-              }}
-            >
-              <ListItemIcon>
-                {index % 2 === 0 ? (
-                  <WebhookIcon color="primary" />
-                ) : (
-                  <WorkIcon color="primary" />
-                )}
-              </ListItemIcon>
-              <ListItemText sx={{ color: "#0066CC" }} primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <Divider />
-      </List>
-      <List>
-        {["통계자료"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              onClick={() => {
-                handleNavigate(text);
-              }}
-            >
-              <ListItemIcon>
-                {index % 2 === 0 ? <InsertChartIcon color="primary" /> : null}
-              </ListItemIcon>
-              <ListItemText sx={{ color: "#0066CC" }} primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
-  const personalInfo = (anchor) => (
-    <Box
-    sx={{ width: 300 }}
-    role="presentation"
-    onClick={toggleDrawer(anchor, false)}
-    onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <div>
-        <h4>안녕하세요!! "강김박배문이" 님</h4>
-        <Button
-          color="primary"
-          variant="contained"
-          fullWidth
-          type="submit"
-          sx={{
-            width: "150px",
-            marginTop: '10px',
-            marginBottom: "10px"
-          }}
-          onClick={logout}
-        >
-          로그아웃
-        </Button>
-
-      </div>
-      <Divider />
-      <div>
-        <h4>내가 구독한 기자</h4>
-        <Divider />
-      </div>
-        <SubReportList />
-      <div>
-        <Button style={{fontWeight:"bold"}} onClick={() => navigate("/mypage")}> 
-          내가 구독한 기자의 최신기사 확인하기 >>
-        </Button>
-      </div>
-    </Box>
+    <MenuDrawer
+      anchor={anchor}
+      toggleDrawer={toggleDrawer}
+      handleNavigate={handleNavigate}
+    />
   );
 
   const [keyword, setKeyword] = useState("");
@@ -227,35 +104,51 @@ const Header = () => {
   };
 
   const search = (anchor) => (
-    <Box sx={{ width: "auto" }} role="presentation">
-      <br />
-      <br />
-      <Button>키워드1</Button>
-      <Button>키워드2</Button>
-      <Button>키워드3</Button>
-      <Button>키워드4</Button>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Box sx={{ width: "70%" }}>
-          <Input
-            sx={{ marginLeft: "10%", marginRight: "1%" }}
-            color="primary"
-            variant="outlined"
-            placeholder="ex)삼성전자, 카카오, 네이버"
-            onChange={handleKeyword}
-            onKeyUp={toggleDrawer1(anchor, false)}
-          />
-        </Box>
-        {/* <IconButton
-          size="large"
-          edge="start"
+    <SearchDrawer
+      anchor={anchor}
+      toggleDrawer1={toggleDrawer1}
+      handleKeyword={handleKeyword}
+    />
+  );
+
+  const personalInfo = (anchor) => (
+    <Box
+      sx={{ width: 300 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <div>
+        <h4>안녕하세요!! "강김박배문이" 님</h4>
+        <Button
           color="primary"
-          sx={{ marginRight: "5%" }}
+          variant="contained"
+          fullWidth
+          type="submit"
+          sx={{
+            width: "150px",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+          onClick={logout}
         >
-          <SearchIcon />
-        </IconButton> */}
-      </Box>
-      <br />
-      <br />
+          로그아웃
+        </Button>
+      </div>
+      <Divider />
+      <div>
+        <h4>내가 구독한 기자</h4>
+        <Divider />
+      </div>
+      <SubReportList />
+      <div>
+        <Button
+          style={{ fontWeight: "bold" }}
+          onClick={() => navigate("/mypage")}
+        >
+          내가 구독한 기자의 최신기사 확인하기 =>
+        </Button>
+      </div>
     </Box>
   );
 
@@ -338,7 +231,6 @@ const Header = () => {
             >
               <PersonIcon />
             </IconButton> */}
-
           </Box>
         </Toolbar>
       </AppBar>
