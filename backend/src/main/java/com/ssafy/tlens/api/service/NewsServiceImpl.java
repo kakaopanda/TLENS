@@ -3,12 +3,18 @@ package com.ssafy.tlens.api.service;
 import com.ssafy.tlens.api.crawler.JsoupCrawler;
 import com.ssafy.tlens.api.crawler.press.*;
 import com.ssafy.tlens.api.request.NewsCrawlRequestDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
+import com.ssafy.tlens.api.response.ReporterInfoDTO;
 import com.ssafy.tlens.entity.rdbms.News;
+import com.ssafy.tlens.entity.rdbms.Reporter;
 import com.ssafy.tlens.repository.NewsRepository;
+import com.ssafy.tlens.repository.NewsSearchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +26,7 @@ public class NewsServiceImpl implements NewsService {
     private final OhMyNews ohMyNews = new OhMyNews(); // 오마이뉴스
 
     private final NewsRepository newsRepository;
+    private final NewsSearchRepository newsSearchRepository;
     private final JsoupCrawler jsoupCrawler = new JsoupCrawler();
     private final String baseURL = "https://n.news.naver.com/mnews/article";
     private final String[] press = {
@@ -70,5 +77,16 @@ public class NewsServiceImpl implements NewsService {
                 .build();
 
         newsRepository.save(news);
+    }
+    @Override
+    public List<NewsInfoDTO> getNewsBySearch(String searchword) {
+
+        List<News> newses = newsSearchRepository.findBySearch(searchword);
+
+        List<NewsInfoDTO> newsInfoList = newses.stream()
+                .map(news -> new NewsInfoDTO(news))
+                .collect(Collectors.toList());
+
+        return newsInfoList;
     }
 }
