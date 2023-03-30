@@ -15,21 +15,37 @@ import { Button } from "@mui/material";
 
 const ReporterDetail = () => {
   const { state } = useLocation();
-  console.log(state[1]);
+  console.log(state);
 
   return (
     <div className="reporterdetail-wrapper">
       <div className="reporterdetail-left">
         <div className="reporterdetail-left-top">
           <div className="reporterdetail-left-top-1">
-            <img src={state[4]} alt="" />
-            <img src={`/${state[1]}`} alt="" />
+            <img
+              style={{ margin: "10%" }}
+              className="img1"
+              src={state[4]}
+              alt=""
+            />
           </div>
+          <Divider orientation="vertical" flexItem />
           <div className="reporterdetail-left-top-2">
-            <h2 className="reporterdetail-left-top-h2">
-              {state[0]} : {state[2]}
-            </h2>
-            <Button>구독하기</Button>
+            <img
+              style={{ textAlign: "left" }}
+              className="img2"
+              src={`/${state[1]}`}
+              alt=""
+            />
+            <h2 style={{ textAlign: "left" }}>{state[2]} 기자</h2>
+            <h3 style={{ textAlign: "left" }}>{state[3]}부</h3>
+            <Button
+              className="reporter-button"
+              sx={{ textAlign: "right" }}
+              variant="contained"
+            >
+              구독하기
+            </Button>
           </div>
         </div>
         <div className="reporterdetail-left-main">
@@ -59,7 +75,16 @@ const ReporterDetail = () => {
         <h2 className="reporterdetail-right-h2">
           T:LENS 키워드 : {state[2]} 기자
         </h2>
-        <WordCloud />
+        <div
+          style={{
+            border: "1px solid #D8D8D8",
+            margin: "0 2% 2% 2%",
+            marginTop: "-1%",
+            borderRadius: "10px",
+          }}
+        >
+          <WordCloud />
+        </div>
         <Divider />
         <h2 className="reporterdetail-right-h2">
           T:LENS 키워드 뉴스 : {state[2]} 기자
