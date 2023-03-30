@@ -16,6 +16,6 @@ public class NewsInfoDTO {
         title = news.getTitle();
         summary = news.getSummary();
         reporter = news.getReporter();
-        link = news.getLink();
+        link = news.getCrawlLink();
     }
 }
