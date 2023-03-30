@@ -2,16 +2,11 @@ import * as React from "react";
 import "./Header.scss";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../../redux/reducers/AuthReducer";
-
-// 로그아웃 : 토큰 유효화 과정에 따라서 다르게 설정할 것
-import { jwtUtils } from "../../utils/jwtUtils";
 
 //Component
-import SubReportList from "../../components/MyPage-Components/MySubscribe/Sub-ReportList";
 import MenuDrawer from "../../components/Drawer-Components/MenuDrawer";
 import SearchDrawer from "../../components/Drawer-Components/SearchDrawer";
+import PersonalDrawer from "../../components/Drawer-Components/PersonalDrawer";
 
 //MUI
 import AppBar from "@mui/material/AppBar";
@@ -24,26 +19,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import SearchIcon from "@mui/icons-material/Search";
 import Drawer from "@mui/material/Drawer";
 import UploadIcon from "@mui/icons-material/Upload";
-import Divider from "@mui/material/Divider";
+
 
 const Header = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = useSelector((state) => state.Auth.token);
-  const [isAuth, setIsAuth] = useState(false);
-  useEffect(() => {
-    if (jwtUtils.isAuth(token)) {
-      setIsAuth(true);
-    } else {
-      setIsAuth(false);
-    }
-  }, [token]);
-  // 비동기로 처리!
-  const logout = async () => {
-    await dispatch(setToken(""));
-    alert("로그아웃 되었습니다😎");
-    navigate("/main");
-  };
 
   const [state, setState] = useState({
     top: false,
@@ -112,44 +91,10 @@ const Header = () => {
   );
 
   const personalInfo = (anchor) => (
-    <Box
-      sx={{ width: 300 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <div>
-        <h4>안녕하세요!! "강김박배문이" 님</h4>
-        <Button
-          color="primary"
-          variant="contained"
-          fullWidth
-          type="submit"
-          sx={{
-            width: "150px",
-            marginTop: "10px",
-            marginBottom: "10px",
-          }}
-          onClick={logout}
-        >
-          로그아웃
-        </Button>
-      </div>
-      <Divider />
-      <div>
-        <h4>내가 구독한 기자</h4>
-        <Divider />
-      </div>
-      <SubReportList />
-      <div>
-        <Button
-          style={{ fontWeight: "bold" }}
-          onClick={() => navigate("/mypage")}
-        >
-          내가 구독한 기자의 최신기사 확인하기
-        </Button>
-      </div>
-    </Box>
+    <PersonalDrawer 
+      anchor={anchor}
+      toggleDrawer={toggleDrawer}
+    />
   );
 
   return (
@@ -221,16 +166,6 @@ const Header = () => {
               </Drawer>
             </React.Fragment>
 
-            {/* <IconButton
-              onClick={() => {
-                navigate("/auth");
-              }}
-              size="large"
-              edge="start"
-              color="primary"
-            >
-              <PersonIcon />
-            </IconButton> */}
           </Box>
         </Toolbar>
       </AppBar>

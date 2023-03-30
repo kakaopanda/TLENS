@@ -7,18 +7,20 @@
     }
     .input-label{
       font-size: 15px;
+      margin-right: 15%;
     }
   }
 
 }
-@media all and (max-width: 1024px) {
+@media all and (max-width: 1100px) {
   .input-forms {
 
     input{
-      width: 18vw;
+      width: 10vw;
     }
     .input-label{
       font-size: 13px;
+      margin-right: 10%;
     }
   }
 }
@@ -27,10 +29,11 @@
   .input-forms {
 
     input{
-      width: 15vw;
+      width: 10vw;
     }
     .input-label{
       font-size: 13px;
+      margin-right: 10%;
     }
   }
 }

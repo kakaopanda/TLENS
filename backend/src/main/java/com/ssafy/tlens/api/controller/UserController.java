@@ -40,7 +40,7 @@ public class UserController {
     @GetMapping("/reissue")
     public ResponseEntity<?> reissue(
             @AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request
-            ) {
+    ) {
         System.out.println(principalDetails.getUser().getUserId() + " " + principalDetails.getUser().getEmail());
         String reqRTK = request.getHeader(JwtProperties.HEADER_STRING)
                 .replace(JwtProperties.TOKEN_PREFIX, "");
@@ -52,6 +52,8 @@ public class UserController {
     @GetMapping("/logout")
     public ResponseEntity<?> logout(@AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request) {
         System.out.println("logout 진입");
+        System.out.println(request);
+        System.out.println(request.getHeader(JwtProperties.HEADER_STRING));
         String reqATK = request.getHeader(JwtProperties.HEADER_STRING)
                 .replace(JwtProperties.TOKEN_PREFIX, "");
         userService.logout(principalDetails.getUser().getEmail(), reqATK);
