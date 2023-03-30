@@ -1,20 +1,14 @@
 import {Formik, ErrorMessage} from "formik";
 import * as Yup from "yup";
 import {Button, TextField, Divider} from "@mui/material";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setToken } from "../../../redux/reducers/AuthReducer";
+import { ToastContainer } from "react-toastify";
+import {login} from "../../../apis/api/axiosinstance.jsx"
 
 
 import "./login.scss";
 
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -23,56 +17,7 @@ const Login = () => {
     password: Yup.string()
       .required("패스워드를 입력하세요!")
   });
-  const submit = async (values) => {
-    const { email, password } = values;
 
-    const loginData = {
-      email: email,
-      password: password,
-    };
-
-    //console.log(loginData);
-
-    const data = await axios.post("http://localhost:8080/api/v1/users/login", loginData);
-    console.log(data);
-    console.log(data.content);
-    
-    if (data.message === 0) {
-      localStorage.setItem("userid", JSON.stringify(data.result[0].id));
-      dispatch(setToken(data.jwt));
-      const redirectUrl = searchParams.get("redirectUrl");
-      toast.success(<h3>로그인 성공😎</h3>, {
-        position: "top-center",
-        autoClose: 2000,
-      });
-
-      // redirectUrl이 쿼리스트링으로 존재하면
-      // 원래가고자 했던 페이지로 돌아가기
-      setTimeout(() => {
-        if (redirectUrl) {
-          navigate(redirectUrl);
-        } else {
-          navigate("/main");
-        }
-      }, 2000);
-
-      setTimeout(() => {
-        navigate("/main");
-      }, 2000);
-    } else if (data.message === 1) {
-      toast.error(<h3>로그인 실패😭</h3>, {
-        position: "top-center",
-        autoClose: 2000,
-      });
-    } else {
-      // 서버에서 받은 에러 메시지 출력
-      toast.error(<h3>다시 시도해주세요😭</h3>, {
-        position: "top-center",
-      });
-    }
-  };
-
-  
   return (
     <Formik
       initialValues={{
@@ -80,7 +25,7 @@ const Login = () => {
         password: "",
       }}
       validationSchema={validationSchema}
-      onSubmit={submit}
+      onSubmit={login}
       // 확인용
       // onSubmit={(values) => {
       //   console.log(values);
@@ -88,6 +33,7 @@ const Login = () => {
     >
       {({values, handleSubmit, handleChange}) => (
         <div className="login-wrapper">
+          <ToastContainer />
           <div >
             <form onSubmit={handleSubmit} autoComplete="off" className="container">
               <div className="input-forms">

@@ -1,13 +1,31 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import PersonalInfo from '../../components/MyPage-Components/PersonalInfo';
-import MyScrap from '../../components/MyPage-Components/MyScrap'
+import MyScrap from '../../components/MyPage-Components/MyScrap';
 import MySubscribe from '../../components/MyPage-Components/MySubscribe';
+import {getUserInfo} from "../../apis/api/axiosinstance";
+
 
 const MyPage = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [userInfo, setUserInfo] = useState([]);
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const id = localStorage.getItem("userId");
+        const response = await getUserInfo(id);
+        console.log(response); // 유저 정보 출력
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    fetchUserInfo();
+  }, [userId]);
 
   function TabPanel(props) {
     const { children, value, index} = props;
@@ -46,7 +64,7 @@ const MyPage = () => {
         </Tabs>
 
         <TabPanel value={value} index={0} className='Test'>
-          {<PersonalInfo />}
+          {<PersonalInfo userInfo={userInfo} />}
         </TabPanel>
         <TabPanel value={value} index={1}>
           {<MyScrap />}
@@ -60,4 +78,4 @@ const MyPage = () => {
   );
 }
 
-export default MyPage
+export default MyPage;
