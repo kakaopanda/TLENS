@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class News extends BaseTimeEntity {
     @Column(name = "news_id")
     private Long newsId;
 
-    @Column(name = "title" , length = 50)
+    @Column(name = "title" , length = 200)
     @NotNull
     private String title;
 
@@ -47,8 +48,11 @@ public class News extends BaseTimeEntity {
     @Column(name = "thumbnail" , length = 300)
     private String thumbNail;
 
-    @Column(name = "link" , length = 300)
-    private String link;
+    @Column(name = "crawl_link", unique = true)
+    private String crawlLink;
+
+    @Column(name = "original_link")
+    private String originalLink;
 
     @Builder.Default
     @OneToMany(mappedBy = "news")
@@ -66,7 +70,8 @@ public class News extends BaseTimeEntity {
                 ", category='" + category + '\'' +
                 ", enterprise='" + enterprise + '\'' +
                 ", thumbNail='" + thumbNail + '\'' +
-                ", link='" + link + '\'' +
+                ", crawlLink='" + crawlLink + '\'' +
+                ", originalLink='" + originalLink + '\'' +
                 ", scraps=" + scraps +
                 '}';
     }
