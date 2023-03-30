@@ -153,7 +153,7 @@ const Header = () => {
   );
 
   return (
-    <div className="Header-main">
+    <div className="header-main">
       <AppBar position="static" color="inherit">
         <Toolbar>
           <React.Fragment key={"left"}>

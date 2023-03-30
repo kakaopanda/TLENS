@@ -4,8 +4,9 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Header from "./layout/Header";
+import Footer from "./layout/Footer";
 import Home from "./pages/Home";
-import Auth from "./pages/Auth"
+import Auth from "./pages/Auth";
 import Main from "./pages/Main";
 import SearchResult from "./pages/SearchResult";
 import Company from "./pages/Company";
@@ -43,6 +44,7 @@ function App() {
           <Route path="/mypage" element={<Mypage />} />
         </Routes>
       </div>
+      {/* {showHeader && <Footer />} */}
     </React.Fragment>
   );
 }
