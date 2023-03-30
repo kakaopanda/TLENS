@@ -1,12 +1,12 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.7.7'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "java"
+    id "org.springframework.boot" version "2.7.7"
+    id "io.spring.dependency-management" version "1.0.15.RELEASE"
 }
 
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+group = "com.example"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = "11"
 
 configurations {
     compileOnly {
@@ -14,30 +14,36 @@ configurations {
     }
 }
 
+configurations.all {
+    exclude group: "org.apache.logging.log4j", module: "log4j-slf4j-impl"
+}
+
 repositories {
     mavenCentral()
 }
 
+ext {
+    apache_spark_version = "3.3.2"
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.kafka:spring-kafka'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
-    // https://mvnrepository.com/artifact/org.apache.spark/spark-core
-    implementation 'org.apache.spark:spark-core_2.13:3.3.2'
-    // https://mvnrepository.com/artifact/org.apache.spark/spark-mllib
-    compileOnly 'org.apache.spark:spark-mllib_2.13:3.3.2'
-    // https://mvnrepository.com/artifact/org.apache.spark/spark-sql
-    compileOnly 'org.apache.spark:spark-sql_2.13:3.3.2'
-    // https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-kafka-0-10
-    implementation 'org.apache.spark:spark-streaming-kafka-0-10_2.13:3.3.2'
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.kafka:spring-kafka"
+
+    implementation "org.apache.spark:spark-mllib_2.13:$apache_spark_version"
+//    implementation "org.apache.spark:spark-sql-kafka-0-10_2.13:$apache_spark_version"
+    implementation "org.apache.spark:spark-streaming-kafka-0-10_2.13:$apache_spark_version"
+
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.kafka:spring-kafka-test"
 
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
