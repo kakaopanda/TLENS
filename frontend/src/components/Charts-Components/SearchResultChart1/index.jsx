@@ -42,7 +42,7 @@ const SearchResultChart1 = ({ keyword }) => {
     },
   };
   return (
-    <div>
+    <div style={{ margin: "0 2% 0 0" }}>
       <ReactApexChart
         options={state.options}
         series={state.series}
