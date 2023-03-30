@@ -31,9 +31,6 @@ const KeywordChart = () => {
       stroke: {
         curve: "smooth",
       },
-      title: {
-        text: "시간별 핫 키워드",
-      },
       xaxis: {
         type: "datetime",
         categories: [

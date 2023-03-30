@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./MainChart.scss";
+import "./Main.scss";
 
 // Charts
 import MainNewsCard from "../MainNewsCard";
@@ -67,7 +67,7 @@ const MainChart = (props) => {
 
   return (
     <div>
-      <div className="MainChart-main">
+      <div className="main-wrapper">
         <Box
           sx={{
             borderTopLeftRadius: 20,
@@ -81,19 +81,10 @@ const MainChart = (props) => {
             },
           }}
         >
-          <h3>오늘 작성된 기사</h3>
-          <h2>{articleField} 건</h2>
+          <h3 className="main-top-h3">오늘 작성된 기사</h3>
+          <h2 className="main-top-h2">{articleField} 건</h2>
         </Box>
-        <hr
-          style={{
-            margin: 0,
-            padding: 0,
-            width: 0.5,
-            height: 100,
-            backgroundColor: "white",
-            position: "absolute",
-          }}
-        />
+        <hr className="main-top-hr" />
         <Box
           sx={{
             borderTopRightRadius: 20,
@@ -107,82 +98,45 @@ const MainChart = (props) => {
             },
           }}
         >
-          <h3>모든 기사 데이터</h3>
-          <h2>{totalArticle}건</h2>
+          <h3 className="main-top-h3">모든 기사 데이터</h3>
+          <h2 className="main-top-h2">{totalArticle}건</h2>
         </Box>
       </div>
       <br />
-      <div>
-        <h2 style={{ textAlign: "left" }}>T:LENS 키워드 통계 : {keyword}</h2>
+      <div className="main-mid">
+        <h2>T:LENS 키워드 통계 : {keyword}</h2>
       </div>
       <Divider />
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-        }}
-      >
-        <div
-          style={{
-            margin: "2%",
-            width: "48%",
-            border: "1px solid #D8D8D8",
-          }}
-        >
+      <div className="main-mid-wrapper">
+        <div className="main-mid-left">
           <h2>키워드 Top 10</h2>
           <BarCharts />
         </div>
         <Divider orientation="vertical" flexItem />
-        <div
-          style={{
-            margin: "2%",
-            width: "48%",
-            border: "1px solid #D8D8D8",
-          }}
-        >
+        <div className="main-mid-right">
           <h2>T:LENS 핫 키워드(Top 30)</h2>
           <Wordcloud />
         </div>
       </div>
       <Divider />
-      <h2 style={{ textAlign: "left" }}>T:LENS 키워드 뉴스 : {keyword}</h2>
+      <h2 className="main-bot-h2">T:LENS 키워드 뉴스 : {keyword}</h2>
       <Divider />
-      <div style={{ display: "flex" }}>
-        <div
-          className="main-news"
-          style={{
-            width: "65%",
-            justifyContent: "center",
-            height: "100vh",
-            overflowY: "auto",
-          }}
-        >
+      <div className="main-bot-wrapper">
+        <div className="main-bot-left">
           <MainNewsCard />
         </div>
         <Divider orientation="vertical" flexItem />
-        <div style={{ flexDirection: "row", flexWrap: "wrap" }}>
-          <div style={{ width: "100%", justifyContent: "center" }}>
-            <h2 style={{ marginBottom: 0 }}>시간별 핫 키워드(Top 10)</h2>
+        <div className="main-bot-right">
+          <div className="main-bot-right-wrapper">
+            <h2 className="main-bot-right-h2">시간별 핫 키워드(Top 3)</h2>
             <br />
-            <div
-              style={{
-                margin: "0 4% 0 4%",
-                width: "110%",
-                border: "1px solid #D8D8D8",
-              }}
-            >
+            <div className="main-bot-right-1">
               <KeywordChart />
             </div>
             <br />
-            <h2 style={{ marginBottom: 0 }}>시간별 핫 키워드(Top 10)</h2>
+            <h2 className="main-bot-right-h2">시간별 핫 키워드(Top 10)</h2>
             <br />
-            <div
-              style={{
-                margin: "0 4% 0 4%",
-                width: "110%",
-                border: "1px solid #D8D8D8",
-              }}
-            >
+            <div className="main-bot-right-2">
               <SearchResultChart2 />
             </div>
           </div>

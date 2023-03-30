@@ -1,9 +1,12 @@
 import * as React from "react";
+import "./MainNewsCard.scss";
+
+// MUI
 import AspectRatio from "@mui/joy/AspectRatio";
 import Link from "@mui/joy/Link";
 import Card from "@mui/joy/Card";
 import Chip from "@mui/joy/Chip";
-import Typography from "@mui/joy/Typography";
+import { Divider } from "@mui/material";
 
 // Data
 import data1 from "./data.json";
@@ -12,7 +15,7 @@ const MainNewsCard = () => {
   const data = data1;
 
   return (
-    <div>
+    <div className="news-container">
       {data.map((V, index) => {
         return (
           <Card
@@ -30,40 +33,39 @@ const MainNewsCard = () => {
               },
             }}
           >
-            <AspectRatio ratio="1" sx={{ width: 90 }}>
+            <AspectRatio ratio="1" sx={{ width: "15%" }}>
               <img src={V[0]} loading="lazy" alt="" />
             </AspectRatio>
-            <div>
-              <Typography
-                level="h2"
-                fontSize="lg"
-                id="card-description"
-                mb={0.5}
-              >
-                {V[1]}
-              </Typography>
-              <Typography
-                fontSize="sm"
-                aria-describedby="card-description"
-                mb={1}
-              >
+            <Divider orientation="vertical" flexItem />
+            <div className="newscard-wrapper" style={{ width: "80%" }}>
+              <div className="newscard-title">
+                <h3 className="newscard-title-text">{V[1]}</h3>
+                <Divider />
+              </div>
+              <div className="newscard-main">
                 <Link
                   overlay
                   underline="none"
                   href="/여기에 url을 보내주자"
-                  sx={{ color: "text.tertiary" }}
+                  sx={{
+                    color: "text.tertiary",
+                  }}
                 >
-                  {V[2]}
+                  <h4 className="newscard-main-text">{V[2]}</h4>
                 </Link>
-              </Typography>
-              <Chip
-                variant="outlined"
-                color="primary"
-                size="sm"
-                sx={{ pointerEvents: "none" }}
-              >
-                {V[3]}
-              </Chip>
+              </div>
+              <div className="newscard-reporter">
+                <Chip
+                  variant="outlined"
+                  color="primary"
+                  size="sm"
+                  sx={{
+                    pointerEvents: "none",
+                  }}
+                >
+                  {V[3]}
+                </Chip>
+              </div>
             </div>
           </Card>
         );
