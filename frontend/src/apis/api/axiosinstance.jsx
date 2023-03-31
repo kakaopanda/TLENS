@@ -1,7 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const BASE_URL = "http://localhost:8080/api/v1";
+// const BASE_URL = "http://localhost:8080/api/v1";
+const BASE_URL = "http://j8c206.p.ssafy.io:8080/api/v1";
 
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url, options) => {
@@ -103,7 +104,7 @@ export const reIssue = async () => {
 export const getUserInfo = async (id) => {
   try {
     const token = localStorage.getItem("Authorization");
-    const authInstance = axiosAuthApi(BASE_URL, token);
+    const authInstance = axiosApi(BASE_URL, token);
     const response = await authInstance.get("/mypage/userinfo", {
       params: { id },
     });
@@ -116,16 +117,10 @@ export const getUserInfo = async (id) => {
 // 검색 기사 가져오기
 export const getKeywordNews = async (keyword) => {
   try {
-    const token = localStorage.getItem("Authorization");
-    const authInstance = axiosAuthApi(BASE_URL, token);
-    const response = await authInstance.post(
-      "http://j8c206.p.ssafy.io:8080/api/v1/api/v1/news/search",
-      token,
-      {
-        params: { searchword: keyword },
-      }
-    );
-    console.log(response);
+    const response = await defaultInstance.get("/api/v1/news/search", {
+      params: { searchword: keyword },
+    });
+    return response.data.content;
   } catch (error) {
     console.log(error);
   }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Main.scss";
-import { getKeywordNews } from "../../../apis/api/axiosinstance";
 
 // Charts
 import MainNewsCard from "../MainNewsCard";
@@ -65,15 +64,6 @@ const MainChart = (props) => {
       setTotalArticle("292,399,211");
     }
   }, [props.value]);
-
-  useEffect(() => {
-    try {
-      const res = getKeywordNews("공기업");
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  });
 
   return (
     <div>

@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MainNewsCard from "../../components/Main-Components/MainNewsCard";
 import "./SearchResult.scss";
+import { getKeywordNews } from "../../apis/api/axiosinstance";
 
 // Charts
 import SearchResultChart1 from "../../components/Charts-Components/SearchResultChart1";
@@ -12,6 +15,21 @@ import Divider from "@mui/material/Divider";
 
 const SearchResult = () => {
   const { keyword } = useParams();
+
+  const [newsData, setNewsData] = useState([]);
+
+  const getNews = async () => {
+    try {
+      const res = await getKeywordNews(keyword);
+      setNewsData(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(async () => {
+    getNews();
+  }, []);
+  console.log(newsData);
 
   return (
     <div className="searchresult-wrapper">
