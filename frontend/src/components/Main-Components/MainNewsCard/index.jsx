@@ -11,8 +11,9 @@ import { Divider } from "@mui/material";
 // Data
 import data1 from "./data.json";
 
-const MainNewsCard = () => {
+const MainNewsCard = ({ newsData }) => {
   const data = data1;
+  // console.log(newsData);
 
   return (
     <div className="news-container">
