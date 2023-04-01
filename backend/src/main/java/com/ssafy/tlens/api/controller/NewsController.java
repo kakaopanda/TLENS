@@ -237,7 +237,7 @@ public class NewsController {
         return success();
     }
 
-    @PostMapping("api/v1/news/search")
+    @GetMapping("api/v1/news/search")
     public ResponseEntity<?> getNewsBySearch(@RequestParam String searchword) {
         List<NewsInfoDTO> result = newsService.getNewsBySearch(searchword);
 
