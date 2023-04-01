@@ -122,9 +122,7 @@ const MainChart = (props) => {
       <h2 className="main-bot-h2">T:LENS 키워드 뉴스 : {keyword}</h2>
       <Divider />
       <div className="main-bot-wrapper">
-        <div className="main-bot-left">
-          <MainNewsCard />
-        </div>
+        <div className="main-bot-left">{/* <MainNewsCard /> */}</div>
         <Divider orientation="vertical" flexItem />
         <div className="main-bot-right">
           <div className="main-bot-right-wrapper">

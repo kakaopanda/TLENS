@@ -3,14 +3,11 @@ import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 import "./ReporterCarousel.scss";
 import ReporterCard from "../ReporterCard";
 import ReporterCard2 from "../ReporterCard2";
-
-// Data
-import reporter from "../../../pages/Reporter/Reporter.json";
+import { getPressData, getReporterData } from "../../../apis/api/axiosinstance";
 
 // MUI
 import Divider from "@mui/material/Divider";
 
-const CARDS = 16;
 const MAX_VISIBILITY = 4;
 
 const Carousel = ({ children, active, handlePrev, handleNext }) => {
@@ -50,9 +47,30 @@ const Carousel = ({ children, active, handlePrev, handleNext }) => {
 
 const ReporterCarousel = () => {
   const [active, setActive] = useState(3);
+  const [pressData, setPressData] = useState([]);
+  const [reporterData, setReporterData] = useState([]);
 
   const handlePrev = () => setActive((i) => i - 1);
   const handleNext = () => setActive((i) => i + 1);
+
+  const getPress = async () => {
+    const data = await getPressData();
+    const sliceData = data.slice(0, 24);
+    setPressData(sliceData);
+  };
+
+  useEffect(() => {
+    getPress();
+  }, []);
+
+  const getReporter = async () => {
+    const data = await getReporterData(active + 1);
+    setReporterData(data);
+  };
+
+  useEffect(() => {
+    getReporter();
+  }, [active]);
 
   return (
     <div style={{ height: 240 }}>
@@ -62,18 +80,16 @@ const ReporterCarousel = () => {
           handlePrev={handlePrev}
           handleNext={handleNext}
         >
-          {[...new Array(CARDS)].map((_, i) => (
-            <ReporterCard key={i} index={i + 1} />
+          {pressData?.map((V, i) => (
+            <ReporterCard key={i} V={V} />
           ))}
         </Carousel>
       </div>
       <br />
       <Divider sx={{ margin: "0 8% 0 8%" }} />
-      {reporter[active] ? (
-        <h2 style={{ textAlign: "left", marginLeft: "8%" }}>
-          {reporter[active][0][0]} : {reporter[active].length}명
-        </h2>
-      ) : null}
+      <h2 style={{ textAlign: "left", marginLeft: "8%" }}>
+        {reporterData[1]?.press} : {reporterData?.length}명
+      </h2>
       <div
         style={{
           margin: "0 8% 0 8%",
@@ -85,9 +101,11 @@ const ReporterCarousel = () => {
           borderRadius: "10px",
         }}
       >
-        {reporter[active] ? (
-          reporter[active].map((V, index) => {
-            return <ReporterCard2 key={index} V={V} />;
+        {reporterData ? (
+          reporterData.map((V, index) => {
+            return (
+              <ReporterCard2 key={index} V={V} pressData={pressData[active]} />
+            );
           })
         ) : (
           <h2>등록된 기자가 없습니다</h2>
