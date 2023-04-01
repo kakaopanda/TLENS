@@ -43,4 +43,9 @@ public class PressController {
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
     }
+
+    @PostMapping("/setting")
+    public void settingPress(){
+        pressService.settingPress();
+    }
 }

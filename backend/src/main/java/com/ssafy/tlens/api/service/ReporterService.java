@@ -1,7 +1,9 @@
 package com.ssafy.tlens.api.service;
 
+import com.ssafy.tlens.api.request.ReporterRequestDTO;
 import com.ssafy.tlens.api.request.TrendRequestDTO;
 import com.ssafy.tlens.api.response.ReporterInfoDTO;
+import com.ssafy.tlens.entity.rdbms.Press;
 
 import java.util.List;
 
@@ -12,4 +14,5 @@ public interface ReporterService {
     void deleteToReporter(Long id);
     List<ReporterInfoDTO> getReportersByPress(Long pressId);
 
+    void insert(ReporterInfoDTO reporterInfoDTO, Press press);
 }

@@ -23,8 +23,8 @@ public class Reporter {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "department", nullable = false, length = 50)
-    private String department;
+    @Column(name = "crawl_link", nullable = false, unique = true)
+    private String crawlLink;
 
     @Column(name = "thumbnail", length= 300)
     private String thumbnail;
