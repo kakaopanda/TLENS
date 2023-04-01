@@ -17,7 +17,10 @@ const SearchResult = () => {
   const { keyword } = useParams();
 
   const [newsData, setNewsData] = useState([]);
-  const [splitKeyword, setSplitKeyword] = useState([]);
+  const [splitKeyword, setSplitKeyword] = useState({
+    textList: [],
+    valueList: [],
+  });
 
   const getNews = async () => {
     try {
@@ -55,6 +58,7 @@ const SearchResult = () => {
 
     const textList = [];
     const valueList = [];
+
     topResult.forEach((entry) => {
       textList.push(entry.text);
       valueList.push(entry.value);

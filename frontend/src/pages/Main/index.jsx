@@ -28,8 +28,10 @@ const Main = () => {
   const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
+    console.log(event);
     setValue(newValue);
   };
+  console.log(value);
 
   return (
     <TabContext value={value}>

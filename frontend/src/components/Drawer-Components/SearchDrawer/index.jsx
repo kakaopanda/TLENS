@@ -21,6 +21,7 @@ const SearchDrawer = ({ anchor, toggleDrawer1, handleKeyword }) => {
             color="primary"
             variant="outlined"
             placeholder="ex)삼성전자, 카카오, 네이버"
+            autoFocus={true}
             onChange={handleKeyword}
             onKeyUp={toggleDrawer1(anchor, false)}
           />

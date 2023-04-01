@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
 import "./CompanyDetail.scss";
+import { getKeywordNews } from "../../../apis/api/axiosinstance";
 
 // Charts
 import CompanyStock from "../../Charts-Components/CompanyStock";
@@ -19,6 +20,16 @@ const CompanyDetail = () => {
 
   const [keyName, setKeyName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [newsData, setNewsData] = useState([]);
+
+  const getNews = async () => {
+    try {
+      const res = await getKeywordNews(name);
+      setNewsData(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (name === "현대자동차") {
@@ -37,9 +48,9 @@ const CompanyDetail = () => {
       setKeyName(name);
     }
     setTimeout(() => {
-      // 2초 뒤에 실행되는 코드
       setLoading(true);
-    }, 50);
+    }, 1);
+    getNews();
   }, [name]);
 
   return (
@@ -56,10 +67,11 @@ const CompanyDetail = () => {
                   alt=""
                 />
               </div>
+              <Divider orientation="vertical" flexItem />
               <div className="companydetail-top-left-3">
                 <h1>{name}</h1>
                 <h3>{state.ename}</h3>
-                <Divider />
+                <Divider sx={{ marginLeft: "-5%" }} />
                 <div className="companydetail-top-left-4">
                   <div style={{ width: "20%" }}>
                     <h4>업종 : </h4>
@@ -78,14 +90,14 @@ const CompanyDetail = () => {
           <Divider orientation="vertical" />
           <div className="companydetail-top-right">
             <h2 style={{ marginLeft: "10px" }}>{name} 주가 그래프</h2>
-            {loading ? <CompanyStock keyName={keyName} /> : null}
+            {loading && <CompanyStock keyName={keyName} />}
           </div>
         </div>
         <div className="companydetail-mid">
           <div className="companydetail-mid-left">
             <h2 style={{ marginLeft: "4%" }}>키워드 관계도 : {name}</h2>
             <div className="companydetail-mid-left-1">
-              <SearchResultChart2 />
+              <SearchResultChart2 keyword={name} />
             </div>
           </div>
           <Divider />
@@ -109,7 +121,7 @@ const CompanyDetail = () => {
               overflowY: "auto",
             }}
           >
-            <MainNewsCard />
+            <MainNewsCard newsData={newsData} />
           </div>
           <Divider orientation="vertical" flexItem />
           <div style={{ width: "35%" }}>
