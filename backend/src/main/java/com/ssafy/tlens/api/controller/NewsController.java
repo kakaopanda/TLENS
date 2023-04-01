@@ -175,22 +175,26 @@ public class NewsController {
             // 퇴사한 기자들은 추적하기 어렵기 때문에 RDBMS상에 남겨두는 것으로 한다.
             // 크롤러는 전체 크롤링을 수행하면서 크롤링한 기자 정보와 RDBMS상의 전체 기자 리스트를 비교한다.
             List<ReporterInfoDTO> list = sc.dynamicCrawling();
+            int duplicate = 0;
 
             // 크롤링한 기자 정보를 RDBMS에 등록한다.
             for(int j=0; j<list.size(); j++){
                 try{
                     reporterService.insert(list.get(j), pressService.getPress(new Long(i+1)));
                 } catch(Exception e){
-                    System.out.println(press[0][i] + press[1][i] + "동시성 문제로 중복된 기자 정보는 등록하지 않습니다.");
+                    duplicate++;
+                    System.out.println("["+ press[1][i] + "]" + " 동시성 문제로 중복된 기자 정보는 등록하지 않습니다.");
                     continue;
                 }
             }
+            System.out.println(reporterPress[1][i]+"의 기자정보 "+(list.size()-duplicate)+"건을 RDBMS reporter 테이블에 적재했습니다.");
         }
         return success();
     }
 
     // 5분마다 실시간 기사 크롤링을 수행한다.
     // @Scheduled(cron = "*/5 * * * * *")
+    @PostMapping("newsCrawling")
     public HttpResponseEntity.ResponseResult<?> newsCrawling() throws Exception {
         // 전체 언론사를 대상으로 최근 뉴스 기사를 크롤링한다.
         for(int i=0; i<press[0].length; i++){
@@ -216,16 +220,19 @@ public class NewsController {
             // 크롤러는 1개의 언론사에서 작성된 전체 최근 기사 목록을 반환한다.
             // 크롤러는 크롤링한 기사와 RDBMS상의 최근 기사의 작성일자를 비교하여 크롤링 진행 여부를 결정한다.
             List<NewsRequestDTO> list = sc.dynamicCrawling();
+            int duplicate = 0;
 
             // 크롤링한 기사를 RDBMS에 등록한다.
             for(int j=0; j<list.size(); j++){
                 try{
                     newsService.insert(list.get(j));
                 } catch(Exception e){
-                    System.out.println(press[0][i] + press[1][i] + "동시성 문제로 중복된 기사는 등록하지 않습니다.");
+                    duplicate++;
+                    System.out.println("[" + press[1][i] + "]" + " 동시성 문제로 중복된 기사는 등록하지 않습니다.");
                     continue;
                 }
             }
+            System.out.println(press[1][i]+"의 최신기사 "+(list.size()-duplicate)+"건을 RDBMS news 테이블에 적재했습니다.");
         }
         return success();
     }

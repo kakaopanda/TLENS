@@ -21,7 +21,7 @@ public class SeleniumNewsCrawler {
 
     // STEP2. 드라이버 속성(Properties) 지정
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static final String WEB_DRIVER_PATH = "C:/selenium/chromedriver_win32/chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "src/main/java/com/ssafy/tlens/api/crawler/selenium/chromedriver_win32/chromedriver.exe";
 
     // STEP3. 크롤링 할 URL 지정
     private final String recentPress;
@@ -43,6 +43,10 @@ public class SeleniumNewsCrawler {
         // STEP6. 드라이버 옵션 설정(Driver SetUp)
         // PageLoadStrategy.NORMAL을 통해 페이지 로드가 완료된 시점에서 크롤링을 수행한다.
         ChromeOptions options = new ChromeOptions();
+
+        // 브라우저 실행을 백그라운드로 전환한다.
+        // options.addArguments("headless");
+
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--log-level=3");
         options.addArguments("--disable-loging");
@@ -56,6 +60,7 @@ public class SeleniumNewsCrawler {
             // STEP7. oid 값에 각 언론사별 코드를 넣어준 다음, 각 언론사별 최신 기사 페이지로 이동한다.
             driver.get(baseURL);
             List<WebElement> elements;
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(500));
 
             while(true){
                 // STEP8. StaleElementReferenceException 예외를 방지하기 위해, 새로운 링크로 이동할 때마다 DOM을 갱신해줘야한다.
@@ -64,8 +69,8 @@ public class SeleniumNewsCrawler {
                 // STEP9. 최신 기사 페이지에서 한 페이지당 작성된 기사 개수를 의미한다. (최대 10개)
                 int articleCount = driver.findElements(By.cssSelector("ul.type06_headline > li")).size();
                 String[] URL = new String[articleCount];
-                int index = 0;
                 int currentPage = Integer.parseInt(driver.findElement(By.cssSelector("#main_content > div.paging > strong")).getText());
+                int index = 0;
 
                 // STEP10. "다음" 버튼이 활성화되어 있는 경우 <a> 태그가 10개, 그렇지 않으면 10개 미만으로 구성된다.
                 // STEP11. 첫 번째 페이지의 태그가 <strong> 태그가 아닌 <a> 태그로 분류될 경우 11개로 구성된다.
@@ -107,7 +112,7 @@ public class SeleniumNewsCrawler {
                     }
                     try{
                         // Case1. 일반적인 기사 페이지로 이동하는 경우
-                        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+                        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
                         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("._ARTICLE_DATE_TIME")));
                         title = driver.findElement(By.cssSelector("#title_area > span")).getText();
                         press = recentPress;
@@ -118,9 +123,15 @@ public class SeleniumNewsCrawler {
                         } catch(Exception e){
                             reporter = press;
                         }
-                        category = driver.findElement(By.cssSelector(".media_end_categorize_item")).getText();
 
-                        // Case1-2. 기사에 썸네일 이미지가 존재하지 않는 경우, 널값으로 대체한다.
+                        // Case1-2. 기사 카테고리 분류가 되지 않은 기사인 경우, 기타로 분류한다.
+                        try{
+                            category = driver.findElement(By.cssSelector(".media_end_categorize_item")).getText();
+                        } catch(Exception e){
+                            category = "기타";
+                        }
+
+                        // Case1-3. 기사에 썸네일 이미지가 존재하지 않는 경우, 널값으로 대체한다.
                         try{
                             thumbNail = driver.findElement(By.id("img1")).getAttribute("src");
                         } catch(Exception e){
@@ -133,7 +144,7 @@ public class SeleniumNewsCrawler {
                                                     By.cssSelector("._ARTICLE_DATE_TIME"))
                                             .getAttribute("data-date-time")
                             );
-                            // Case1-3. 크롤링한 기사의 작성일자가 RDBMS보다 먼저 작성된 경우 크롤링을 중단한다.
+                            // Case1-4. 크롤링한 기사의 작성일자가 RDBMS보다 먼저 작성된 경우 크롤링을 중단한다.
                             if(news.getCrawlLink().equals(crawlLink) || news.getCreatedDate().isEqual(createdDate) || news.getCreatedDate().isAfter(createdDate)){
                                 flag = false;
                                 break;
@@ -145,7 +156,7 @@ public class SeleniumNewsCrawler {
                                             .getAttribute("data-date-time")
                             );
                         }
-                        // Case1-4. 기사에 수정일자가 존재하지 않는 경우, 작성일자로 대체한다.
+                        // Case1-5. 기사에 수정일자가 존재하지 않는 경우, 작성일자로 대체한다.
                         try{
                             modifiedDate = transLocalDateTime(
                                     driver.findElement(
@@ -156,7 +167,7 @@ public class SeleniumNewsCrawler {
                             modifiedDate = createdDate;
                         }
 
-                        // Case1-5. 기사에 원문링크(언론사)가 존재하지 않는 경우 크롤링하지 않는다.
+                        // Case1-6. 기사에 원문링크(언론사)가 존재하지 않는 경우 크롤링하지 않는다.
                         try{
                             originalLink = driver.findElement(By.cssSelector("div.media_end_head_info_datestamp > a")).getAttribute("href");
                         } catch(Exception e){
@@ -171,7 +182,7 @@ public class SeleniumNewsCrawler {
                     } catch(TimeoutException e1){
                         try{
                             // Case2. 연예 기사 페이지로 리다이렉트 된 경우
-                            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+                            wait = new WebDriverWait(driver, Duration.ofSeconds(3));
                             wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#content > div.end_ct > div > div.article_info > span:nth-child(1) > em")));
                             title = driver.findElement(By.cssSelector("div.end_ct > div > h2")).getText();
                             press = recentPress;
@@ -233,7 +244,7 @@ public class SeleniumNewsCrawler {
                             driver.navigate().back();
                         } catch(TimeoutException e2){
                             // Case3. 스포츠 기사 페이지로 리다이렉트 된 경우
-                            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+                            wait = new WebDriverWait(driver, Duration.ofSeconds(3));
                             wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#content > div > div.content > div > div.news_headline > div > span:nth-child(1)")));
                             title = driver.findElement(By.cssSelector("div.news_headline > h4")).getText();
                             press = recentPress;
@@ -330,7 +341,7 @@ public class SeleniumNewsCrawler {
                     }
                     try{
                         // Case1. 일반적인 기사 페이지로 이동하는 경우
-                        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+                        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
                         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("._ARTICLE_DATE_TIME")));
                         title = driver.findElement(By.cssSelector("#title_area > span")).getText();
                         press = recentPress;
@@ -395,7 +406,7 @@ public class SeleniumNewsCrawler {
                     } catch(TimeoutException e1){
                         try{
                             // Case2. 연예 기사 페이지로 리다이렉트 된 경우
-                            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+                            wait = new WebDriverWait(driver, Duration.ofSeconds(3));
                             wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#content > div.end_ct > div > div.article_info > span:nth-child(1) > em")));
                             title = driver.findElement(By.cssSelector("div.end_ct > div > h2")).getText();
                             press = recentPress;
@@ -456,7 +467,7 @@ public class SeleniumNewsCrawler {
                             driver.navigate().back();
                         } catch(TimeoutException e2){
                             // Case3. 스포츠 기사 페이지로 리다이렉트 된 경우
-                            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+                            wait = new WebDriverWait(driver, Duration.ofSeconds(3));
                             wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#content > div > div.content > div > div.news_headline > div > span:nth-child(1)")));
                             title = driver.findElement(By.cssSelector("div.news_headline > h4")).getText();
                             press = recentPress;
@@ -525,7 +536,7 @@ public class SeleniumNewsCrawler {
                     if((currentPage % 10) != 0){
                         if(smallNextURL!=null){
                             driver.navigate().to(smallNextURL);
-                            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+                            wait = new WebDriverWait(driver, Duration.ofSeconds(3));
                             wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul.type06_headline > li")));
                             currentPage++;
                             continue;
@@ -537,7 +548,7 @@ public class SeleniumNewsCrawler {
                     else{
                         if(bigNextURL != null){
                             driver.navigate().to(bigNextURL);
-                            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+                            wait = new WebDriverWait(driver, Duration.ofSeconds(3));
                             wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul.type06_headline > li")));
                         }
                         else{
@@ -550,6 +561,8 @@ public class SeleniumNewsCrawler {
             e.printStackTrace();
         } finally {
             driver.close();
+            driver.quit();
+            System.out.println(recentPress+"의 최신기사 "+list.size()+"건을 크롤링하였습니다.");
             return list;
         }
     }
