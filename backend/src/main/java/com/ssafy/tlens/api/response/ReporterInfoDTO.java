@@ -12,11 +12,24 @@ public class ReporterInfoDTO {
     private String name;
     private String press;
     private String thumbnail;
+    private String crawlLink;
 
     public ReporterInfoDTO(Reporter reporter) {
         reporterId = reporter.getReporterId();
         name = reporter.getName();
         press = reporter.getPress().getName();
         thumbnail = reporter.getThumbnail();
+        crawlLink = reporter.getCrawlLink();
+    }
+
+    @Override
+    public String toString() {
+        return "ReporterInfoDTO{" +
+                "reporterId=" + reporterId +
+                ", name='" + name + '\'' +
+                ", press='" + press + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", crawlLink='" + crawlLink + '\'' +
+                '}';
     }
 }

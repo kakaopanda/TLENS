@@ -1,6 +1,7 @@
 package com.ssafy.tlens.api.service;
 
 
+import com.ssafy.tlens.api.request.ReporterRequestDTO;
 import com.ssafy.tlens.api.request.TrendRequestDTO;
 import com.ssafy.tlens.api.response.MainPressDTO;
 import com.ssafy.tlens.api.response.ReporterInfoDTO;
@@ -21,9 +22,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReporterServiceImpl implements ReporterService {
 
-    private ReporterTrendRepository reporterTrendRepository;
-    private ReporterRepository reporterRepository;
-    private PressRepository pressRepository;
+    private final ReporterTrendRepository reporterTrendRepository;
+    private final ReporterRepository reporterRepository;
+    private final PressRepository pressRepository;
 
     public void insertToReporter(TrendRequestDTO request) {
 
@@ -68,5 +69,16 @@ public class ReporterServiceImpl implements ReporterService {
                 .collect(Collectors.toList());
 
         return reporterInfoList;
+    }
+
+    @Override
+    public void insert(ReporterInfoDTO reporterInfoDTO, Press press) {
+        reporterRepository.save(Reporter.builder()
+                .crawlLink(reporterInfoDTO.getCrawlLink())
+                .name(reporterInfoDTO.getName())
+                .thumbnail(reporterInfoDTO.getThumbnail())
+                .press(press)
+                .build()
+        );
     }
 }
