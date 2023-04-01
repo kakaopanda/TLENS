@@ -1,9 +1,9 @@
 import React from "react";
 
-const ReporterCard = ({ index }) => {
+const ReporterCard = ({ V }) => {
   return (
     <div className="reporter-card">
-      <img style={{ width: "100%" }} src={`images/${index}.jpg`} alt="" />
+      <img src={V.thumbnail} alt="" />
     </div>
   );
 };

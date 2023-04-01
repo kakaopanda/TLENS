@@ -5,12 +5,19 @@ import { useNavigate } from "react-router-dom";
 import Link from "@mui/joy/Link";
 import Card from "@mui/joy/Card";
 import Typography from "@mui/joy/Typography";
+import Divider from "@mui/material/Divider";
 
-const ReporterCard2 = ({ V }) => {
+const ReporterCard2 = ({ V, pressData }) => {
   const navigate = useNavigate();
 
   const handlenavigate = (value) => {
-    navigate(`/reporter/${value[2]}`, { state: value });
+    console.log(value);
+    navigate(`/reporter/${value.name}`, {
+      state: {
+        data: value,
+        thumbnail: pressData.thumbnail,
+      },
+    });
   };
 
   return (
@@ -22,8 +29,9 @@ const ReporterCard2 = ({ V }) => {
         variant="outlined"
         orientation="horizontal"
         sx={{
+          width: "100%",
           display: "flex",
-          width: 250,
+          width: 280,
           gap: 2,
           "&:hover": {
             boxShadow: "md",
@@ -33,20 +41,21 @@ const ReporterCard2 = ({ V }) => {
       >
         <div>
           <img
-            style={{ Width: "100%", height: "auto", borderRadius: "20px" }}
-            src={V[4]}
+            style={{ width: "100px", height: "110px", borderRadius: "20px" }}
+            src={V.thumbnail ? V.thumbnail : `/images/thumbnail.png`}
             loading="lazy"
             alt=""
           />
         </div>
+        <Divider orientation="vertical" flexItem />
         <div>
-          <img style={{ width: "30%" }} src={V[1]} alt="" />
+          <img style={{ width: "30%" }} src={pressData.thumbnail} alt="" />
           <Typography level="h2" fontSize="lg" id="card-description" mb={0.5}>
             {V[2]}
           </Typography>
           <Typography fontSize="sm" aria-describedby="card-description" mb={1}>
             <Link overlay underline="none" sx={{ color: "text.tertiary" }}>
-              {V[0]} : {V[3]}
+              {V.press} : {V.name}
             </Link>
           </Typography>
           <Typography fontSize="sm" aria-describedby="card-description" mb={1}>

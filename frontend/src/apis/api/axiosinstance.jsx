@@ -126,6 +126,28 @@ export const getKeywordNews = async (keyword) => {
   }
 };
 
+// 언론사 데이터 가져오기
+export const getPressData = async () => {
+  try {
+    const response = await defaultInstance.get("/press");
+    return response.data.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 기자 데이터 가져오기
+export const getReporterData = async (num) => {
+  try {
+    const response = await defaultInstance.get("/reporter/press", {
+      params: { pressId: num },
+    });
+    return response.data.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // 다음은 사용법
 
 // import { defaultInstance, authInstance } from '@apis/utils'

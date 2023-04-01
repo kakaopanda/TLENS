@@ -1,11 +1,12 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const SearchResultChart1 = ({ keyword }) => {
+const SearchResultChart1 = ({ splitKeyword }) => {
+  console.log(splitKeyword);
   const state = {
     series: [
       {
-        data: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+        data: splitKeyword.valueList,
       },
     ],
     options: {
@@ -26,18 +27,7 @@ const SearchResultChart1 = ({ keyword }) => {
         enabled: false,
       },
       xaxis: {
-        categories: [
-          "South Korea",
-          "Canada",
-          "United Kingdom",
-          "Netherlands",
-          "Italy",
-          "France",
-          "Japan",
-          "United States",
-          "China",
-          "Germany",
-        ],
+        categories: splitKeyword.textList,
       },
     },
   };

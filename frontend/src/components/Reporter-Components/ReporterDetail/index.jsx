@@ -23,9 +23,13 @@ const ReporterDetail = () => {
         <div className="reporterdetail-left-top">
           <div className="reporterdetail-left-top-1">
             <img
-              style={{ margin: "10%" }}
+              style={{ margin: "10%", width: "80%" }}
               className="img1"
-              src={state[4]}
+              src={
+                state.data.thumbnail
+                  ? state.data.thumbnail
+                  : `/images/thumbnail.png`
+              }
               alt=""
             />
           </div>
@@ -34,10 +38,10 @@ const ReporterDetail = () => {
             <img
               style={{ textAlign: "left" }}
               className="img2"
-              src={`/${state[1]}`}
+              src={state.thumbnail}
               alt=""
             />
-            <h2 style={{ textAlign: "left" }}>{state[2]} 기자</h2>
+            <h2 style={{ textAlign: "left" }}>{state.data.name}</h2>
             <h3 style={{ textAlign: "left" }}>{state[3]}부</h3>
             <Button
               className="reporter-button"
@@ -50,14 +54,14 @@ const ReporterDetail = () => {
         </div>
         <div className="reporterdetail-left-main">
           <h3 className="reporterdetail-left-main-h3">
-            {state[2]} 기자의 취재 분야
+            {state.data.name}의 취재 분야
           </h3>
           <div className="reporterdetail-left-chart">
             <ReporterPieChart />
           </div>
           <Divider />
           <h3 className="reporterdetail-left-main-h3">
-            {state[2]} 기자의 구독 현황
+            {state.data.name}의 구독 현황
           </h3>
           <div className="reporterdetail-left-main-chart1">
             <div className="reporterdetail-left-main-chart1-1">
@@ -90,7 +94,7 @@ const ReporterDetail = () => {
           T:LENS 키워드 뉴스 : {state[2]} 기자
         </h2>
         <div className="reporterdetail-right-news">
-          <MainNewsCard />
+          {/* <MainNewsCard /> */}
         </div>
       </div>
     </div>

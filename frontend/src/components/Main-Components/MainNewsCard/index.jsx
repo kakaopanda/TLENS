@@ -8,16 +8,12 @@ import Card from "@mui/joy/Card";
 import Chip from "@mui/joy/Chip";
 import { Divider } from "@mui/material";
 
-// Data
-import data1 from "./data.json";
-
 const MainNewsCard = ({ newsData }) => {
-  const data = data1;
-  // console.log(newsData);
+  console.log(newsData);
 
   return (
     <div className="news-container">
-      {data.map((V, index) => {
+      {newsData.map((V, index) => {
         return (
           <Card
             key={index}
@@ -35,25 +31,24 @@ const MainNewsCard = ({ newsData }) => {
             }}
           >
             <AspectRatio ratio="1" sx={{ width: "15%" }}>
-              <img src={V[0]} loading="lazy" alt="" />
+              {/* <img src={} loading="lazy" alt="" /> */}
             </AspectRatio>
             <Divider orientation="vertical" flexItem />
             <div className="newscard-wrapper" style={{ width: "80%" }}>
               <div className="newscard-title">
-                <h3 className="newscard-title-text">{V[1]}</h3>
+                <h3 className="newscard-title-text">{V.title}</h3>
                 <Divider />
               </div>
               <div className="newscard-main">
                 <Link
                   overlay
                   underline="none"
-                  href="/여기에 url을 보내주자"
+                  href={V.link}
+                  target="_blank"
                   sx={{
                     color: "text.tertiary",
                   }}
-                >
-                  <h4 className="newscard-main-text">{V[2]}</h4>
-                </Link>
+                ></Link>
               </div>
               <div className="newscard-reporter">
                 <Chip
@@ -64,7 +59,7 @@ const MainNewsCard = ({ newsData }) => {
                     pointerEvents: "none",
                   }}
                 >
-                  {V[3]}
+                  {V.reporter}
                 </Chip>
               </div>
             </div>
