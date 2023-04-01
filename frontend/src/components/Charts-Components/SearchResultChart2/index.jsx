@@ -87,6 +87,7 @@ const SearchResultChart2 = ({ keyword }) => {
       ],
     },
   ];
+
   useEffect(() => {
     am4core.useTheme(am4themes_animated);
 

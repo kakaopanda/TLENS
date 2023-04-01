@@ -15,7 +15,6 @@ import { Button } from "@mui/material";
 
 const ReporterDetail = () => {
   const { state } = useLocation();
-  console.log(state);
 
   return (
     <div className="reporterdetail-wrapper">

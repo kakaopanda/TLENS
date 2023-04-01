@@ -2,7 +2,6 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 const SearchResultChart1 = ({ splitKeyword }) => {
-  console.log(splitKeyword);
   const state = {
     series: [
       {
@@ -31,6 +30,7 @@ const SearchResultChart1 = ({ splitKeyword }) => {
       },
     },
   };
+
   return (
     <div style={{ margin: "0 2% 0 0" }}>
       <ReactApexChart

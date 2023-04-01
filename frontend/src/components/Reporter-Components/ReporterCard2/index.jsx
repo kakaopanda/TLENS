@@ -11,7 +11,6 @@ const ReporterCard2 = ({ V, pressData }) => {
   const navigate = useNavigate();
 
   const handlenavigate = (value) => {
-    console.log(value);
     navigate(`/reporter/${value.name}`, {
       state: {
         data: value,

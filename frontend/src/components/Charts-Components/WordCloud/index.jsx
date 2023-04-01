@@ -37,9 +37,6 @@ const WordCloudContainer = () => {
     { text: "Heroku", value: 25 },
   ];
 
-  const fontSizeMapper = (word) => Math.log2(word.value) * 10;
-  const rotate = (word) => (word.value % 360) + "deg";
-
   const options = {
     fontSizes: [10, 60],
     rotations: 2,
@@ -56,8 +53,6 @@ const WordCloudContainer = () => {
     <div>
       <WordCloud
         words={data}
-        fontSizeMapper={fontSizeMapper}
-        rotate={rotate}
         options={options}
         callbacks={{
           onWordClick: handleWordClick,
