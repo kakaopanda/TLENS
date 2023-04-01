@@ -19,7 +19,7 @@ public class SeleniumReporterCrawler {
 
     // STEP2. 드라이버 속성(Properties) 지정
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static final String WEB_DRIVER_PATH = "C:/selenium/chromedriver_win32/chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "src/main/java/com/ssafy/tlens/api/crawler/selenium/chromedriver_win32/chromedriver.exe";
 
     // STEP3. 크롤링 할 URL 지정
     private final String baseURL;
@@ -42,6 +42,10 @@ public class SeleniumReporterCrawler {
         // STEP6. 드라이버 옵션 설정(Driver SetUp)
         // PageLoadStrategy.NORMAL을 통해 페이지 로드가 완료된 시점에서 크롤링을 수행한다.
         ChromeOptions options = new ChromeOptions();
+
+        // 브라우저 실행을 백그라운드로 전환한다.
+        options.addArguments("headless");
+
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--log-level=3");
         options.addArguments("--disable-loging");
@@ -122,7 +126,6 @@ public class SeleniumReporterCrawler {
             }
             System.out.println(press.getName()+"의 RDBMS 데이터 조회가 완료되었습니다. ("+reporterList.size()+"건)");
             System.out.println(press.getName()+"에 대한 기자정보 크롤링이 완료되었습니다. ("+elements.size()+"건)");
-            System.out.println(press.getName()+"에 대한 새로 추가된 데이터는 다음과 같습니다. ("+list.size()+"건)");
 
 //            if(elements.size()!= reporterCount){
 //                System.out.println(press.getName()+"의 기자 정보 크롤링이 불완전하게 수행되어 다시 시도합니다.");
@@ -133,6 +136,7 @@ public class SeleniumReporterCrawler {
         e.printStackTrace();
         } finally {
             driver.close();
+            driver.quit();
             return list;
         }
     }
