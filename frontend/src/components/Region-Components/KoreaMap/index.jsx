@@ -18,8 +18,8 @@ const KoreaMap = ({ onRegionSelect }) => {
     setReport(report);
 
     // 마우스 이벤트가 발생한 위치를 기준으로 카드를 위치시킨다
-    const cardX = event.clientX + 10;
-    const cardY = event.clientY + 10;
+    const cardX = event.clientX + 5;
+    const cardY = event.clientY + 5;
     setCardStyle({ top: cardY, left: cardX });
 
 		const name = event.target.getAttribute('name');
@@ -48,9 +48,11 @@ const KoreaMap = ({ onRegionSelect }) => {
       </svg>
 			{cardStyle !== null && (
         <div className="card-wrapper">
-          <div className="card" style={cardStyle}>
+          <div className="map-card" style={cardStyle}>
             <h5>{id}</h5>
-            <p>{report}</p>
+            <h5>뉴스량 : {report}</h5>
+            <h5>가장 많은 키워드 : </h5>
+            <h5>사과({report}) </h5>
           </div>
           {label !== '' && (
             <div className="label" style={{ top: cardStyle.top - 20, left: cardStyle.left }}>

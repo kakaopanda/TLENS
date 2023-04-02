@@ -1,26 +1,47 @@
-.korea-map{
-  fill:#06c;
-  height:45vw;
-  width:40vw;
+.korea-map {
+  fill: #06c;
+  height: 40vw;
+  width: 35vw;
+  position: relative;
+  z-index: 0;
+  padding-top: 50px;
 }
 
-path:hover, path.selected {
-  fill: rgb(166, 207, 249);
+.korea-map path:hover,
+.korea-map path.selected {
+  fill:rgb(166, 207, 249);
+  z-index: 99;
+  // transform: scale(1.1);
+  position: absolute;
+  top: 0;
+
+  transform: translate(0%, -2.5%);
+  transition: transform 1s ease-in-out;
+  position: relative;
+  /* box-shadow 수정 */
+  filter: drop-shadow(0px 15px 15px rgba(20, 118, 255, 1));
 }
+
 
 // path:hover,
 // path:active {
-//   fill: rgb(166, 207, 249);
+  // fill: rgb(166, 207, 249);
 // }
 
-.card {
+.map-card {
   position: absolute;
+  text-align: start;
+  justify-content: start;
   width: 15vw;
   height: 15vh;
+  border-radius: 10px;
   background-color: rgba(255, 255, 155, 0.700);
-  // padding: 10px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   z-index: 20; /* 카드의 z-index 값 수정 */
+  h5{
+    margin-left: 10px;
+    margin: 10px;
+  }
 }
 
 .label {
@@ -29,7 +50,18 @@ path:hover, path.selected {
   font-size: 12px;
   font-weight: bold;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 3px 5px;
+  padding: 1.2px 5px;
   border-radius: 5px;
-  z-index: 11;
+  z-index: 9;
+}
+
+.wordcloud-message {
+  text-align: center;
+  font-size: 40px;
+  margin-top: 50px;
+  padding-block:15vh;
+  opacity: 0.8;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #06c;
 }
