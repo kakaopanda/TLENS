@@ -39,8 +39,7 @@ public class ReporterController {
 
     @GetMapping("/press")
     public ResponseEntity<?> getReportersByPress(@RequestParam Long pressId) {
-
-        List<ReporterInfoDTO> result =  reporterService.getReportersByPress(pressId);
+        List<ReporterInfoDTO> result = reporterService.getReportersByPress(pressId);
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
     }

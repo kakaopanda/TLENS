@@ -40,7 +40,6 @@ public class PressController {
     @GetMapping()
     public ResponseEntity<?> getMainPress() {
         List<MainPressDTO> result = pressService.getMainPress();
-
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
     }
 
