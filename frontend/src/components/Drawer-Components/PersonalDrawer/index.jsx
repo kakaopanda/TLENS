@@ -1,3 +1,4 @@
+import {useState, useEffect} from "react"
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Divider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
@@ -8,12 +9,30 @@ import "./personalDrawer.scss"
 
 //Api
 import {logout} from "../../../apis/users/"
+import {getUserInfo} from "../../../apis/api/axiosinstance"
 
 const PersonalDrawer = ( ) => {
   const navigate = useNavigate();
   
   const Authorization = localStorage.getItem("Authorization")
   const isLoggedIn = Authorization !== null;
+
+  const [userInfo, setUserInfo] = useState([]);
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const id = localStorage.getItem("userId");
+        const response = await getUserInfo(id);
+        setUserInfo(response); // response 값을 userInfo에 설정합니다.
+        console.log(response); // 유저 정보 출력
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchUserInfo();
+  }, [userId]);
 
   // const logout = async () => {
   //   try {
@@ -32,7 +51,7 @@ const PersonalDrawer = ( ) => {
         <ToastContainer />
         <div>
           {isLoggedIn ? (
-            <h4>안녕하세요!! "강김박배문이" 님</h4>
+            <h4>안녕하세요!! "{userInfo.nickname}" 님</h4>
           ) : (
             <div className="drawer-login">
               <Divider />
@@ -88,14 +107,14 @@ const PersonalDrawer = ( ) => {
         <div>
           <Divider />
         </div>
-        {isLoggedIn && <SubReportList />}
+        {isLoggedIn && <SubReportList key = {userId} userInfo = {userInfo}/>}
         <div>
           {isLoggedIn && (
             <Button
               style={{ fontWeight: "bold" }}
               onClick={() => navigate("/mypage")}
             >
-              내가 구독한 기자의 최신기사 확인하기
+              MyPage에서 구독 기자들을 확인하세요 >>
             </Button>
           )}
         </div>

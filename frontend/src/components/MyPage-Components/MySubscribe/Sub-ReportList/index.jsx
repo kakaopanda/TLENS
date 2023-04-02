@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom";
 import reporters from "./reporters.json";
 
 
-const SubReportList = () => {
+const SubReportList = ({userInfo}) => {
   const navigate = useNavigate()
 
   return (
     <div>
-      <h4>"강김문배박이"님의 구독기자 : (총 {reporters.length} 명)</h4>
+      <h4>"{userInfo.nickname}"님의 구독기자 : (총 {reporters.length} 명)</h4>
       <div style={{ maxHeight: "500px", overflowY: "scroll" }}> {/* 카드 부분 스크롤 적용 */}
         {reporters.map((V, index) => {
           let imgName;

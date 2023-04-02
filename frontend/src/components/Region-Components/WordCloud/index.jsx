@@ -17,7 +17,15 @@ const options = {
   rotations: 2,
   rotationAngles: [0],
   fontSizes: [10, 50],
-};
+  fontFamily:'Jua, sans-serif',
+  tooltipOptions: {
+    placement: 'bottom',
+    style: {
+      fontWeight: 'bold',
+      fontFamily: 'Jua, sans-serif',
+    },
+  },
+}
 
 function WordCloud(props) {
   const [selectedWord, setSelectedWord] = useState(null);
@@ -74,11 +82,11 @@ function WordCloud(props) {
         options={options}
         key={key}
       />
-      {selectedWord && (
+      {/* {selectedWord && (
         <p>
           선택한 단어 : "{selectedWord.text}", 빈도수 : {selectedWord.value}
         </p>
-      )}
+      )} */}
 
     </div>
   );
