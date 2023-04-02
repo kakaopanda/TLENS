@@ -67,7 +67,6 @@ public class SubscribeServiceImpl implements SubscribeService {
     };
 
     @Override
-    @Transactional
     public ListAndCntResponseDTO getSubscribeReporter(Long userId) {
         List<Reporter> reporterList = reporterRepository.findSubscribeReporterByUserId(userId);
 
@@ -75,11 +74,10 @@ public class SubscribeServiceImpl implements SubscribeService {
                 .map(reporter -> new ReporterInfoDTO(reporter))
                 .collect(Collectors.toList());
 
-        return new ListAndCntResponseDTO(reporterList, reporterList.size());
+        return new ListAndCntResponseDTO(reporterInfoList, reporterInfoList.size());
     }
 
     @Override
-    @Transactional
     public ListAndCntResponseDTO getNewsBySubscribeReporter(Long userId) {
         List<Reporter> reporterList = reporterRepository.findSubscribeReporterByUserId(userId);
 
@@ -87,7 +85,21 @@ public class SubscribeServiceImpl implements SubscribeService {
                 .map(reporter -> new ReporterInfoDTO(reporter))
                 .collect(Collectors.toList());
 
-        return new ListAndCntResponseDTO(reporterList, reporterList.size());
+        return new ListAndCntResponseDTO(reporterInfoList, reporterInfoList.size());
     }
 
+    @Override
+    public boolean isSubscribe(Long userId, Long reporterId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));
+
+        Reporter reporter = reporterRepository.findById(reporterId)
+                .orElseThrow(() -> new NotFoundException("Could not found news id : " + reporterId));
+
+        if (subscribeRepository.findByUserAndReporter(user, reporter).isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

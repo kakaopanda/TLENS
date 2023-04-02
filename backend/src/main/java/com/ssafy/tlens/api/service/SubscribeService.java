@@ -9,4 +9,5 @@ public interface SubscribeService {
     void delete(SubscribeRequestDTO subscribeRequestDTO);
     ListAndCntResponseDTO getSubscribeReporter(Long userId);
     ListAndCntResponseDTO getNewsBySubscribeReporter(Long userId);
+    boolean isSubscribe(Long userId, Long reporterId);
 }

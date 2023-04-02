@@ -49,9 +49,9 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<NewsInfoDTO> getNewsBySearch(String searchword) {
+    public List<NewsInfoDTO> getNewsBySearch(String searchword, int pageNo, int pageSize) {
 
-        List<News> newses = newsSearchRepository.findBySearch(searchword);
+        List<News> newses = newsSearchRepository.findBySearch(searchword, pageNo, pageSize);
 
         List<NewsInfoDTO> newsInfoList = newses.stream()
                 .map(news -> new NewsInfoDTO(news))

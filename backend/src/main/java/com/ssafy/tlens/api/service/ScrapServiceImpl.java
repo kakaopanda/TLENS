@@ -31,7 +31,7 @@ public class ScrapServiceImpl implements ScrapService {
                 .orElseThrow(() -> new NotFoundException("Could not found news id : " + scrapRequestDTO.getNewsId()));
 
         // 이미 스크랩되어있으면 에러 반환
-        if (scrapRepository.findByUserAndNews(user, news).isPresent()){
+        if (scrapRepository.findByUserAndNews(user, news).isPresent()) {
             // TODO 409에러로 변경
             throw new DuplicateResourceException("already exist data by user id :" + user.getUserId() + " ,"
                     + "news id : " + news.getNewsId());
@@ -61,7 +61,6 @@ public class ScrapServiceImpl implements ScrapService {
     };
 
     @Override
-    @Transactional
     public ListAndCntResponseDTO getScrapNewsList(Long userId){
         List<News> newsList = newsrepository.findScrapNewsByUserId(userId);
 
@@ -70,5 +69,20 @@ public class ScrapServiceImpl implements ScrapService {
                 .collect(Collectors.toList());
 
         return new ListAndCntResponseDTO(newsInfoList, newsInfoList.size());
+    }
+
+    @Override
+    public boolean isScrap(Long userId, Long newsId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));
+
+        News news = newsrepository.findById(newsId)
+                .orElseThrow(() -> new NotFoundException("Could not found news id : " + newsId));
+
+        if (scrapRepository.findByUserAndNews(user, news).isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

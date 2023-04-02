@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface NewsService {
-    List<NewsInfoDTO> getNewsBySearch(String searchword);
+    List<NewsInfoDTO> getNewsBySearch(String searchword, int pageNo, int pageSize);
 
     void insert(NewsRequestDTO newsRequestDTO);
     // 입력값으로 전달된 언론사에서 가장 최근에 작성된 뉴스 기사를 가져온다.

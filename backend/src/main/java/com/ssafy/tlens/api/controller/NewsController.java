@@ -238,8 +238,8 @@ public class NewsController {
     }
 
     @GetMapping("api/v1/news/search")
-    public ResponseEntity<?> getNewsBySearch(@RequestParam String searchword) {
-        List<NewsInfoDTO> result = newsService.getNewsBySearch(searchword);
+    public ResponseEntity<?> getNewsBySearch(@RequestParam String searchword, @RequestParam int pageNo, @RequestParam int pageSize) {
+        List<NewsInfoDTO> result = newsService.getNewsBySearch(searchword, pageNo, pageSize);
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_SEARCH_SUCCESS, result), HttpStatus.OK);
     }
