@@ -7,7 +7,7 @@ import SubReportList from "../../MyPage-Components/MySubscribe/Sub-ReportList";
 import "./personalDrawer.scss"
 
 //Api
-import {authInstance, logout} from "../../../apis/api/axiosinstance.jsx"
+import {logout} from "../../../apis/users/"
 
 const PersonalDrawer = ( ) => {
   const navigate = useNavigate();

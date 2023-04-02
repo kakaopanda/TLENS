@@ -1,19 +1,17 @@
 import React from "react";
-import {Navigate} from "react-router-dom";
-import {jwtUtils} from "../utils/jwtUtils";
-import {useSelector} from "react-redux";
+import { Navigate } from "react-router-dom";
+import {jwtUtils} from "../utils/jwtUtils"; // 토큰 관련 유틸리티
 
-const PrivateRoute = (props) => {
-  // 넘어오는 props를 파악하는게 중요.
-  // path, component ....
-  const token = useSelector((state) => state.Auth.token);
-  const {component: RouteComponent, path} = props;
-  // redirectUrl은 로그인이 성공후 돌아갈 화면이다.
+const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
+  const token = localStorage.getItem("Authorization");
+
   if (!jwtUtils.isAuth(token)) {
-    alert("로그인이 필요한 페이지입니다");
-    return <Navigate to={`/login?redirectUrl=${path}`}/>;
+    // 로그인되어 있지 않으면 로그인 페이지로 리디렉션
+    return <Navigate to="/auth" />;
   }
-  return <RouteComponent/>;
+
+  // 로그인되어 있으면 보호된 경로에 접근
+  return <RouteComponent {...rest} />;
 };
 
 export default PrivateRoute;

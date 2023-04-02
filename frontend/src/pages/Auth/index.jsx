@@ -25,15 +25,7 @@ export default function Auth() {
     <div className="auth-wrapper">
       <div className="auth-container">
         <div className="auth-box1">
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2 }}
-          onClick={() => navigate("/main")}
-        >
-          T:LENS 즉시 이용하기
-        </Button>
+
         </div>
         <div className="auth-box2">
           <Box sx={{ width: '100%', typography: 'body1' }}>
