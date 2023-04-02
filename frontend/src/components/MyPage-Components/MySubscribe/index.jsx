@@ -3,15 +3,15 @@ import "./mySubscribe.scss"
 import KeywordList from "./KyewordList"
 import SubJournalist from "./Sub-Journalist"
 
-const MySubscribe = () => {
+const MySubscribe = ({userInfo}) => {
   return (
-    <div className="mySubscribe">
+    <div className="mySubscribe" style={{ "font-family": 'Jua, sans-serif' }}>
       <div className="basic-Info">
-        <h2>안녕하세요! 강김문배박이 님.</h2>
+        <h2>안녕하세요! {userInfo.nickname} 님.</h2>
         <Divider sx={{ borderBottomWidth: "3px" }} />
       </div>
       <div className="keyword-selector">
-        <h2>"강김문배박이"의 T:LENS 키워드</h2>
+        <h2>"{userInfo.nickname}"의 T:LENS 키워드</h2>
         <KeywordList />
       </div>
       <Divider sx={{ borderBottomWidth: "3px" }} />

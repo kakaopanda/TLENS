@@ -2,17 +2,20 @@ import { useState } from "react";
 import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import './passwordChange.scss'
 
-const PasswordChangeModal = ({ onClose }) => {
+const PasswordChangeModal = ({ onClose, userInfo }) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isAuthed, setIsAuthed] = useState(false);
+
 
   function handlePasswordChange(e) {
     setPassword(e.target.value);
   }
 
   function authenticatePassword() {
+
+    // const validPassword = userInfo.password; // 유효한 비밀번호
     const validPassword = "password123"; // 유효한 비밀번호
     if (currentPassword === validPassword) {
       setIsAuthed(true);
@@ -59,12 +62,12 @@ const PasswordChangeModal = ({ onClose }) => {
           width: '30vw',
         }}
       >
-        <div className="password-verification">
-          비밀번호 변경하기
+        <div className="password-verification" >
+          <Typography className="password-text" style={{ fontWeight: 'bold', textAlign: 'center',  fontSize: '20px' }}>비밀번호 입력하기</Typography>
         </div>
         {!isAuthed ? (
           <form onSubmit={handleAuthSubmit} className="password-form">
-            <Typography variant="h5" >현재 비밀번호를 입력해주십시오.</Typography>
+           <Typography className="password-text" style={{ fontWeight: 'bold', marginBottom: '5px' }}>사용중이신 비밀번호를 입력해주십시오.</Typography>
             <TextField
               className="password-fields"
               type="password"
@@ -79,19 +82,19 @@ const PasswordChangeModal = ({ onClose }) => {
                   borderRadius: '50px',
                   justifyContent: 'center',
                   width: '100%',
-                  height: '50px',
+                  height: '45px',
                 }
               }}
             />
             <div className="auth-button">
-              <Button onClick={authenticatePassword} className="button" type="submit" variant="contained" color="primary" sx={{ mt: 5, justifyContent: 'center', width: '160px'}}>
+              <Button onClick={authenticatePassword} className="button" type="submit" variant="contained" color="primary" sx={{ mt: 2, justifyContent: 'center', width: '160px'}}>
               인증하기
               </Button>
             </div>
           </form>
         ) : (
           <form onSubmit={handleFormSubmit} className="password-form">
-            <Typography>새 비밀번호</Typography>
+            <Typography className="password-text" style={{ fontWeight: 'bold', marginTop: '5px' }}>새 비밀번호</Typography>
             <TextField
               className="password-fields"
               type="password"
@@ -104,12 +107,13 @@ const PasswordChangeModal = ({ onClose }) => {
                 style: {
                   borderRadius: '50px',
                   justifyContent: 'center',
+                  alignItems: 'center',
                   width: '100%',
-                  height: '50px',
+                  height: '45px',
                 }
               }}
             />
-            <Typography>비밀번호 확인</Typography>
+             <Typography className="password-text" style={{ fontWeight: 'bold', marginBottom: '5px', marginTop: '15px' }}>비밀번호 확인</Typography>
             <TextField
               className="password-fields"
               type="password"
@@ -123,7 +127,7 @@ const PasswordChangeModal = ({ onClose }) => {
                   borderRadius: '50px',
                   justifyContent: 'center',
                   width: '100%',
-                  height: '50px',
+                  height: '45px',
                 }
               }}
             />

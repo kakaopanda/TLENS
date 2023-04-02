@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import "./home.scss";
-import Auth from "../Auth";
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -92,7 +92,24 @@ const Home = () => {
               </div>
               <div className="house__wall house__wall--front house__wall--front-f">
                 <div className="house__component" style={{ width: "100%" }}>
-                  <Auth />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    sx={{ mt: 2 }}
+                    onClick={() => navigate("/main")}
+                  >
+                    T:LENS 즉시 이용하기
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    sx={{ mt: 2 }}
+                    onClick={() => navigate("/auth")}
+                  >
+                    T:LENS 로그인 하기
+                  </Button>
                 </div>
               </div>
               

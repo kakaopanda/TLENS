@@ -1,15 +1,15 @@
 import {Formik, ErrorMessage} from "formik";
 import * as Yup from "yup";
 import {Button, TextField, Divider} from "@mui/material";
-import { ToastContainer } from "react-toastify";
-import {login} from "../../../apis/api/axiosinstance.jsx"
-
-
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import {defaultInstance} from "../../../apis/api/axiosinstance"
 import "./login.scss";
 
 
-const Login = () => {
 
+const Login = () => {
+  const navigate = useNavigate()
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("올바른 이메일 형식이 아닙니다!")
@@ -17,6 +17,37 @@ const Login = () => {
     password: Yup.string()
       .required("패스워드를 입력하세요!")
   });
+
+  const login = async (values) => {
+    const { email, password } = values;
+    const loginData = {
+      email: email,
+      password: password,
+    };
+  
+    try {
+      const response = await defaultInstance.post(`users/login`, loginData);
+      localStorage.setItem("Authorization", response.headers.atk);
+      localStorage.setItem("refresh-token", response.headers.rtk);
+      localStorage.setItem("userId", response.data.content.userId);
+  
+      toast.success(<h3>로그인 성공😎</h3>, {
+        position: "top-center",
+        autoClose: 2000,
+      });
+      
+      setTimeout(() => {
+        navigate("/main");
+      }, 2000);
+      
+    } catch (error) {
+      console.log(error);
+      toast.error(<h3>로그인정보를 확인해주세요😭</h3>, {
+        position: "top-center",
+        autoClose: 2000,
+      });
+    }
+  };
 
   return (
     <Formik

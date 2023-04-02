@@ -55,12 +55,14 @@ const QuitMember = ({ onClose }) => {
           width: '30vw',
         }}
       >
-        <div className="password-verification">
-          회원 탈퇴하기
+        <div className="quit-verification" >
+          <Typography className="quit-text" style={{ fontWeight: 'bold', textAlign: 'center',  fontSize: '20px' }}>회원 탈퇴하기</Typography>
         </div>
         {!isAuthed ? (
           <form onSubmit={handleAuthSubmit} className="password-form">
-            <Typography variant="h5" >회원탈퇴를 위해서 비밀번호를 인증해주십시오.</Typography>
+            <Typography className="password-text" style={{ fontWeight: 'bold', marginBottom: '5px', marginTop: '5px' }}>
+              회원탈퇴를 위해서 비밀번호를 인증해주십시오.
+            </Typography>
             <TextField
               className="password-fields"
               type="password"
@@ -85,8 +87,12 @@ const QuitMember = ({ onClose }) => {
           </form>
         ) : (
           <form onSubmit={handleFormSubmit}>
-            <Typography variant="h5">매크로 방지를 위해서 아래 문구를 입력해주세요</Typography>
-            <Typography variant="h5" color={"secondary"}>저는 다시 한번 트렌즈의 서비스를 이용하겠습니다</Typography>
+            <Typography className="password-text" style={{ fontWeight: 'bold', marginBottom: '5px', marginTop: '5px' }}>
+              매크로 방지를 위해서 아래 문구를 입력해주세요
+            </Typography>
+            <Typography className="password-text" style={{ fontWeight: 'bold', marginBottom: '5px', marginTop: '5px', color: '#0066cc' }}>
+              저는 다시 한번 트렌즈의 서비스를 이용하겠습니다
+            </Typography>
             <TextField
               placeholder="저는 다시 한번 트렌즈의 서비스를 이용하겠습니다"
               type="text" 

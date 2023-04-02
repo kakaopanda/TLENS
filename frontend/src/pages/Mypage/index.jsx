@@ -8,6 +8,7 @@ import MySubscribe from '../../components/MyPage-Components/MySubscribe';
 import {getUserInfo} from "../../apis/api/axiosinstance";
 
 
+
 const MyPage = () => {
   const [value, setValue] = useState(0);
   const [userInfo, setUserInfo] = useState([]);
@@ -18,12 +19,12 @@ const MyPage = () => {
       try {
         const id = localStorage.getItem("userId");
         const response = await getUserInfo(id);
+        setUserInfo(response); // response 값을 userInfo에 설정합니다.
         console.log(response); // 유저 정보 출력
       } catch (error) {
         console.error(error);
       }
     };
-    
     fetchUserInfo();
   }, [userId]);
 
@@ -46,6 +47,7 @@ const MyPage = () => {
       padding: 10,
       borderRadius: '15px',
       height: '90vh',
+      margin: 0,
     }}>
       <Box
         sx={{ flexGrow: 1, bgcolor: 'parent', display: 'flex', height: '100%' }}
@@ -54,23 +56,21 @@ const MyPage = () => {
           orientation="vertical"
           value={value}
           onChange={handleChange}
-          aria-label="Vertical tabs example"
-          sx={{ borderRight: 2, borderColor: 'divider', minWidth: '12vw'}}
+          sx={{ borderRight: '3px solid', borderColor: 'divider', minWidth: '12vw', '& .Mui-selected': { borderRight: '3px solid #000' } }}
         >
-          <Tab label="Personal Info" sx={{height: '6vh'}}/>
-          <Tab label="My Scrap" sx={{height: '6vh'}}/>
-          <Tab label="My Subscribe" sx={{height: '6vh'}}/>
-
+          <Tab label="Personal Info" sx={{height: '6vh', '&.Mui-selected': {backgroundColor: 'skyblue', opacity: '60%', fontWeight: 'Bold', color: "black"}}} />
+          <Tab label="My Scrap" sx={{height: '6vh', '&.Mui-selected': {backgroundColor: 'skyblue', opacity: '60%', fontWeight: 'Bold', color: "black"}}}/>
+          <Tab label="My Subscribe" sx={{height: '6vh', '&.Mui-selected': {backgroundColor: 'skyblue', opacity: '60%', fontWeight: 'Bold', color: "black"}}}/>
         </Tabs>
 
         <TabPanel value={value} index={0} className='Test'>
-          {<PersonalInfo userInfo={userInfo} />}
+          {<PersonalInfo kye={userId} userInfo={userInfo}/>}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {<MyScrap />}
+          {<MyScrap kye= {userId} userInfo={userInfo}/>}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {<MySubscribe />}
+          {<MySubscribe kye= {userId} userInfo={userInfo}/>}
         </TabPanel>
       </Box>
 
