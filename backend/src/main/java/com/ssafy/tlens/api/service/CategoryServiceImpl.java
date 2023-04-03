@@ -1,16 +1,23 @@
 package com.ssafy.tlens.api.service;
 
+import com.google.common.collect.FluentIterable;
 import com.ssafy.tlens.api.request.TrendRequestDTO;
+import com.ssafy.tlens.api.response.CountNewsByCategoryDTO;
 import com.ssafy.tlens.api.response.MainCategoryDTO;
 import com.ssafy.tlens.api.response.MainEnterpriseDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.common.exception.handler.NotFoundException;
 import com.ssafy.tlens.entity.rdbms.Category;
 import com.ssafy.tlens.entity.rdbms.CategoryTrend;
+import com.ssafy.tlens.entity.rdbms.News;
 import com.ssafy.tlens.repository.CategoryRepository;
 import com.ssafy.tlens.repository.CategoryTrendRepository;
+import com.ssafy.tlens.repository.NewsSearchRepository;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +27,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     private  final CategoryTrendRepository categoryTrendRepository;
     private  final CategoryRepository categoryRepository;
+    private  final NewsSearchRepository newsSearchRepository;
 
     public void insertToCategory(TrendRequestDTO request) {
 
@@ -56,11 +64,24 @@ public class CategoryServiceImpl implements CategoryService{
 
         List<Category> categories = categoryRepository.findAll();
 
-        List<MainCategoryDTO> categoryInfoList = categories.stream()
+        return categories.stream()
                 .map(category -> new MainCategoryDTO(category))
                 .collect(Collectors.toList());
+    }
 
-        return categoryInfoList;
+
+    public List<NewsInfoDTO> getNewsByCategory(String category, int pageNo, int pageSize) {
+        List<News> newses = newsSearchRepository.findByCategory(category, pageNo, pageSize);
+
+        return newses.stream()
+                .map(news -> new NewsInfoDTO(news))
+                .collect(Collectors.toList());
+    }
+
+    public CountNewsByCategoryDTO countNewsByCategory(String category) {
+        Long countAllNews = newsSearchRepository.countNewsByCategory(category);
+        Long countRecentNews = newsSearchRepository.countNewsByCategoryOnToday(category);
+        return new CountNewsByCategoryDTO(countAllNews, countRecentNews);
     }
 
 }

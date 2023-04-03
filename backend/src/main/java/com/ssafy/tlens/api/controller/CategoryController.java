@@ -2,7 +2,9 @@ package com.ssafy.tlens.api.controller;
 
 
 import com.ssafy.tlens.api.request.TrendRequestDTO;
+import com.ssafy.tlens.api.response.CountNewsByCategoryDTO;
 import com.ssafy.tlens.api.response.MainCategoryDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.api.service.CategoryService;
 import com.ssafy.tlens.common.ResponseDto;
 import com.ssafy.tlens.enums.ResponseEnum;
@@ -38,9 +40,23 @@ public class CategoryController {
         categoryService.deleteToCategory(id);
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getMainCategory() {
         List<MainCategoryDTO> result = categoryService.getMainCategory();
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
+    }
+    
+    @GetMapping("/news")
+    public ResponseEntity<?> getNewsByCategory(@RequestParam String category, @RequestParam int pageNo, @RequestParam int pageSize) {
+        List<NewsInfoDTO> result = categoryService.getNewsByCategory(category, pageNo, pageSize);
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<?> countNewsByCategory(@RequestParam String category) {
+        CountNewsByCategoryDTO result = categoryService.countNewsByCategory(category);
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
     }
