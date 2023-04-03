@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-
-// const BASE_URL = "http://localhost:8080/api/v1";
-const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
+import authInstance from "./interceptor";
+const BASE_URL = "http://localhost:8080/api/v1";
+// const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
 
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url, options) => {
@@ -89,30 +89,45 @@ export const login = async (values) => {
   }
 };
 
-// 499에러(reissue)
-export const reIssue = async () => {
-  try {
-    const token = localStorage.getItem("refresh-token");
-    const refreshInstance = axiosRefreshApi(BASE_URL, token);
-    await refreshInstance.get("/users/reissue");
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 // 유저 정보 가져오기
 export const getUserInfo = async (id) => {
   try {
-    const token = localStorage.getItem("Authorization");
-    const authInstance = axiosApi(BASE_URL, token);
-    const response = await authInstance.get("/mypage/userinfo", {
+    const response = await authInstance.get('/mypage/userinfo', {
       params: { id },
     });
     return response.data.content;
   } catch (error) {
-    console.error(error);
+    if (error.response && error.response.status === 401) {
+      const refreshToken = localStorage.getItem('refresh_token');
+      if (refreshToken) {
+        try {
+          const response = await authInstance.get('/users/reissue', {
+            headers: {
+              Authorization: refreshToken,
+            },
+          });
+          const { accessToken } = response.data.data;
+          localStorage.setItem('Authorization', accessToken);
+          return await getUserInfo(id);
+        } catch (err) {
+          console.error('토큰 재발급 요청 실패');
+          localStorage.clear();
+          window.location.replace('/auth');
+          throw err;
+        }
+      } else {
+        console.error('refresh_token을 찾을 수 없습니다.');
+        throw error;
+      }
+    } else {
+      console.error(error);
+      throw error;
+    }
   }
 };
+
 
 // 검색 기사 가져오기
 export const getKeywordNews = async (keyword) => {

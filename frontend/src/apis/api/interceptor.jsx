@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const API_URL = 'http://localhost:8080/api/v1';
-const API_URL = "http://j8c206.p.ssafy.io:8080/api/v1";
+const API_URL = 'http://localhost:8080/api/v1';
+// const API_URL = "http://j8c206.p.ssafy.io:8080/api/v1";
 
 const authInstance = axios.create({
   baseURL: API_URL,
@@ -11,8 +11,11 @@ const authInstance = axios.create({
 authInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('Authorization');
   if (token) {
-    config.headers.Authorization = token;
-    console.log(config)
+    if (token.startsWith('Bearer ')) {
+      config.headers.Authorization = token;
+    } else {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 }, (error) => {
@@ -26,7 +29,7 @@ authInstance.interceptors.response.use((response) => {
   const originalRequest = error.config;
   const refreshToken = localStorage.getItem('refresh_token');
 
-  if (error.response && error.response.status === 499 && !originalRequest._retry && refreshToken) {
+  if (error.response && error.response.status === 499 && refreshToken) {
     originalRequest._retry = true;
 
     try {
@@ -35,13 +38,16 @@ authInstance.interceptors.response.use((response) => {
           Authorization: refreshToken,
         },
       });
-
       const { accessToken } = response.data.data;
       console.log('reissue');
       console.log(response);
       localStorage.setItem('Authorization', accessToken);
 
-      originalRequest.headers.Authorization = accessToken;
+      if (accessToken.startsWith('Bearer ')) {
+        originalRequest.headers.Authorization = accessToken;
+      } else {
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+      }
 
       return authInstance(originalRequest);
     } catch (err) {
