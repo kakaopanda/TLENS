@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const BASE_URL = "http://localhost:8080/api/v1";
-const BASE_URL = "http://j8c206.p.ssafy.io:8080/api/v1";
+const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
 
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url, options) => {

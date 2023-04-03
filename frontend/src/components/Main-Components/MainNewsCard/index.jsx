@@ -3,76 +3,70 @@ import "./MainNewsCard.scss";
 
 // MUI
 import Card from "@mui/joy/Card";
-import { Divider, Typography } from "@mui/material";
-
+import Link from "@mui/joy/Link";
+import Chip from "@mui/joy/Chip";
+import AspectRatio from "@mui/joy/AspectRatio";
+import { Divider } from "@mui/material";
 
 const MainNewsCard = ({ newsData }) => {
   if (!newsData) return null; // add conditional check
-
+  console.log(newsData);
   return (
-    <div>
-    {newsData.map((news) => (
-      <div key={news.id}>
-        <Card
-          className="main-news-card"
-          variant="outlined"
-          sx={{
-            margin: "auto",
-            marginTop: "15px",
-            width: "90%",
-            height: "150px", // 카드 높이를 220px로 지정
-            display: "flex",
-            flexDirection: "row", // 좌우로 배치
-            gap: 2,
-            boxShadow: "md",
-            transition: "all 0.3s ease",
-            "&:hover": {
-              boxShadow: "lg",
-              borderColor: "neutral.outlinedHoverBorder",
-            },
-            cursor: "pointer",
-          }}
-          onClick={() => window.open(news.link)}
-        >
-          <div
-            style={{
-              width: "40%",
-              height: "100%",
-              overflow: "hidden",
-              borderRadius: "4px",
+    <div className="news-container">
+      {newsData.map((V, index) => {
+        return (
+          <Card
+            key={index}
+            variant="outlined"
+            orientation="horizontal"
+            sx={{
+              margin: "auto",
+              marginTop: "15px",
+              width: "90%",
+              gap: 2,
+              "&:hover": {
+                boxShadow: "md",
+                borderColor: "neutral.outlinedHoverBorder",
+              },
             }}
           >
-            <img
-              src={news.thumbnail}
-              alt=""
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              width: "60%",
-              padding: "0 10px",
-            }}
-          >
-            <Typography variant="h6" sx={{ marginBottom: "10px" , textAlign: "start"}}>
-              {news.title}
-            </Typography>
-            <Typography variant="h6" sx={{ marginBottom: "10px", textAlign: "end" }}>
-              {news.reporter}
-            </Typography>
-          </div>
-        </Card>
-      </div>
-    ))}
-  </div>
-  
+            <AspectRatio ratio="1" sx={{ width: "15%" }}>
+              <img src={V.thumbnail} loading="lazy" alt="" />
+            </AspectRatio>
+            <Divider orientation="vertical" flexItem />
+            <div className="newscard-wrapper" style={{ width: "80%" }}>
+              <div className="newscard-title">
+                <h3 className="newscard-title-text">{V.title}</h3>
+                <Divider />
+              </div>
+              <div className="newscard-main">
+                <Link
+                  overlay
+                  underline="none"
+                  href={V.link}
+                  target="_blank"
+                  sx={{
+                    color: "text.tertiary",
+                  }}
+                ></Link>
+              </div>
+              <div className="newscard-reporter">
+                <Chip
+                  variant="outlined"
+                  color="primary"
+                  size="sm"
+                  sx={{
+                    pointerEvents: "none",
+                  }}
+                >
+                  {V.reporter}
+                </Chip>
+              </div>
+            </div>
+          </Card>
+        );
+      })}
+    </div>
   );
 };
 
