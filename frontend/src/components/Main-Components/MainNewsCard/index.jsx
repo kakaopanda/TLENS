@@ -10,7 +10,7 @@ import { Divider } from "@mui/material";
 
 const MainNewsCard = ({ newsData }) => {
   if (!newsData) return null; // add conditional check
-  console.log(newsData);
+
   return (
     <div className="news-container">
       {newsData.map((V, index) => {
