@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import authInstance from "./interceptor";
-const BASE_URL = "http://localhost:8080/api/v1";
-// const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
+// const BASE_URL = "http://localhost:8080/api/v1";
+const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
 
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url, options) => {
@@ -89,36 +89,34 @@ export const login = async (values) => {
   }
 };
 
-
-
 // 유저 정보 가져오기
 export const getUserInfo = async (id) => {
   try {
-    const response = await authInstance.get('/mypage/userinfo', {
+    const response = await authInstance.get("/mypage/userinfo", {
       params: { id },
     });
     return response.data.content;
   } catch (error) {
     if (error.response && error.response.status === 401) {
-      const refreshToken = localStorage.getItem('refresh_token');
+      const refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken) {
         try {
-          const response = await authInstance.get('/users/reissue', {
+          const response = await authInstance.get("/users/reissue", {
             headers: {
               Authorization: refreshToken,
             },
           });
           const { accessToken } = response.data.data;
-          localStorage.setItem('Authorization', accessToken);
+          localStorage.setItem("Authorization", accessToken);
           return await getUserInfo(id);
         } catch (err) {
-          console.error('토큰 재발급 요청 실패');
+          console.error("토큰 재발급 요청 실패");
           localStorage.clear();
-          window.location.replace('/auth');
+          window.location.replace("/auth");
           throw err;
         }
       } else {
-        console.error('refresh_token을 찾을 수 없습니다.');
+        console.error("refresh_token을 찾을 수 없습니다.");
         throw error;
       }
     } else {
@@ -128,12 +126,15 @@ export const getUserInfo = async (id) => {
   }
 };
 
-
 // 검색 기사 가져오기
 export const getKeywordNews = async (keyword) => {
   try {
     const response = await defaultInstance.get("/api/v1/news/search", {
-      params: { searchword: keyword },
+      params: {
+        searchword: keyword,
+        pageNo: 0,
+        pageSize: 5,
+      },
     });
     return response.data.content;
   } catch (error) {
