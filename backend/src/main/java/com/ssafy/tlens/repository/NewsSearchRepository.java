@@ -59,7 +59,6 @@ public class NewsSearchRepository {
                 .select(news)
                 .from(news)
                 .where(categoryEq(category))
-                .orderBy(news.createdDate.desc())
                 .fetchCount();
     }
 
@@ -71,8 +70,7 @@ public class NewsSearchRepository {
         return query
                 .select(news)
                 .from(news)
-                .where(categoryEq(category).and(isCreatedToday()))
-                .orderBy(news.createdDate.desc())
+                .where(categoryEq(category),isCreatedToday())
                 .fetchCount();
     }
 
