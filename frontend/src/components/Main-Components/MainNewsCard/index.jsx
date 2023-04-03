@@ -31,7 +31,9 @@ const MainNewsCard = ({ newsData }) => {
             }}
           >
             <AspectRatio ratio="1" sx={{ width: "15%" }}>
-              <img src={V.thumbnail} loading="lazy" alt="" />
+              {V.thumbnail ? (
+                <img src={V.thumbnail} loading="lazy" alt="" />
+              ) : null}
             </AspectRatio>
             <Divider orientation="vertical" flexItem />
             <div className="newscard-wrapper" style={{ width: "80%" }}>
