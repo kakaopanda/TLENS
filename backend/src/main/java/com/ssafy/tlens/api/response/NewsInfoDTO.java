@@ -11,11 +11,12 @@ public class NewsInfoDTO {
     private String summary;
     private String reporter;
     private String link;
-
+    private String thumbnail;
     public NewsInfoDTO(News news) {
         title = news.getTitle();
         summary = news.getSummary();
         reporter = news.getReporter();
         link = news.getCrawlLink();
+        thumbnail = news.getThumbNail();
     }
 }
