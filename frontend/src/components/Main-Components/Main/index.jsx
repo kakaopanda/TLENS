@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Main.scss";
 
 // Charts
@@ -16,15 +16,49 @@ import Box from "@mui/material/Box";
 import { defaultInstance } from "../../../apis/news";
 
 const MainChart = (props) => {
-  const [keyword, setKeyword] = useState("");
+  const [keywordNews, setKeywordNews] = useState([]);
   const [todayNewsCount, setTodayNewsCount] = useState("");
   const [allNewsCount, setAllNewsCount] = useState("");
-  const [page, setPage] = useState(-1);
-  const [pageSize, setPageSize] = useState(10);
-  const [keywordNews, setKeywordNews] = useState([]);
   const [category, setCategory] = useState("");
+  const [allKeywordNews, setAllKeywordNews] = useState([]);
 
-  // getCategoryNews에서 기사데이터 개수를 받아 3자리마다 콤마를 붙히는 함수
+  const pageSize = 10;
+  const mainBotLeftRef = useRef(null);
+
+  const getCategoryNews = async (category, page) => {
+    if (page === 0) {
+      try {
+        const response = await defaultInstance.get("/category/news", {
+          params: { category, pageNo: page, pageSize },
+        });
+        const response2 = await defaultInstance.get("/category/news", {
+          params: { category, pageNo: 0, pageSize: 1000 },
+        });
+        setAllKeywordNews(response2.data.conten);
+        setKeywordNews(response.data.content);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const response = await defaultInstance.get("/category/news", {
+          params: { category, pageNo: page, pageSize },
+        });
+        const response2 = await defaultInstance.get("/category/count", {
+          params: { category },
+        });
+        setTodayNewsCount(addCommas(response2.data.content.countRecentNews));
+        setAllNewsCount(addCommas(response2.data.content.countAllNews));
+        setKeywordNews((prevKeywordNews) => [
+          ...prevKeywordNews,
+          ...response.data.content,
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const addCommas = (num) => {
     const str = num.toString();
     const len = str.length;
@@ -35,69 +69,50 @@ const MainChart = (props) => {
     }
   };
 
-  // 카테고리별 기사데이터와 개수를 받는 함수
-  const getCategoryNews = async (category, page, pageSize) => {
-    setPage(page + 1);
-    try {
-      const response = await defaultInstance.get("/category/news", {
-        params: {
-          category: category,
-          pageNo: page,
-          pageSize: pageSize,
-        },
-      });
-      const response2 = await defaultInstance.get("/category/count", {
-        params: { category: category },
-      });
-
-      setTodayNewsCount(addCommas(response2.data.content.countRecentNews));
-      setAllNewsCount(addCommas(response2.data.content.countAllNews));
-      setKeywordNews(response.data.content);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // 메인화면의 탭이 바뀔때마다 카테고리 상태를 관리
   useEffect(() => {
+    setKeywordNews([]);
+    setCategory("");
     if (props?.value === "1") {
-      setKeyword("전체(All)");
       setCategory("전체");
     } else if (props?.value === "2") {
-      setKeyword("IT");
       setCategory("IT");
     } else if (props?.value === "3") {
-      setKeyword("경제(Economy)");
       setCategory("경제");
     } else if (props?.value === "4") {
-      setKeyword("사회(Society)");
       setCategory("사회");
     } else if (props?.value === "5") {
-      setKeyword("정치(Politics)");
       setCategory("정치");
     } else if (props?.value === "6") {
-      setKeyword("세계(World)");
       setCategory("세계");
     } else if (props?.value === "7") {
-      setKeyword("생활(Life)");
       setCategory("생활");
     } else if (props?.value === "8") {
-      setKeyword("스포츠(Sports)");
       setCategory("스포츠");
     } else if (props?.value === "9") {
-      setKeyword("연예(Entertainments)");
       setCategory("연예");
     } else {
-      setKeyword("오피니언(Opinion)");
       setCategory("오피니언");
     }
   }, [props.value]);
 
-  // 컴포넌트가 마운트되면 첫 페이지 데이터 불러오기
   useEffect(() => {
-    setPage(-1);
-    getCategoryNews(category, page, pageSize);
-  }, [keyword]);
+    getCategoryNews(category, 0);
+  }, [category]);
+
+  const handleScroll = () => {
+    const el = mainBotLeftRef.current;
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight) {
+      getCategoryNews(category, Math.ceil(keywordNews.length / pageSize));
+    }
+  };
+
+  useEffect(() => {
+    const el = mainBotLeftRef.current;
+    el.addEventListener("scroll", handleScroll);
+    return () => {
+      el.removeEventListener("scroll", handleScroll);
+    };
+  }, [keywordNews.length]);
 
   return (
     <div>
@@ -138,7 +153,7 @@ const MainChart = (props) => {
       </div>
       <br />
       <div className="main-mid">
-        <h2>T:LENS 키워드 통계 : {keyword}</h2>
+        <h2>T:LENS 키워드 통계 : {category}</h2>
       </div>
       <Divider />
       <div className="main-mid-wrapper">
@@ -153,10 +168,10 @@ const MainChart = (props) => {
         </div>
       </div>
       <Divider />
-      <h2 className="main-bot-h2">T:LENS 키워드 뉴스 : {keyword}</h2>
+      <h2 className="main-bot-h2">T:LENS 키워드 뉴스 : {category}</h2>
       <Divider />
       <div className="main-bot-wrapper">
-        <div className="main-bot-left">
+        <div className="main-bot-left" ref={mainBotLeftRef}>
           <MainNewsCard newsData={keywordNews} />
         </div>
         <Divider orientation="vertical" flexItem />
@@ -171,7 +186,7 @@ const MainChart = (props) => {
             <h2 className="main-bot-right-h2">시간별 핫 키워드(Top 10)</h2>
             <br />
             <div className="main-bot-right-2">
-              <SearchResultChart2 />
+              <SearchResultChart2 keyword={category} />
             </div>
           </div>
         </div>
