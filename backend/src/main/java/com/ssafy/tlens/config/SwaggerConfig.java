@@ -21,7 +21,7 @@ public class SwaggerConfig {
                 .version("v1.0.0")
                 .description("SSAFY 특화 프로젝트 T:LENS의 API 명세서입니다.");
         return new OpenAPI()
-                .addServersItem(new Server().url("/"))
+                .addServersItem(new Server().url("https://j8c206.p.ssafy.io/api/v1"))
                 .components(new Components())
                 .info(info);
     }
