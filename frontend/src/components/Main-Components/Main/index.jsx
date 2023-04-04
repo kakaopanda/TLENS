@@ -20,21 +20,57 @@ const MainChart = (props) => {
   const [todayNewsCount, setTodayNewsCount] = useState("");
   const [allNewsCount, setAllNewsCount] = useState("");
   const [category, setCategory] = useState("");
-  const [allKeywordNews, setAllKeywordNews] = useState([]);
+  const [splitKeyword, setSplitKeyword] = useState({
+    textList: [],
+    valueList: [],
+  });
 
   const pageSize = 10;
   const mainBotLeftRef = useRef(null);
 
+  const countWords = (text) => {
+    const words = text.split(" ");
+    const wordCounts = {};
+    words.forEach((word) => {
+      if (wordCounts[word] && word.length !== 1) {
+        wordCounts[word]++;
+      } else {
+        wordCounts[word] = 1;
+      }
+    });
+    const result = Object.entries(wordCounts)
+      .map(([text, value]) => ({ text, value }))
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 10);
+
+    const textList = result.map(({ text }) => text);
+    const valueList = result.map(({ value }) => value);
+
+    return { textList, valueList };
+  };
+
   const getCategoryNews = async (category, page) => {
+    const res = await defaultInstance.get("/category/news", {
+      params: { category, pageNo: 0, pageSize: 9999 },
+    });
+    const combinedTitle = res.data.content
+      .map((news) => {
+        return news.title;
+      })
+      .join(" ");
+    const cleanStr = combinedTitle.replace(/[^\p{L}\p{N}\s]/gu, "");
+    const count = countWords(cleanStr);
+    setSplitKeyword(count);
     if (page === 0) {
       try {
         const response = await defaultInstance.get("/category/news", {
           params: { category, pageNo: page, pageSize },
         });
-        const response2 = await defaultInstance.get("/category/news", {
-          params: { category, pageNo: 0, pageSize: 1000 },
+        const response3 = await defaultInstance.get("/category/count", {
+          params: { category },
         });
-        setAllKeywordNews(response2.data.conten);
+        setTodayNewsCount(addCommas(response3.data.content.countRecentNews));
+        setAllNewsCount(addCommas(response3.data.content.countAllNews));
         setKeywordNews(response.data.content);
       } catch (error) {
         console.log(error);
@@ -44,11 +80,6 @@ const MainChart = (props) => {
         const response = await defaultInstance.get("/category/news", {
           params: { category, pageNo: page, pageSize },
         });
-        const response2 = await defaultInstance.get("/category/count", {
-          params: { category },
-        });
-        setTodayNewsCount(addCommas(response2.data.content.countRecentNews));
-        setAllNewsCount(addCommas(response2.data.content.countAllNews));
         setKeywordNews((prevKeywordNews) => [
           ...prevKeywordNews,
           ...response.data.content,
@@ -101,7 +132,7 @@ const MainChart = (props) => {
 
   const handleScroll = () => {
     const el = mainBotLeftRef.current;
-    if (el.scrollTop + el.clientHeight >= el.scrollHeight) {
+    if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
       getCategoryNews(category, Math.ceil(keywordNews.length / pageSize));
     }
   };
@@ -159,7 +190,7 @@ const MainChart = (props) => {
       <div className="main-mid-wrapper">
         <div className="main-mid-left">
           <h2>키워드 Top 10</h2>
-          <BarCharts />
+          <BarCharts splitKeyword={splitKeyword} />
         </div>
         <Divider orientation="vertical" flexItem />
         <div className="main-mid-right">

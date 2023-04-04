@@ -126,14 +126,30 @@ export const getUserInfo = async (id) => {
   }
 };
 
-// 검색 기사 가져오기
-export const getKeywordNews = async (keyword) => {
+// 모든 검색 기사 가져오기
+export const getAllKeywordNews = async (keyword) => {
   try {
     const response = await defaultInstance.get("/api/v1/news/search", {
       params: {
         searchword: keyword,
         pageNo: 0,
-        pageSize: 5,
+        pageSize: 999999,
+      },
+    });
+    return response.data.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 검색 기사 가져오기
+export const getKeywordNews = async (keyword, page) => {
+  try {
+    const response = await defaultInstance.get("/api/v1/news/search", {
+      params: {
+        searchword: keyword,
+        pageNo: page,
+        pageSize: 10,
       },
     });
     return response.data.content;
@@ -159,6 +175,22 @@ export const getReporterData = async (num) => {
       params: { pressId: num },
     });
     return response.data.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 기자별 기사 데이터 가져오기
+export const getReporterNews = async (name, page, pageSize) => {
+  try {
+    const res = await defaultInstance.get("/reporter/news", {
+      params: {
+        reporter: name,
+        pageNo: page,
+        pageSize: pageSize,
+      },
+    });
+    return res.data.content;
   } catch (error) {
     console.log(error);
   }
