@@ -18,7 +18,6 @@ import Divider from "@mui/material/Divider";
 
 const SearchResult = () => {
   const { keyword } = useParams();
-  console.log(keyword);
 
   const pageSize = 10;
   const mainBotLeftRef = useRef(null);
