@@ -120,7 +120,7 @@ const ReporterCarousel = () => {
       getReporter(pressName, Math.ceil(reporterData.length / pageSize));
     }
   };
-  console.log(Math.ceil(reporterData.length / pageSize));
+
   useEffect(() => {
     const el = mainBotLeftRef.current;
     el.addEventListener("scroll", handleScroll);
@@ -149,8 +149,8 @@ const ReporterCarousel = () => {
       </h2>
       <div
         style={{
-          margin: "0 8% 0 8%",
-          height: "50vh",
+          margin: "0 8% 3% 8%",
+          height: "70vh",
           display: "flex",
           flexWrap: "wrap",
           alignItems: "center",
@@ -171,6 +171,7 @@ const ReporterCarousel = () => {
           <h2>등록된 기자가 없습니다</h2>
         )}
       </div>
+      <br />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
 import "./CompanyDetail.scss";
@@ -22,9 +22,13 @@ const CompanyDetail = () => {
   const [loading, setLoading] = useState(false);
   const [newsData, setNewsData] = useState([]);
 
+  const page = 0;
+  const pageSize = 10;
+  const mainBotLeftRef = useRef(null);
+
   const getNews = async () => {
     try {
-      const res = await getKeywordNews(name);
+      const res = await getKeywordNews(name, 0, 10);
       setNewsData(res);
     } catch (error) {
       console.log(error);
@@ -52,6 +56,26 @@ const CompanyDetail = () => {
     }, 1);
     getNews();
   }, [name]);
+
+  const handleScroll = async () => {
+    const el = mainBotLeftRef.current;
+    if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
+      const res3 = await getKeywordNews(
+        name,
+        Math.ceil(newsData.length / pageSize),
+        pageSize
+      );
+      setNewsData((prevData) => [...prevData, ...res3]);
+    }
+  };
+
+  useEffect(() => {
+    const el = mainBotLeftRef.current;
+    el.addEventListener("scroll", handleScroll);
+    return () => {
+      el.removeEventListener("scroll", handleScroll);
+    };
+  }, [newsData.length]);
 
   return (
     <div className="companydetail-wrapper">
@@ -120,6 +144,7 @@ const CompanyDetail = () => {
               height: "95vh",
               overflowY: "auto",
             }}
+            ref={mainBotLeftRef}
           >
             <MainNewsCard newsData={newsData} />
           </div>

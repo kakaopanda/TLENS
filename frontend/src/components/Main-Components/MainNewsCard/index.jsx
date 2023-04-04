@@ -10,7 +10,7 @@ import { Divider } from "@mui/material";
 
 const MainNewsCard = ({ newsData }) => {
   if (!newsData) return null; // add conditional check
-
+  const err = "요약정보가 없습니다!";
   return (
     <div className="news-container">
       {newsData.map((V, index) => {
@@ -51,7 +51,9 @@ const MainNewsCard = ({ newsData }) => {
                     color: "text.tertiary",
                   }}
                 >
-                  <h4 className="newscard-main-text">{V.summary}</h4>
+                  <h4 className="newscard-main-text">
+                    {V.summary ? V.summary : err}
+                  </h4>
                 </Link>
               </div>
               <div className="newscard-reporter">
