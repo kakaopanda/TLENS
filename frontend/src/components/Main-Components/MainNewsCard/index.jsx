@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState} from "react";
 import "./MainNewsCard.scss";
 
 // MUI
@@ -8,7 +8,27 @@ import Chip from "@mui/joy/Chip";
 import AspectRatio from "@mui/joy/AspectRatio";
 import { Divider } from "@mui/material";
 
+
+// API
+import NewsCardModal from "../../NewsCardModal"
+
 const MainNewsCard = ({ newsData }) => {
+
+  const [newsModalOpen, setNewsModalOpen] = useState(false);
+  const [selectedNews, setSelectedNews] = useState(null);
+
+  const handleCardClick = (news) => {
+    // console.log(news)
+    setSelectedNews(news);
+    setNewsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setNewsModalOpen(false);
+    setSelectedNews(null);
+  };
+
+
   if (!newsData) return null; // add conditional check
   const err = "요약정보가 없습니다!";
   return (
@@ -19,6 +39,7 @@ const MainNewsCard = ({ newsData }) => {
             key={index}
             variant="outlined"
             orientation="horizontal"
+            onClick={() => handleCardClick(V)}
             sx={{
               margin: "auto",
               marginTop: "15px",
@@ -42,19 +63,9 @@ const MainNewsCard = ({ newsData }) => {
                 <Divider />
               </div>
               <div className="newscard-main">
-                <Link
-                  overlay
-                  underline="none"
-                  href={V.link}
-                  target="_blank"
-                  sx={{
-                    color: "text.tertiary",
-                  }}
-                >
-                  <h4 className="newscard-main-text">
-                    {V.summary ? V.summary : err}
-                  </h4>
-                </Link>
+                <h4 className="newscard-main-text">
+                  {V.summary ? V.summary : err}
+                </h4>
               </div>
               <div className="newscard-reporter">
                 <Chip
@@ -72,6 +83,13 @@ const MainNewsCard = ({ newsData }) => {
           </Card>
         );
       })}
+      {selectedNews && (
+        <NewsCardModal
+          onClose={handleCloseModal}
+          news={selectedNews}
+          open={newsModalOpen}
+        />
+      )}
     </div>
   );
 };
