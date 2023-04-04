@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/v1';
-// const API_URL = "http://j8c206.p.ssafy.io:8080/api/v1";
+// const API_URL = 'http://localhost:8080/api/v1';
+const API_URL = "http://j8c206.p.ssafy.io/api/v1";
 
 const authInstance = axios.create({
   baseURL: API_URL,
