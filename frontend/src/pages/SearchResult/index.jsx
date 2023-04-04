@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import {
+  getKeywordNews,
+  getAllKeywordNews,
+} from "../../apis/api/axiosinstance";
 import MainNewsCard from "../../components/Main-Components/MainNewsCard";
 import "./SearchResult.scss";
-import { getKeywordNews } from "../../apis/api/axiosinstance";
 
 // Charts
 import SearchResultChart1 from "../../components/Charts-Components/SearchResultChart1";
@@ -15,29 +18,57 @@ import Divider from "@mui/material/Divider";
 
 const SearchResult = () => {
   const { keyword } = useParams();
+  console.log(keyword);
 
+  const pageSize = 10;
+  const mainBotLeftRef = useRef(null);
   const [newsData, setNewsData] = useState([]);
   const [splitKeyword, setSplitKeyword] = useState({
     textList: [],
     valueList: [],
   });
 
-  const getNews = async () => {
-    try {
-      const res = await getKeywordNews(keyword);
-      setNewsData(res);
-      const combinedTitle = res
-        .map((news) => {
-          return news.title;
-        })
-        .join(" ");
-      const cleanStr = combinedTitle.replace(/[^\p{L}\p{N}\s]/gu, "");
-      const count = countWords(cleanStr);
-      setSplitKeyword(count);
-    } catch (error) {
-      console.log(error);
+  const getNews = async (keyword, page) => {
+    const res = await getAllKeywordNews(keyword);
+    const combinedTitle = res
+      .map((news) => {
+        return news.title;
+      })
+      .join(" ");
+    const cleanStr = combinedTitle.replace(/[^\p{L}\p{N}\s]/gu, "");
+    const count = countWords(cleanStr);
+    setSplitKeyword(count);
+    if (page === 0) {
+      try {
+        const res1 = await getKeywordNews(keyword, page);
+        setNewsData(res1);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      const res2 = await getKeywordNews(keyword, page);
+      setNewsData((prevData) => [...prevData, ...res2]);
     }
   };
+
+  useEffect(() => {
+    getNews(keyword, 0);
+  }, [keyword]);
+
+  const handleScroll = () => {
+    const el = mainBotLeftRef.current;
+    if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
+      getNews(keyword, Math.ceil(newsData.length / pageSize));
+    }
+  };
+
+  useEffect(() => {
+    const el = mainBotLeftRef.current;
+    el.addEventListener("scroll", handleScroll);
+    return () => {
+      el.removeEventListener("scroll", handleScroll);
+    };
+  }, [newsData.length]);
 
   const countWords = (text) => {
     const words = text.split(" ");
@@ -49,26 +80,16 @@ const SearchResult = () => {
         wordCounts[word] = 1;
       }
     });
-    const result = Object.entries(wordCounts).map(([text, value]) => ({
-      text,
-      value,
-    }));
-    result.sort((a, b) => b.value - a.value);
-    const topResult = result.slice(0, 10);
+    const result = Object.entries(wordCounts)
+      .map(([text, value]) => ({ text, value }))
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 10);
 
-    const textList = [];
-    const valueList = [];
+    const textList = result.map(({ text }) => text);
+    const valueList = result.map(({ value }) => value);
 
-    topResult.forEach((entry) => {
-      textList.push(entry.text);
-      valueList.push(entry.value);
-    });
     return { textList, valueList };
   };
-
-  useEffect(() => {
-    getNews();
-  }, [keyword]);
 
   return (
     <div className="searchresult-wrapper">
@@ -82,7 +103,7 @@ const SearchResult = () => {
       </div>
       <Divider />
       <div className="searchresult-main">
-        <div className="searchresult-news">
+        <div className="searchresult-news" ref={mainBotLeftRef}>
           <MainNewsCard newsData={newsData} />
         </div>
         <Divider orientation="vertical" flexItem />

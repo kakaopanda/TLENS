@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
 import "./ReporterDetail.scss";
@@ -8,6 +8,7 @@ import ReporterPieChart from "../../Charts-Components/ReporterPieChart";
 import ReporterPieChart2 from "../../Charts-Components/ReporterPieChart2";
 import ReporterColumnChart from "../../Charts-Components/ReporterColumnChart";
 import WordCloud from "../../Charts-Components/WordCloud";
+import { getReporterNews } from "../../../apis/api/axiosinstance";
 
 // MUI
 import Divider from "@mui/material/Divider";
@@ -15,6 +16,20 @@ import { Button } from "@mui/material";
 
 const ReporterDetail = () => {
   const { state } = useLocation();
+
+  const [newsData, setNewsData] = useState([]);
+  const [page, setPage] = useState(0);
+  const pageSize = 10;
+
+  const getReporterNewsData = async () => {
+    const res = await getReporterNews(state.data.name, page, pageSize);
+    setNewsData(res);
+    console.log(res);
+  };
+
+  useEffect(() => {
+    getReporterNewsData();
+  }, []);
 
   return (
     <div className="reporterdetail-wrapper">
@@ -93,7 +108,7 @@ const ReporterDetail = () => {
           T:LENS 키워드 뉴스 : {state[2]} 기자
         </h2>
         <div className="reporterdetail-right-news">
-          {/* <MainNewsCard /> */}
+          <MainNewsCard newsData={newsData} />
         </div>
       </div>
     </div>

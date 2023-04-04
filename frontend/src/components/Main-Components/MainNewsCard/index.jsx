@@ -50,7 +50,9 @@ const MainNewsCard = ({ newsData }) => {
                   sx={{
                     color: "text.tertiary",
                   }}
-                ></Link>
+                >
+                  <h4 className="newscard-main-text">{V.summary}</h4>
+                </Link>
               </div>
               <div className="newscard-reporter">
                 <Chip
