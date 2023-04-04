@@ -94,5 +94,37 @@
     "category": "원유 정제처리업",
     "ceo": "허세홍",
     "birth": "1967-05-19"
+  },
+  {
+    "id": "12",
+    "name": "삼성물산",
+    "ename": "Samsung C&T Corporation",
+    "category": "기타 전문 도매업",
+    "ceo": "고정석, 오세철, 한승환",
+    "birth": "1963-12-23"
+  },
+  {
+    "id": "13",
+    "name": "하나금융지주",
+    "ename": "Hana Bank",
+    "category": "국내은행",
+    "ceo": "박성호",
+    "birth": "1959-12-01"
+  },
+  {
+    "id": "14",
+    "name": "삼성SDI",
+    "ename": "SAMSUNG SDI CO., LTD.",
+    "category": "축전지 제조업",
+    "ceo": "최윤호",
+    "birth": "1970-01-20"
+  },
+  {
+    "id": "15",
+    "name": "LG디스플레이",
+    "ename": "LG Display Co., Ltd",
+    "category": "액정 표시장치 제조업",
+    "ceo": "정호영",
+    "birth": "1985-02-28"
   }
 ]

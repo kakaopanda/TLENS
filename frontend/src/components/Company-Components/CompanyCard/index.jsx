@@ -26,7 +26,13 @@ const CompanyCard = ({ name, ename, category, ceo, birth, index }) => {
     <div>
       <Card className="company-card" variant="outlined">
         <CardOverflow>
-          <img src={`/img/${index}.jpg`} alt="" width="150" height="80" />
+          <img
+            style={{ marginTop: "10%" }}
+            src={`/img/${index}.jpg`}
+            alt=""
+            width="150"
+            height="80"
+          />
         </CardOverflow>
         <Typography level="h2" sx={{ fontSize: "md" }}>
           <Link
