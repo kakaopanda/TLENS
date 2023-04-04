@@ -6,11 +6,8 @@ import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
 
 import {Button, TextField, FormControl, MenuItem, Select, Typography, FormControlLabel, Checkbox} from "@mui/material";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { format } from "date-fns";
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import "./signUp.scss"
 import axios from 'axios';
 
@@ -18,24 +15,13 @@ const SignUp = () => {
   
   const navigate = useNavigate()
 
-  // // 생년월일 
-  // const handleDateChange = (date) => {
-  //   setSelectedDate(date);
-  //   console.log(date)
-  // };
-
-  // // 체크 박스
-  // const handleCheckboxChange = (event) => {
-  //   setIsMember(event.target.checked);
-  //   console.log(isMember)
-  // };
-
   const submit = async (values) => {
-    const { email, nickname, password, gender, birthday, membership } = values;
+    const { email, nickname, password, gender, birthday, membership, age } = values;
 
     //signup data
 
     const signupData = {
+      age: age,
       email: email,
       nickname: nickname,
       password: password,
@@ -44,34 +30,40 @@ const SignUp = () => {
       membership: membership,
     };
 
-    try {
-      const response = await axios.post("http://localhost:8080/api/v1/users", signupData);
-
-      if (response.data.message === 0) {
-        toast.success(
-          <h3>
-            회원가입이 완료되었습니다.
-            <br />
-            로그인 하세요😎
-          </h3>,
-          {
-            position: "top-center",
-            autoClose: 2000,
-          }
-        );
-        setTimeout(() => {
-          navigate("/auth");
-        }, 2000);
-      } else {
-        toast.error(<h3>이미 있는 회원입니다.</h3>);
+      try {
+        const response = await axios.post("http://localhost:8080/api/v1/users", signupData);
+        console.log(response)
+        if (response.data.code === 200) {
+          toast.success(
+            <h3>
+              회원가입이 완료되었습니다.
+              <br/>
+              로그인 하세요😎
+            </h3>,
+            {
+              position: "top-center",
+              autoClose: 2000,
+              onClose: () => {
+                window.location.reload();
+              }
+            }
+          );
+        } else {
+          toast.error(
+            <h3>이미 있는 회원입니다😭.</h3>,
+            {
+              position: "top-center",
+              autoClose: 2000,
+            }
+          );
+        }
+      } catch (e) {
+        // 서버에서 받은 에러 메시지 출력
+        toast.error(e.response.data.message + "😭", {
+          position: "top-center",
+        });
       }
-    } catch (e) {
-      // 서버에서 받은 에러 메시지 출력
-      toast.error(e.response.data.message + "😭", {
-        position: "top-center",
-      });
-    }
-  };
+    };
 
 
 
@@ -112,7 +104,8 @@ const SignUp = () => {
         password2: "",
         gender:"",
         birthday:null,
-        membership: false,
+        age:null,
+        membership: null,
       }}
       validationSchema={validationSchema}
       
@@ -125,7 +118,9 @@ const SignUp = () => {
       validateOnMount={true}
     >
     {({values, handleSubmit, handleChange, errors, setFieldValue}) => (
+      
     <div className="signup-wrapper">
+      <ToastContainer/>
       <div className="container">
         <form 
         onSubmit={handleSubmit} autoComplete="off"
@@ -224,53 +219,44 @@ const SignUp = () => {
                     label="성별"
                     variant="outlined"
                     onChange={handleChange}
-                    style={{ height: '35px', width: '100%' }}
+                    style={{ height: '35px', width: '100px', marginLeft: '35px' }}
                   >
                     <MenuItem value={"male"}>남성</MenuItem>
                     <MenuItem value={"female"}>여성</MenuItem>
                   </Select>
                 </FormControl>
               </div>
-              <div className="error-message">{errors.gender}</div>
+                <div className="error-message">{errors.gender}</div>
 
-              <div className="input-datepicker">
-                <div className="input-label">생년월일 : </div>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    value={values.birthday}
-                    label="생년월일을 입력해주세요"
-                    onChange={(date) => setFieldValue("birthday", date)}
-                    style={{ height: '100%' }} // 높이를 200px로 조정
-                    slotProps={{
-                      label: {
-                        style: { fontSize: "10px"}
-                      },
-                      textField: {
-                        helperText: 'MM / DD / YYYY',
-                        style: { width: '320px' }
-                      },
-                    }}      
-                    TextFieldProps={{
-                      InputProps: {
-                        style: { height: '5px' } // 높이를 auto로 설정하여 자동으로 조정하도록 합니다.
-                      }
-                    }}
-                  />
-                </LocalizationProvider>
-              </div>
-              
-              <div className="membership-check" style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
-                <FormControlLabel
-                  control={
-                  <Checkbox
-                  name="membership" 
-                  checked={values.membership} 
-                  onChange={handleChange} />
-                }
-                  label={<Typography style={{ fontWeight: "bold", marginLeft: "-5px", fontSize: "15px" }}>T:LENS 맴버쉽에 가입하시겠습니까?</Typography>}
-                  labelPlacement="start"
-                />
-              </div>
+                <div className="input-forms-item">
+                  <div className="input-label">생년월일 : </div>
+                    <div className='input-datepicker'>
+                      <DatePicker
+                        selected={values.birthday}
+                        onChange={(date) => {
+                          setFieldValue('birthday', date);
+                          const ageDiffMs = Date.now() - date.getTime();
+                          const ageDate = new Date(ageDiffMs);
+                          const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+                          setFieldValue('age', age);
+                        }}
+                        dateFormat="yyyy-MM-dd"
+                        placeholderText="YYYY-MM-DD"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="membership-check" style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+                    <div className="input-label">
+                      <Typography style={{ fontWeight: "bold", marginLeft: "5px", fontSize: "15px" }}>T:LENS 맴버쉽에 가입하시겠습니까?</Typography>
+                    </div>
+                      <Checkbox
+                        name="membership" 
+                        value={values.membership} 
+                        onChange={handleChange} 
+                        id="membership-checkbox"
+                      />
+                    </div>
 
               <div className='submit-button'>
                 <Button

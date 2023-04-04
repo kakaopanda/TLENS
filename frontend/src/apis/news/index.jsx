@@ -4,6 +4,7 @@ import {toast} from "react-toastify"
 // const BASE_URL = "http://localhost:8080/api/v1";
 const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
 
+
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url, options) => {
   const instance = axios.create({ baseURL: url, ...options });
@@ -75,6 +76,19 @@ export const subStatus = async (id) => {
 };
 
 
+export const getSubscribe = async (id) => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const response = await authInstance.get("/subscribe/status",  {
+      params: { reporterId : id },
+    });
+    return response.data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 ///////////////////////////////////////////////////////////////////////// 기사 스크랩
 
 export const scrapArticle = async (id) => {
@@ -116,11 +130,11 @@ export const scrapStatus = async (id) => {
   try {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
-    const test = await authInstance.get("/scrap/status", {
+    const response = await authInstance.get("/scrap/status", {
       params: { newsId : id },
     });
-    return test
-    console.log(test)
+    return response
+
   } catch (error) {
     console.log(error);
   }
