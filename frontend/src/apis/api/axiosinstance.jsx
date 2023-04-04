@@ -200,6 +200,25 @@ export const getReporterNews = async (name, page, pageSize) => {
   }
 };
 
+// 기자별 기사 카테고리 카운트 가져오기
+export const getReporterCategory = async (name) => {
+  try {
+    const res = await defaultInstance.get("/reporter/category/count", {
+      params: { reporter: name },
+    });
+    const result = res.data.content;
+    const text = [];
+    const count = [];
+    result.map((V) => {
+      text.push(V.name);
+      count.push(V.cnt);
+    });
+    return { text, count };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // 다음은 사용법
 
 // import { defaultInstance, authInstance } from '@apis/utils'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
 import "./ReporterDetail.scss";
@@ -8,7 +8,10 @@ import ReporterPieChart from "../../Charts-Components/ReporterPieChart";
 import ReporterPieChart2 from "../../Charts-Components/ReporterPieChart2";
 import ReporterColumnChart from "../../Charts-Components/ReporterColumnChart";
 import WordCloud from "../../Charts-Components/WordCloud";
-import { getReporterNews } from "../../../apis/api/axiosinstance";
+import {
+  getReporterNews,
+  getReporterCategory,
+} from "../../../apis/api/axiosinstance";
 
 // MUI
 import Divider from "@mui/material/Divider";
@@ -16,20 +19,44 @@ import { Button } from "@mui/material";
 
 const ReporterDetail = () => {
   const { state } = useLocation();
-
   const [newsData, setNewsData] = useState([]);
-  const [page, setPage] = useState(0);
-  const pageSize = 10;
+  const [categoryCount, setCategoryCount] = useState([]);
 
-  const getReporterNewsData = async () => {
-    const res = await getReporterNews(state.data.name, page, pageSize);
-    setNewsData(res);
-    console.log(res);
+  const page = 0;
+  const pageSize = 10;
+  const mainBotLeftRef = useRef(null);
+
+  const getReporterNewsData = async (name, page, pageSize) => {
+    const res1 = await getReporterCategory(state.data.name);
+    setCategoryCount(res1);
+
+    const res2 = await getReporterNews(state.data.name, page, pageSize);
+    setNewsData(res2);
   };
 
   useEffect(() => {
-    getReporterNewsData();
+    getReporterNewsData(state.data.name, page, pageSize);
   }, []);
+
+  const handleScroll = async () => {
+    const el = mainBotLeftRef.current;
+    if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
+      const res3 = await getReporterNews(
+        state.data.name,
+        Math.ceil(newsData.length / pageSize),
+        pageSize
+      );
+      setNewsData((prevData) => [...prevData, ...res3]);
+    }
+  };
+
+  useEffect(() => {
+    const el = mainBotLeftRef.current;
+    el.addEventListener("scroll", handleScroll);
+    return () => {
+      el.removeEventListener("scroll", handleScroll);
+    };
+  }, [newsData.length]);
 
   return (
     <div className="reporterdetail-wrapper">
@@ -56,7 +83,6 @@ const ReporterDetail = () => {
               alt=""
             />
             <h2 style={{ textAlign: "left" }}>{state.data.name}</h2>
-            <h3 style={{ textAlign: "left" }}>{state[3]}부</h3>
             <Button
               className="reporter-button"
               sx={{ textAlign: "right" }}
@@ -71,7 +97,13 @@ const ReporterDetail = () => {
             {state.data.name}의 취재 분야
           </h3>
           <div className="reporterdetail-left-chart">
-            <ReporterPieChart />
+            {categoryCount.text?.length > 0 ? (
+              <ReporterPieChart categoryCount={categoryCount} />
+            ) : (
+              <div style={{ height: "250px" }}>
+                <h2>{state.data.name}의 기사가 없습니다.</h2>
+              </div>
+            )}
           </div>
           <Divider />
           <h3 className="reporterdetail-left-main-h3">
@@ -107,8 +139,12 @@ const ReporterDetail = () => {
         <h2 className="reporterdetail-right-h2">
           T:LENS 키워드 뉴스 : {state[2]} 기자
         </h2>
-        <div className="reporterdetail-right-news">
-          <MainNewsCard newsData={newsData} />
+        <div className="reporterdetail-right-news" ref={mainBotLeftRef}>
+          {newsData?.length > 0 ? (
+            <MainNewsCard newsData={newsData} />
+          ) : (
+            <h2>기사가 없습니다!</h2>
+          )}
         </div>
       </div>
     </div>
