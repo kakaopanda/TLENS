@@ -2,7 +2,6 @@ import React from "react";
 import ApexCharts from "react-apexcharts";
 
 const BarCharts = ({ splitKeyword }) => {
-  console.log(splitKeyword);
   const state = {
     series: [
       {

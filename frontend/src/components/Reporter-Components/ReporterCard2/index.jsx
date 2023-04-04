@@ -20,7 +20,7 @@ const ReporterCard2 = ({ V, pressData }) => {
   };
 
   return (
-    <div style={{ margin: "0.5%" }}>
+    <div style={{ margin: "1%", display: "flex" }}>
       <Card
         onClick={() => {
           handlenavigate(V);
@@ -30,7 +30,7 @@ const ReporterCard2 = ({ V, pressData }) => {
         sx={{
           width: "100%",
           display: "flex",
-          width: 280,
+          width: 340,
           gap: 2,
           "&:hover": {
             boxShadow: "md",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 import "./ReporterCarousel.scss";
 import ReporterCard from "../ReporterCard";
@@ -49,28 +49,85 @@ const ReporterCarousel = () => {
   const [active, setActive] = useState(3);
   const [pressData, setPressData] = useState([]);
   const [reporterData, setReporterData] = useState([]);
+  const [pressName, setPressName] = useState("");
+  const [reporterCount, setReporterCount] = useState("");
+  const mainBotLeftRef = useRef(null);
+
+  const pageSize = 12;
+  const page = 0;
 
   const handlePrev = () => setActive((i) => i - 1);
   const handleNext = () => setActive((i) => i + 1);
 
+  const pressNames = [
+    "경향신문",
+    "서울신문",
+    "한겨레",
+    "국민일보",
+    "세계일보",
+    "한국일보",
+    "동아일보",
+    "조선일보",
+    "문화일보",
+    "중앙일보",
+    "뉴스1",
+    "채널A",
+    "MBC",
+    "TV조선",
+    "뉴시스",
+    "한국경제TV",
+    "MBN",
+    "YTN",
+    "연합뉴스",
+    "JTBC",
+    "SBS",
+    "연합뉴스TV",
+    "KBS",
+    "SBS Biz",
+  ];
+
   const getPress = async () => {
     const data = await getPressData();
-    const sliceData = data.slice(0, 24);
-    setPressData(sliceData);
+    setPressData(data);
   };
 
   useEffect(() => {
+    setPressName(pressNames[active]);
     getPress();
-  }, []);
-
-  const getReporter = async () => {
-    const data = await getReporterData(active + 1);
-    setReporterData(data);
-  };
-
-  useEffect(() => {
-    getReporter();
   }, [active]);
+
+  const getReporter = async (pressName, page) => {
+    try {
+      const res = await getReporterData(pressName, page, pageSize);
+      const res2 = await getReporterData(pressName, 0, 99999);
+      setReporterCount(res2.length);
+      if (page === 0) {
+        setReporterData(res);
+      } else {
+        setReporterData((prevData) => [...prevData, ...res]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getReporter(pressName, page);
+  }, [pressName, page]);
+
+  const handleScroll = () => {
+    const el = mainBotLeftRef.current;
+    if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
+      getReporter(pressName, Math.ceil(reporterData.length / pageSize));
+    }
+  };
+  console.log(Math.ceil(reporterData.length / pageSize));
+  useEffect(() => {
+    const el = mainBotLeftRef.current;
+    el.addEventListener("scroll", handleScroll);
+    return () => {
+      el.removeEventListener("scroll", handleScroll);
+    };
+  }, [reporterData.length]);
 
   return (
     <div style={{ height: 240 }}>
@@ -88,18 +145,21 @@ const ReporterCarousel = () => {
       <br />
       <Divider sx={{ margin: "0 8% 0 8%" }} />
       <h2 style={{ textAlign: "left", marginLeft: "8%" }}>
-        {reporterData[1]?.press} : {reporterData?.length}명
+        {reporterData[1]?.press} : {reporterCount}명
       </h2>
       <div
         style={{
           margin: "0 8% 0 8%",
+          height: "50vh",
           display: "flex",
           flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "center",
           border: "1px solid #D8D8D8",
           borderRadius: "10px",
+          overflow: "auto",
         }}
+        ref={mainBotLeftRef}
       >
         {reporterData ? (
           reporterData.map((V, index) => {

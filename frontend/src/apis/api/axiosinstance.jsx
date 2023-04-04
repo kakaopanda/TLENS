@@ -169,10 +169,14 @@ export const getPressData = async () => {
 };
 
 // 기자 데이터 가져오기
-export const getReporterData = async (num) => {
+export const getReporterData = async (name, page, pageSize) => {
   try {
     const response = await defaultInstance.get("/reporter/press", {
-      params: { pressId: num },
+      params: {
+        press: name,
+        pageNo: page,
+        pageSize: pageSize,
+      },
     });
     return response.data.content;
   } catch (error) {
