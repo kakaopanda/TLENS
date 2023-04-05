@@ -51,7 +51,7 @@ const MainChart = (props) => {
 
   const getCategoryNews = async (category, page) => {
     const res = await defaultInstance.get("/category/news", {
-      params: { category, pageNo: 0, pageSize: 9999 },
+      params: { category, pageNo: 0, pageSize: 100 },
     });
     const combinedTitle = res.data.content
       .map((news) => {

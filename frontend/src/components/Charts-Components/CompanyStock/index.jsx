@@ -6,7 +6,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 am4core.useTheme(am4themes_animated);
 
-function StockChart({ keyName }) {
+function StockChart({ keyName, day }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function StockChart({ keyName }) {
     const params = {
       serviceKey:
         "ERifINcaqI/MKEa0+o15ZnvcLbu2m2py9mvF3UhczTq4Mf+ZR9O4sSPclr6/g8IhwGmDRxLQX8YExauSPSIomA==",
-      numOfRows: 600,
+      numOfRows: day,
       resultType: "json",
       itmsNm: keyName,
     };
@@ -29,7 +29,7 @@ function StockChart({ keyName }) {
       }
     };
     if (keyName) fetchData();
-  }, [keyName]);
+  }, [keyName, day]);
 
   const createChart = (chartData) => {
     const chart = am4core.create("chartdiv", am4charts.XYChart);
