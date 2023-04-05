@@ -18,7 +18,7 @@ public class SparkKafkaStreaming {
 
     private static final Logger log = LoggerFactory.getLogger(SparkKafkaStreaming.class);
 
-    private static final String KAFKA_TOPIC_NAME = "tlens";
+    private static final String KAFKA_TOPIC_NAME = "news";
 
     public static void main(String[] args) throws Exception {
         SparkSession spark = SparkSession.builder()
@@ -47,8 +47,6 @@ public class SparkKafkaStreaming {
                 .format("console")
                 .start()
                 .awaitTermination();
-
-        df.
     }
 
 }

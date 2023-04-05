@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class NewsRequestDTO {
     String title; // 기사 제목
-    String summary; // 기사 내용요약/
+    String summary; // 기사 내용요약
     String cont; // 기사 내용(RDBMS에는 포함되지 않는 필드)
     String reporter; // 기자
     String press; // 언론사
@@ -25,6 +25,7 @@ public class NewsRequestDTO {
     String originalLink; // 뉴스 본문 링크(언론사)
     LocalDateTime createdDate; // 기사 작성 시각
     LocalDateTime modifiedDate; // 기사 수정 시각
+    String content; // 기사 내용
 
     @Override
     public String toString() {
@@ -42,6 +43,7 @@ public class NewsRequestDTO {
                 " originalLink(원문링크, 언론사) = " + originalLink +
                 " createdDate(작성일자) = " + createdDate +
                 " modifiedDate(수정일자) = " + modifiedDate +
+                " content(기사내용) = " + content +
                 '}';
     }
 }

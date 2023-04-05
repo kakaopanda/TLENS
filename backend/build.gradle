@@ -76,9 +76,12 @@ dependencies {
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.8.1'
 
-    //querydsl
+    // querydsl
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    // Korean-Summarizer
+    implementation 'com.github.tuguri8:korean-summarizer:0.1.2'
 }
 
 tasks.named('test') {
