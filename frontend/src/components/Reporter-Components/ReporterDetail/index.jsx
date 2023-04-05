@@ -105,7 +105,7 @@ const ReporterDetail = () => {
             <img
               style={{ textAlign: "left" }}
               className="img2"
-              src={state.thumbnail}
+              src={state.data.pressThumbnail}
               alt=""
             />
             <h2 style={{ textAlign: "left" }}>{state.data.name}</h2>

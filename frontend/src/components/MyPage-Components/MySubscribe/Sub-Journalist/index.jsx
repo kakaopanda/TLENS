@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import MainNewsCard from "../../../Main-Components/MainNewsCard"
 import SubArticles from '../Sub-articles';
 import './subJournalist.scss';
 
@@ -11,6 +12,7 @@ import reporters from "./reporters.json";
 import {getSubscribe} from "../../../../apis/news"
 
 const SubJournalist = ({userInfo}) => {
+  
   const [selectedJournalist, setSelectedJournalist] = useState(null);
 
   const [subReporter, setsubReporter] = useState([])
@@ -76,18 +78,21 @@ const SubJournalist = ({userInfo}) => {
           </div>
         ))}
       </Slider>
+      <div className="journalist-info-container">
       {!selectedJournalist && (
-        <div className="journalist-info">
-          {subReporter.map((reporter) => (
-            <SubArticles key={reporter.id} name={reporter.name} />
-          ))}
+          <div className="journalist-info">
+            {subReporter.map((reporter) => (
+              <SubArticles key={reporter.id} name={reporter.name} />
+            ))}
+          </div>
+        )}
+        {selectedJournalist && (
+          <div className="journalist-info">
+            <SubArticles key={selectedJournalist.id} name={selectedJournalist.name} />
+
         </div>
       )}
-      {selectedJournalist && (
-        <div className="journalist-info">
-          <SubArticles key={selectedJournalist.id} name={selectedJournalist.name} />
-        </div>
-      )}
+      </div>
     </div>
   );
 };
