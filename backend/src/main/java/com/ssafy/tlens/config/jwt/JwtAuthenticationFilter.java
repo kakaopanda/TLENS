@@ -5,14 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.tlens.common.RedisDao;
 import com.ssafy.tlens.common.ResponseDto;
 import com.ssafy.tlens.config.auth.PrincipalDetails;
-import com.ssafy.tlens.dto.LoginRequestDto;
-import com.ssafy.tlens.dto.LoginRespDto;
+import com.ssafy.tlens.api.request.LoginRequestDto;
+import com.ssafy.tlens.api.response.LoginRespDto;
 import com.ssafy.tlens.enums.ResponseEnum;
 import com.ssafy.tlens.handler.exception.CustomAuthenticationException;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +23,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.Date;
 
 // 로그인 인증과정

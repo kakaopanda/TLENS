@@ -4,7 +4,7 @@ import com.ssafy.tlens.common.ResponseDto;
 import com.ssafy.tlens.config.auth.PrincipalDetails;
 import com.ssafy.tlens.config.jwt.JwtProperties;
 import com.ssafy.tlens.config.jwt.JwtProvider;
-import com.ssafy.tlens.dto.SignUpRequestDto;
+import com.ssafy.tlens.api.request.SignUpRequestDto;
 import com.ssafy.tlens.enums.ResponseEnum;
 import com.ssafy.tlens.api.service.UserServiceImpl;
 import com.ssafy.tlens.handler.exception.CustomApiException;
@@ -15,9 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,5 +60,20 @@ public class UserController {
         userService.logout(principalDetails.getUser().getEmail(), reqATK);
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_LOGOUT_SUCCESS), HttpStatus.OK);
+    }
+
+    @GetMapping("/{rawPwd}")
+    @ApiOperation(value = "비밀번호 변경 전 확인")
+    public ResponseEntity<?> confirm(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable String rawPwd) {
+        String email = principalDetails.getUser().getEmail();
+        return userService.confirm(email, rawPwd);
+    }
+    @PutMapping("/{rawPwd}")
+    @ApiOperation(value = "비밀번호 변경")
+    public ResponseEntity<?> update(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable String rawPwd) {
+        String email = principalDetails.getUser().getEmail();
+        userService.update(email, rawPwd);
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_USERNAME_CK_SUCCESS), HttpStatus.OK);
     }
 }
