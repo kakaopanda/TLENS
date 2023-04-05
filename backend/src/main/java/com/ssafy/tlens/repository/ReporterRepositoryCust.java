@@ -23,7 +23,7 @@ public class ReporterRepositoryCust {
                 .select(reporter)
                 .from(reporter)
                 .where(reporter.press.name.eq(press))
-                .orderBy(reporter.subscribes.size().desc())
+                .orderBy(reporter.name.asc())
                 //offset 방식
                 .limit(pageSize)
                 .offset(pageNo * pageSize)
