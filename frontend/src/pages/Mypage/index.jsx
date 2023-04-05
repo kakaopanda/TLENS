@@ -19,8 +19,9 @@ const MyPage = () => {
       try {
         const id = localStorage.getItem("userId");
         const response = await getUserInfo(id);
-        setUserInfo(response); // response 값을 userInfo에 설정합니다.
-        console.log(response); // 유저 정보 출력
+        // 유저 정보 출력
+        setUserInfo(response.data.content); // response 값을 userInfo에 설정합니다.
+        
       } catch (error) {
         console.error(error);
       }

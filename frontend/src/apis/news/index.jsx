@@ -52,7 +52,7 @@ export const cancelSub = async (id) => {
     await authInstance.delete("/subscribe",  {
       params: { reporterId: id },
     });
-    toast.success(<h3>구독을 취소 하셨습니다.👋</h3>, {
+    toast.error(<h3>구독을 취소 하셨습니다.👋</h3>, {
       position: "top-center",
       autoClose: 2000,
     });
@@ -76,14 +76,26 @@ export const subStatus = async (id) => {
 };
 
 
-export const getSubscribe = async (id) => {
+export const getSubscribe = async () => {
   try {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
-    const response = await authInstance.get("/subscribe/status",  {
-      params: { reporterId : id },
-    });
-    return response.data
+    const response = await authInstance.get("/subscribe/reporter");
+    console.log(response.data.content)
+    return response.data.content
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export const getSubscribeNews = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const response = await authInstance.get("/subscribe/reporter/news");
+    console.log(response.data.content)
+    return response.data.content
   } catch (error) {
     console.log(error);
   }
@@ -116,7 +128,7 @@ export const cancelScrap = async (id) => {
     await authInstance.delete("/scrap",  {
       params: { newsId : id },
     });
-    toast.success(<h3>스크랩을 취소 하셨습니다.👋</h3>, {
+    toast.error(<h3>스크랩을 취소 하셨습니다.👋</h3>, {
       position: "top-center",
       autoClose: 2000,
     });
@@ -134,6 +146,21 @@ export const scrapStatus = async (id) => {
       params: { newsId : id },
     });
     return response
+
+  } catch (error) {
+    console.log(error);
+  }
+};  
+
+
+export const scrapList = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const response = await authInstance.get("/scrap/news");
+    // console.log(response.data.content.lst)
+    return response.data.content
+    
 
   } catch (error) {
     console.log(error);

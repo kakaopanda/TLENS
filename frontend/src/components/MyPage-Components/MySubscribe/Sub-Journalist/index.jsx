@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,15 +7,32 @@ import './subJournalist.scss';
 
 import reporters from "./reporters.json";
 
-const SubJournalist = () => {
+// API
+import {getSubscribe} from "../../../../apis/news"
+
+const SubJournalist = ({userInfo}) => {
   const [selectedJournalist, setSelectedJournalist] = useState(null);
+
+  const [subReporter, setsubReporter] = useState([])
+
+  useEffect(() => {
+    const fetchReporterList = async () => {
+      try {
+        const response = await getSubscribe();
+        setsubReporter(response.lst);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchReporterList();
+  }, []);
 
   const settings = {
     dots: true,
     arrows: true,
     infinite: true,
-    speed: 500,
-    slidesToShow: 5,
+    speed: 1000,
+    slidesToShow: subReporter.length < 5 ? subReporter.length : 5,
     slidesToScroll: 1,
     centerMode: true,
     focusOnSelect: true,
@@ -34,30 +51,34 @@ const SubJournalist = () => {
           centerMode: true,
         },
       },
-
-
     ],
   };
 
   return (
     <div>
-      <h2>"강김문배박이"님의 구독한 기자 : (총 {reporters.length}명)</h2>
+      <h2>"{userInfo.nickname}"님의 구독한 기자 : (총 {subReporter.length}명)</h2>
       <Slider {...settings}>
-        {reporters.map((reporter) => (
-          <div key={reporter.id}>
+        {subReporter.map((reporter) => (
+          <div key={reporter.reporterId}>
             <img
-              src={reporter.image}
+              src={reporter.thumbnail}
               alt={reporter.name}
               onClick={() => setSelectedJournalist(reporter)}
               className="reporter-image"
             />
-            <p>{reporter.company} {reporter.name}</p>
+            {/* <img
+              className="press-image"
+              src={reporter.press}
+              alt={reporter.name}
+              onClick={() => setSelectedJournalist(reporter)}
+            /> */}
+            <p>{reporter.name}</p>
           </div>
         ))}
       </Slider>
       {!selectedJournalist && (
         <div className="journalist-info">
-          {reporters.map((reporter) => (
+          {subReporter.map((reporter) => (
             <SubArticles key={reporter.id} name={reporter.name} />
           ))}
         </div>

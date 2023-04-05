@@ -30,6 +30,7 @@
     "dayjs": "^1.11.7",
     "flickity": "^3.0.0",
     "formik": "^2.2.9",
+    "http-proxy-middleware": "^2.0.6",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.3",
     "node-sass": "^8.0.0",

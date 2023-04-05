@@ -31,7 +31,7 @@ const SignUp = () => {
     };
 
       try {
-        const response = await axios.post("http://localhost:8080/api/v1/users", signupData);
+        const response = await axios.post("https://j8c206.p.ssafy.io/api/v1/users", signupData);
         console.log(response)
         if (response.data.code === 200) {
           toast.success(

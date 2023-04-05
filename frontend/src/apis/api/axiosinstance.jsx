@@ -92,37 +92,15 @@ export const login = async (values) => {
 // 유저 정보 가져오기
 export const getUserInfo = async (id) => {
   try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/mypage/userinfo", {
-      params: { id },
+      params: { id: id },
     });
-    return response.data.content;
+    return response;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      const refreshToken = localStorage.getItem("refresh_token");
-      if (refreshToken) {
-        try {
-          const response = await authInstance.get("/users/reissue", {
-            headers: {
-              Authorization: refreshToken,
-            },
-          });
-          const { accessToken } = response.data.data;
-          localStorage.setItem("Authorization", accessToken);
-          return await getUserInfo(id);
-        } catch (err) {
-          console.error("토큰 재발급 요청 실패");
-          localStorage.clear();
-          window.location.replace("/auth");
-          throw err;
-        }
-      } else {
-        console.error("refresh_token을 찾을 수 없습니다.");
-        throw error;
-      }
-    } else {
-      console.error(error);
-      throw error;
-    }
+    console.log(error);
+    return error
   }
 };
 
