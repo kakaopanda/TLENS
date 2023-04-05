@@ -16,7 +16,7 @@ const MySubscribe = ({userInfo}) => {
       </div>
       <Divider sx={{ borderBottomWidth: "3px" }} />
       <div className="subscribing-journalists">
-        <SubJournalist />
+        <SubJournalist userInfo = {userInfo}/>
       </div>
 
     </div>

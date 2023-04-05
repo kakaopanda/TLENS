@@ -16,7 +16,7 @@ const MyScrap = ({userInfo}) => {
         <DonutChart />
       </div>
       <div className="scrap-article">
-        <ArticleScrap />
+        <ArticleScrap userInfo = {userInfo}/>
       </div>
     <Divider />
 

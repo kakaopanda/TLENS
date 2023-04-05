@@ -28,23 +28,54 @@ const axiosAuthApi = (url, token, options) => {
 // axios 인스턴스를 내보낸다.
 export const defaultInstance = axiosApi(BASE_URL);
 
-// 로그아웃
-export const logout = async () => {
-  try {
-    const token = localStorage.getItem("Authorization");
-    const authAxios = axiosAuthApi(BASE_URL, token);
-    await authAxios.get("/users/logout");
-    localStorage.removeItem("Authorization");
-    localStorage.removeItem("refresh-token");
-    localStorage.removeItem("userId");
-    toast.success(<h3>로그아웃 성공👋</h3>, {
-      position: "top-center",
-      autoClose: 2000,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+// 회원가입
+const Register = async (values) => {
+  const { email, nickname, password, gender, birthday, membership, age } = values;
+  const signupData = {
+    age: age,
+    email: email,
+    nickname: nickname,
+    password: password,
+    gender: gender,
+    birthday: birthday,
+    membership: membership,
+  };
+
+    try {
+      const response = await defaultInstance.post("/users", signupData);
+      console.log(response)
+      if (response.data.code === 200) {
+        toast.success(
+          <h3>
+            회원가입이 완료되었습니다.
+            <br/>
+            로그인 하세요😎
+          </h3>,
+          {
+            position: "top-center",
+            autoClose: 2000,
+            onClose: () => {
+              window.location.reload();
+            }
+          }
+        );
+      } else {
+        toast.error(
+          <h3>이미 있는 회원입니다😭.</h3>,
+          {
+            position: "top-center",
+            autoClose: 2000,
+          }
+        );
+      }
+    } catch (e) {
+      // 서버에서 받은 에러 메시지 출력
+      toast.error(e.response.data.message + "😭", {
+        position: "top-center",
+      });
+    }
+  };
+
 
 // 로그인
 export const login = async (values) => {
@@ -73,3 +104,26 @@ export const login = async (values) => {
     });
   }
 };
+
+
+
+
+
+// 로그아웃
+export const logout = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authAxios = axiosAuthApi(BASE_URL, token);
+    await authAxios.get("/users/logout");
+    localStorage.removeItem("Authorization");
+    localStorage.removeItem("refresh-token");
+    localStorage.removeItem("userId");
+    toast.success(<h3>로그아웃 성공👋</h3>, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
