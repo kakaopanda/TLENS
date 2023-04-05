@@ -27,10 +27,8 @@ public class KeywordSerivceImpl implements KeywordService {
         keywordRepository.save(keyword);
     }
     public void delete(Long userId, String Keyword) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));
 
-        Keyword keyword = keywordRepository.findByUserAndName(user, Keyword)
+        Keyword keyword = keywordRepository.findByUserAndName(userId, Keyword)
                 .orElseThrow(() -> new NotFoundException("Could not found keyword"));
 
         keywordRepository.delete(keyword);
@@ -38,10 +36,7 @@ public class KeywordSerivceImpl implements KeywordService {
 
     public Boolean getKeywordStatusByUser(Long userId, String keyword) {
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));
-
-        if (keywordRepository.findByUserAndName(user, keyword).isPresent()) {
+        if (keywordRepository.findByUserAndName(userId, keyword).isPresent()) {
             return true;
         }
 
