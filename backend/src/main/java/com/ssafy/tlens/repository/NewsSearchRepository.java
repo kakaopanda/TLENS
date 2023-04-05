@@ -66,6 +66,22 @@ public class NewsSearchRepository {
                 .fetch();
     }
 
+    public List<News> findByRegion(String region, int pageNo, int pageSize) {
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QNews news = QNews.news;
+
+        return query
+                .select(news)
+                .from(news)
+                .where(news.region.eq(region))
+                .orderBy(news.createdDate.desc())
+                //offset 방식
+                .limit(pageSize)
+                .offset(pageNo * pageSize)
+                .distinct()
+                .fetch();
+    }
+
     // 분야별 기사 수
     public Long countNewsByCategory(String category) {
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -75,6 +91,18 @@ public class NewsSearchRepository {
                 .select(news)
                 .from(news)
                 .where(categoryEq(category))
+                .fetchCount();
+    }
+
+    // 지역별 기사 수
+    public Long countNewsByRegion(String region) {
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QNews news = QNews.news;
+
+        return query
+                .select(news)
+                .from(news)
+                .where(news.region.eq(region))
                 .fetchCount();
     }
 
