@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +24,8 @@ public class SeleniumNewsCrawler {
     // STEP2. 드라이버 속성(Properties) 지정
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
     // public static final String WEB_DRIVER_PATH = "src/main/java/com/ssafy/tlens/api/crawler/selenium/chromedriver_win32/chromedriver.exe";
-    public static final String WEB_DRIVER_PATH = "/home/ubuntu/usr/local/bin/chromedriver";
+    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+    String currentPath = Paths.get("").toAbsolutePath().toString();
 
     // STEP3. 크롤링 할 URL 지정
     private final String recentPress;
@@ -38,6 +40,7 @@ public class SeleniumNewsCrawler {
         super();
         this.recentPress = recentPress;
         this.news = news;
+        System.out.println("★ currentPath : " + currentPath);
 
         // STEP5. 시스템 속성 설정(System Property SetUp)
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
