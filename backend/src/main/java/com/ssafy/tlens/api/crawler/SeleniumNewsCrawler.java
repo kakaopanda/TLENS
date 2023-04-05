@@ -22,7 +22,8 @@ public class SeleniumNewsCrawler {
 
     // STEP2. 드라이버 속성(Properties) 지정
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static final String WEB_DRIVER_PATH = "src/main/java/com/ssafy/tlens/api/crawler/selenium/chromedriver_win32/chromedriver.exe";
+    // public static final String WEB_DRIVER_PATH = "src/main/java/com/ssafy/tlens/api/crawler/selenium/chromedriver_win32/chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
 
     // STEP3. 크롤링 할 URL 지정
     private final String recentPress;
@@ -46,7 +47,7 @@ public class SeleniumNewsCrawler {
         ChromeOptions options = new ChromeOptions();
 
         // 브라우저 실행을 백그라운드로 전환한다.
-        // options.addArguments("headless");
+        options.addArguments("headless");
 
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--log-level=3");
