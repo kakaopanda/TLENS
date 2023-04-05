@@ -51,7 +51,8 @@ public class SeleniumNewsCrawler {
 
         // 브라우저 실행을 백그라운드로 전환한다.
         options.addArguments("headless");
-
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--log-level=3");
         options.addArguments("--disable-loging");
