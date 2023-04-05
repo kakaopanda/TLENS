@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
-    @Query("SELECT k FROM Keyword k WHERE k.user.userCode = :userId AND k.name = :name")
+    @Query("SELECT k FROM Keyword k WHERE k.user.userId = :userId AND k.name = :name")
     Optional<Keyword> findByUserAndName(@Param("userId") Long userId, @Param("name") String name);
 }
