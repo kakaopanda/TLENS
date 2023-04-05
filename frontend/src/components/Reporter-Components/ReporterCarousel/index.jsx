@@ -110,6 +110,7 @@ const ReporterCarousel = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getReporter(pressName, page);
   }, [pressName, page]);

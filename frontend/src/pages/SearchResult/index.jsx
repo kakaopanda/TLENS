@@ -101,22 +101,26 @@ const SearchResult = () => {
         </div>
       </div>
       <Divider />
-      <div className="searchresult-main">
-        <div className="searchresult-news" ref={mainBotLeftRef}>
-          <MainNewsCard newsData={newsData} />
-        </div>
-        <Divider orientation="vertical" flexItem />
-        <div className="searchresult-chart">
-          <h4>"{keyword}" 연관 검색어 추천</h4>
-          <div style={{ border: "1px solid #D8D8D8" }}>
-            <SearchResultChart1 splitKeyword={splitKeyword} />
+      {newsData?.length > 0 ? (
+        <div className="searchresult-main">
+          <div className="searchresult-news" ref={mainBotLeftRef}>
+            <MainNewsCard newsData={newsData} />
           </div>
-          <h4>"{keyword}" 연관 키워드</h4>
-          <div style={{ border: "1px solid #D8D8D8" }}>
-            <SearchResultChart2 keyword={keyword} />
+          <Divider orientation="vertical" flexItem />
+          <div className="searchresult-chart">
+            <h4>"{keyword}" 연관 검색어 추천</h4>
+            <div style={{ border: "1px solid #D8D8D8" }}>
+              <SearchResultChart1 splitKeyword={splitKeyword} />
+            </div>
+            <h4>"{keyword}" 연관 키워드</h4>
+            <div style={{ border: "1px solid #D8D8D8" }}>
+              <SearchResultChart2 keyword={keyword} />
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <h2 ref={mainBotLeftRef}>검색 결과가 없습니다!</h2>
+      )}
     </div>
   );
 };

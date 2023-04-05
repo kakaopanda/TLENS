@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./MainNewsCard.scss";
 
 // MUI
@@ -8,12 +8,10 @@ import Chip from "@mui/joy/Chip";
 import AspectRatio from "@mui/joy/AspectRatio";
 import { Divider } from "@mui/material";
 
-
 // API
-import NewsCardModal from "../../NewsCardModal"
+import NewsCardModal from "../../NewsCardModal";
 
 const MainNewsCard = ({ newsData }) => {
-
   const [newsModalOpen, setNewsModalOpen] = useState(false);
   const [selectedNews, setSelectedNews] = useState(null);
 
@@ -28,7 +26,6 @@ const MainNewsCard = ({ newsData }) => {
     setSelectedNews(null);
   };
 
-
   if (!newsData) return null; // add conditional check
   const err = "요약정보가 없습니다!";
   return (
@@ -41,6 +38,7 @@ const MainNewsCard = ({ newsData }) => {
             orientation="horizontal"
             onClick={() => handleCardClick(V)}
             sx={{
+              cursor: "pointer",
               margin: "auto",
               marginTop: "15px",
               width: "90%",
