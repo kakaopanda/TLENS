@@ -40,7 +40,6 @@ public class SeleniumNewsCrawler {
         super();
         this.recentPress = recentPress;
         this.news = news;
-        System.out.println("★ currentPath : " + currentPath);
 
         // STEP5. 시스템 속성 설정(System Property SetUp)
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
@@ -207,6 +206,7 @@ public class SeleniumNewsCrawler {
                                 thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                         list.add(newsRequestDTO);
+                        System.out.println(newsRequestDTO);
                         driver.navigate().back();
                     } catch(TimeoutException e1){
                         try{
@@ -284,6 +284,7 @@ public class SeleniumNewsCrawler {
                                     thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
+                            System.out.println(newsRequestDTO);
                             driver.navigate().back();
                         } catch(TimeoutException e2){
                             // Case3. 스포츠 기사 페이지로 리다이렉트 된 경우
@@ -360,6 +361,7 @@ public class SeleniumNewsCrawler {
                                     thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
+                            System.out.println(newsRequestDTO);
                             driver.navigate().back();
                         }
                     }
@@ -474,6 +476,7 @@ public class SeleniumNewsCrawler {
                                 thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                         list.add(newsRequestDTO);
+                        System.out.println(newsRequestDTO);
                         driver.navigate().back();
                     } catch(TimeoutException e1){
                         try{
@@ -550,6 +553,7 @@ public class SeleniumNewsCrawler {
                                     thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
+                            System.out.println(newsRequestDTO);
                             driver.navigate().back();
                         } catch(TimeoutException e2){
                             // Case3. 스포츠 기사 페이지로 리다이렉트 된 경우
@@ -627,6 +631,7 @@ public class SeleniumNewsCrawler {
                                     thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
+                            System.out.println(newsRequestDTO);
                             driver.navigate().back();
                         }
                     }
