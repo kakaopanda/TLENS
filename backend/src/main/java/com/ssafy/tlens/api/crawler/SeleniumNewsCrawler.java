@@ -23,7 +23,7 @@ public class SeleniumNewsCrawler {
     // STEP2. 드라이버 속성(Properties) 지정
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
     // public static final String WEB_DRIVER_PATH = "src/main/java/com/ssafy/tlens/api/crawler/selenium/chromedriver_win32/chromedriver.exe";
-    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+    public static final String WEB_DRIVER_PATH = "/home/ubuntu/usr/local/bin/chromedriver";
 
     // STEP3. 크롤링 할 URL 지정
     private final String recentPress;
