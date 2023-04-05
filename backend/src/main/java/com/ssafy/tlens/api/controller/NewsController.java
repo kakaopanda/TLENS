@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -239,8 +240,8 @@ public class NewsController {
     }
 
     // 5분마다 실시간 기사 크롤링을 수행한다.
-    // @Scheduled(cron = "*/5 * * * * *")
-    @PostMapping("newsCrawling")
+    @Scheduled(cron = "*/5 * * * * *")
+//    @PostMapping("newsCrawling")
     public HttpResponseEntity.ResponseResult<?> newsCrawling() throws Exception {
         // 전체 언론사를 대상으로 최근 뉴스 기사를 크롤링한다.
         for(int i=0; i<press[0].length; i++){
