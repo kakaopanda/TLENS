@@ -50,4 +50,8 @@ public class User {
     @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Scrap> scraps = new ArrayList<>();
+
+    public void update(String password){
+        this.password = password;
+    }
 }

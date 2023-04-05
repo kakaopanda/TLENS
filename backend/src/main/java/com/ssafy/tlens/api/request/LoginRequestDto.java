@@ -1,4 +1,4 @@
-package com.ssafy.tlens.dto;
+package com.ssafy.tlens.api.request;
 
 import com.ssafy.tlens.enums.LoginType;
 import lombok.Data;

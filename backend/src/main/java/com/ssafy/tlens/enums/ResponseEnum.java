@@ -75,7 +75,9 @@ public enum ResponseEnum {
     REDIS_USER_NOT_FOUND(401,"Redis에 해당 USER가 존재하지 않습니다."),
     RTK_NOT_MATCHED(401,"Redis에 저장된 해당 USER의 RTK와 요청 받은 RTK가 일치하지 않습니다."),
     ATK_REISSUE_SUCCESS(200,"ATK 재발급 성공"),
-    TOKEN_TYPE_NOT_FOUND(401,"토큰의 타입이 존재하지 않습니다");
+    TOKEN_TYPE_NOT_FOUND(401,"토큰의 타입이 존재하지 않습니다"),
+    FAIL_CONFIRM_PWD(500,"비밀번호를 다시 확인해주세요")
+    ;
 
 
     private final int code;

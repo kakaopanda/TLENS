@@ -1,4 +1,4 @@
-package com.ssafy.tlens.dto;
+package com.ssafy.tlens.api.response;
 
 
 import com.ssafy.tlens.entity.rdbms.User;
