@@ -75,7 +75,7 @@ const SubReportList = ({userInfo}) => {
                   </Typography>
                   <div>
                     <img
-                      src={reporter.press}
+                      src={reporter.pressThumbnail}
                       alt="company image"
                       style={{ width: "80px", height: "25px" }}
                     />

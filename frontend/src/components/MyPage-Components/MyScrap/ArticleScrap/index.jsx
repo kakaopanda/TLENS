@@ -5,8 +5,9 @@ import Card from "@mui/joy/Card";
 import Chip from "@mui/joy/Chip";
 import Typography from "@mui/joy/Typography";
 import NewsCardModal from "../../../NewsCardModal"
+import { Divider, Button } from "@material-ui/core";
 import "./articleScrap.scss"
-import { Button } from "@mui/material";
+
 
 
 // API
@@ -51,9 +52,11 @@ const ArticleScrap = ({ userInfo }) => {
       console.log(error);
     }
   };
+  if (!scrapNews) return null; // add conditional check
+  const err = "요약정보가 없습니다!";
 
   return (
-    <div>
+    <div >
       <h2>"{userInfo.nickname}"의 스크랩 기사 : (총 {scrapNews.length} 건)</h2>
       {scrapNews.map((news) => {
         return (
@@ -64,6 +67,7 @@ const ArticleScrap = ({ userInfo }) => {
               orientation="horizontal"
               onClick={() => handleCardClick(news)}
               sx={{
+                cursor: "pointer",
                 margin: "auto",
                 marginTop: "15px",
                 width: "90%",
@@ -74,42 +78,35 @@ const ArticleScrap = ({ userInfo }) => {
                 },
               }}
             >
-              <AspectRatio ratio="1" sx={{ width: 90 }}>
-                <img src={news.thumbnail} alt="" />
+              <AspectRatio ratio="1" sx={{ width: "15%" }}>
+                {news.thumbnail ? (
+                  <img src={news.thumbnail} loading="lazy" alt="" />
+                ) : null}
               </AspectRatio>
-              <div>
-                <Typography
-                  level="h2"
-                  fontSize="lg"
-                  id="card-description"
-                  mb={0.5}
-                >
-                  {news.title}
-                </Typography>
-                <Typography
-                  fontSize="sm"
-                  aria-describedby="card-description"
-                  mb={1}
-                >
-                  <Link
-                    overlay
-                    underline="none"
-                    href="#interactive-card"
-                    sx={{ color: "text.tertiary" }}
+              <Divider orientation="vertical" flexItem />
+              <div className="newscard-wrapper" style={{ width: "80%" }}>
+                <div className="newscard-title">
+                  <h3 className="newscard-title-text">{news.title}</h3>
+                  <Divider />
+                </div>
+                <div className="newscard-main">
+                  <h4 className="newscard-main-text">
+                    {news.summary ? news.summary : err}
+                  </h4>
+                </div>
+                <div className="newscard-reporter">
+                  <Chip
+                    variant="outlined"
+                    color="primary"
+                    size="sm"
+                    sx={{
+                      pointerEvents: "none",
+                    }}
                   >
-                    {/* {news.summary} */}
-                  </Link>
-                </Typography>
-                <Chip
-                  variant="outlined"
-                  color="primary"
-                  size="sm"
-                  sx={{ pointerEvents: "none" }}
-                >
-                  {news.reporter}
-                </Chip>
+                    {news.reporter}
+                  </Chip>
+                </div>
               </div>
-
             </Card>
             <Button
               sx={{

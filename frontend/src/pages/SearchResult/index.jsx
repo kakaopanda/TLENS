@@ -14,7 +14,7 @@ import SearchResultChart1 from "../../components/Charts-Components/SearchResultC
 import SearchResultChart2 from "../../components/Charts-Components/SearchResultChart2";
 
 // MUI
-import Divider from "@mui/material/Divider";
+import {Divider, Button} from "@mui/material";
 
 const SearchResult = () => {
   const { keyword } = useParams();
@@ -97,6 +97,9 @@ const SearchResult = () => {
       <div className="searchresult-container">
         <div className="searchresult-text">
           <h2>"{keyword}" 뉴스 기사</h2>
+          <Button>
+            키워드 등록하기
+          </Button>
         </div>
         <div className="searchresult-text2">
           <h2>T:LENS 검색어 분석 : {keyword}</h2>

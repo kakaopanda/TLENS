@@ -127,3 +127,16 @@
   overflow: hidden;
 }
 
+.journalist-info-container {
+  height: 300px; /* 스크롤 가능한 영역의 높이를 설정합니다. */
+  overflow-y: scroll; /* 수직 방향 스크롤을 가능하게 합니다. */
+}
+.journalist-info {
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.journalist-info::-webkit-scrollbar {
+  display: none;
+}
