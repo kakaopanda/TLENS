@@ -10,13 +10,12 @@ import com.ssafy.tlens.entity.rdbms.News;
 import com.ssafy.tlens.entity.rdbms.Reporter;
 import com.ssafy.tlens.entity.rdbms.User;
 import com.ssafy.tlens.entity.rdbms.Subscribe;
-import com.ssafy.tlens.repository.ReporterRepository;
-import com.ssafy.tlens.repository.SubscribeRepository;
-import com.ssafy.tlens.repository.UserRepository;
+import com.ssafy.tlens.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +26,9 @@ public class SubscribeServiceImpl implements SubscribeService {
     private final UserRepository userRepository;
     private final ReporterRepository reporterRepository;
     private final SubscribeRepository subscribeRepository;
+    private final NewsRepository newsRepository;
+    private final PressRepository pressRepository;
+
     @Override
     @Transactional
     public void insert(SubscribeRequestDTO subscribeRequestDTO) {
@@ -79,13 +81,18 @@ public class SubscribeServiceImpl implements SubscribeService {
 
     @Override
     public ListAndCntResponseDTO getNewsBySubscribeReporter(Long userId) {
-        List<Reporter> reporterList = reporterRepository.findSubscribeReporterByUserId(userId);
+        List<Reporter> reporters = reporterRepository.findSubscribeReporterByUserId(userId);
+        List<NewsInfoDTO> newsInfoList = new ArrayList<>();
 
-        List<ReporterInfoDTO> reporterInfoList = reporterList.stream()
-                .map(reporter -> new ReporterInfoDTO(reporter))
-                .collect(Collectors.toList());
+        for (Reporter reporter : reporters) {
+            List<News> newses = newsRepository.findByReporter(reporter.getName());
+            for (News news : newses) {
+                NewsInfoDTO newsInfo = new NewsInfoDTO(news, pressRepository.findByName(news.getPress()).getThumbnail());
+                newsInfoList.add(newsInfo);
+            }
+        }
 
-        return new ListAndCntResponseDTO(reporterInfoList, reporterInfoList.size());
+        return new ListAndCntResponseDTO(newsInfoList, newsInfoList.size());
     }
 
     @Override

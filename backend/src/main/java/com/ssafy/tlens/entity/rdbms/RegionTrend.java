@@ -16,7 +16,6 @@ import javax.persistence.*;
 @SuperBuilder
 public class RegionTrend extends BaseTrendEntity {
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
