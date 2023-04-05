@@ -1,9 +1,14 @@
 package com.ssafy.tlens.api.service;
 
+import com.ssafy.tlens.api.response.KeywordResponseDTO;
+import com.ssafy.tlens.api.response.MainEnterpriseDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.common.RedisDao;
+import com.ssafy.tlens.common.exception.handler.NotFoundException;
 import com.ssafy.tlens.config.jwt.JwtProperties;
 import com.ssafy.tlens.config.jwt.JwtProvider;
 import com.ssafy.tlens.dto.SignUpRequestDto;
+import com.ssafy.tlens.entity.rdbms.Keyword;
 import com.ssafy.tlens.entity.rdbms.User;
 import com.ssafy.tlens.enums.ResponseEnum;
 import com.ssafy.tlens.handler.exception.CustomApiException;
@@ -13,6 +18,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component("userService")
 public class UserServiceImpl implements UserService {
@@ -78,6 +85,19 @@ public class UserServiceImpl implements UserService {
 //        redisService.setValuesWithTimeout(requestAccessToken,
 //                "logout",
 //                expiration);
+    }
+
+    public List<KeywordResponseDTO> getKeywordByUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));
+
+        List<Keyword> keywords = user.getKeywords();
+
+        List<KeywordResponseDTO> keywordList = keywords.stream()
+                .map(keyword -> new KeywordResponseDTO(keyword))
+                .collect(Collectors.toList());
+
+        return keywordList;
     }
 
 }
