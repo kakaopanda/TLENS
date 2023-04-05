@@ -1,5 +1,6 @@
 package com.ssafy.tlens.api.crawler;
 
+import com.github.tuguri8.lib.KoreanSummarizer;
 import com.ssafy.tlens.api.request.NewsRequestDTO;
 import com.ssafy.tlens.entity.rdbms.News;
 import org.openqa.selenium.*;
@@ -53,6 +54,14 @@ public class SeleniumNewsCrawler {
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         driver = new ChromeDriver(options);
         baseURL = URL;
+
+        int xPosition = -10; // 크롤러의 x 좌표
+        int yPosition = 0; // 크롤러의 y 좌표
+        int width = 790; // 크롤러의 너비
+        int height = 1080; // 크롤러의 높이
+
+        driver.manage().window().setPosition(new Point(xPosition, yPosition));
+        driver.manage().window().setSize(new Dimension(width, height));
     }
 
     public List<NewsRequestDTO> dynamicCrawling(){
@@ -100,7 +109,7 @@ public class SeleniumNewsCrawler {
                 for(int i=0; i<URL.length; i++){
                     // 크롤링 대상 기사의 정보를 담을 RequestDTO를 생성한다.
                     NewsRequestDTO newsRequestDTO = new NewsRequestDTO();
-                    String title, reporter, press, region, category, enterprise, thumbNail, crawlLink, originalLink;
+                    String title, reporter, press, region, category, enterprise, thumbNail, crawlLink, originalLink, content, summary;
                     region = null;
                     enterprise = null;
                     LocalDateTime createdDate, modifiedDate;
@@ -174,8 +183,23 @@ public class SeleniumNewsCrawler {
                             driver.navigate().back();
                             continue;
                         }
-                        newsRequestDTO = constructDTO(title, reporter, press, region, category, enterprise,
-                                thumbNail, crawlLink, originalLink, createdDate, modifiedDate);
+
+                        try{
+                            content = driver.findElement(By.cssSelector("#dic_area")).getText();
+                        } catch(Exception e){
+                            System.out.println("Dic_Area Exception");
+                            content = "";
+                        }
+
+                        try{
+                            summary = summary(content);
+                        } catch(Exception e){
+                            System.out.println("Summary Exception");
+                            summary = "";
+                        }
+
+                        newsRequestDTO = constructDTO(title, summary, reporter, press, region, category, enterprise,
+                                thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                         list.add(newsRequestDTO);
                         driver.navigate().back();
@@ -237,8 +261,22 @@ public class SeleniumNewsCrawler {
                                 driver.navigate().back();
                                 continue;
                             }
-                            newsRequestDTO = constructDTO(title, reporter, press, region, category, enterprise,
-                                    thumbNail, crawlLink, originalLink, createdDate, modifiedDate);
+
+                            try{
+                                content = driver.findElement(By.cssSelector("#articeBody")).getText();
+                            } catch(Exception e){
+                                content = "";
+                            }
+
+                            try{
+                                summary = summary(content);
+                            } catch(Exception e){
+                                System.out.println("Summary Exception");
+                                summary = "";
+                            }
+
+                            newsRequestDTO = constructDTO(title, summary, reporter, press, region, category, enterprise,
+                                    thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
                             driver.navigate().back();
@@ -299,8 +337,22 @@ public class SeleniumNewsCrawler {
                                 driver.navigate().back();
                                 continue;
                             }
-                            newsRequestDTO = constructDTO(title, reporter, press, region, category, enterprise,
-                                    thumbNail, crawlLink, originalLink, createdDate, modifiedDate);
+
+                            try{
+                                content = driver.findElement(By.cssSelector("#newsEndContents")).getText();
+                            } catch(Exception e){
+                                content = "";
+                            }
+
+                            try{
+                                summary = summary(content);
+                            } catch(Exception e){
+                                System.out.println("Summary Exception");
+                                summary = "";
+                            }
+
+                            newsRequestDTO = constructDTO(title, summary, reporter, press, region, category, enterprise,
+                                    thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
                             driver.navigate().back();
@@ -329,7 +381,7 @@ public class SeleniumNewsCrawler {
                     }
                     // STEP11. 크롤링 대상 기사의 정보를 담을 RequestDTO를 생성한다.
                     NewsRequestDTO newsRequestDTO = new NewsRequestDTO();
-                    String title, reporter, press, region, category, enterprise, thumbNail, crawlLink, originalLink;
+                    String title, reporter, press, region, category, enterprise, thumbNail, crawlLink, originalLink, content, summary;
                     region = null;
                     enterprise = null;
                     LocalDateTime createdDate, modifiedDate;
@@ -398,8 +450,23 @@ public class SeleniumNewsCrawler {
                             driver.navigate().back();
                             continue;
                         }
-                        newsRequestDTO = constructDTO(title, reporter, press, region, category, enterprise,
-                                thumbNail, crawlLink, originalLink, createdDate, modifiedDate);
+
+                        try{
+                            content = driver.findElement(By.cssSelector("#dic_area")).getText();
+                        } catch(Exception e){
+                            System.out.println("Dic_Area Exception");
+                            content = "";
+                        }
+
+                        try{
+                            summary = summary(content);
+                        } catch(Exception e){
+                            System.out.println("Summary Exception");
+                            summary = "";
+                        }
+
+                        newsRequestDTO = constructDTO(title, summary, reporter, press, region, category, enterprise,
+                                thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                         list.add(newsRequestDTO);
                         driver.navigate().back();
@@ -460,8 +527,22 @@ public class SeleniumNewsCrawler {
                                 driver.navigate().back();
                                 continue;
                             }
-                            newsRequestDTO = constructDTO(title, reporter, press, region, category, enterprise,
-                                    thumbNail, crawlLink, originalLink, createdDate, modifiedDate);
+
+                            try{
+                                content = driver.findElement(By.cssSelector("#articeBody")).getText();
+                            } catch(Exception e){
+                                content = "";
+                            }
+
+                            try{
+                                summary = summary(content);
+                            } catch(Exception e){
+                                System.out.println("Summary Exception");
+                                summary = "";
+                            }
+
+                            newsRequestDTO = constructDTO(title, summary, reporter, press, region, category, enterprise,
+                                    thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
                             driver.navigate().back();
@@ -523,8 +604,22 @@ public class SeleniumNewsCrawler {
                                 driver.navigate().back();
                                 continue;
                             }
-                            newsRequestDTO = constructDTO(title, reporter, press, region, category, enterprise,
-                                    thumbNail, crawlLink, originalLink, createdDate, modifiedDate);
+
+                            try{
+                                content = driver.findElement(By.cssSelector("#newsEndContents")).getText();
+                            } catch(Exception e){
+                                content = "";
+                            }
+
+                            try{
+                                summary = summary(content);
+                            } catch(Exception e){
+                                System.out.println("Summary Exception");
+                                summary = "";
+                            }
+
+                            newsRequestDTO = constructDTO(title, summary, reporter, press, region, category, enterprise,
+                                    thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
                             driver.navigate().back();
@@ -640,12 +735,13 @@ public class SeleniumNewsCrawler {
         return ldt;
     }
 
-    public NewsRequestDTO constructDTO(String title, String reporter, String press, String region,
+    public NewsRequestDTO constructDTO(String title, String summary, String reporter, String press, String region,
                                        String category, String enterprise, String thumbNail, String crawlLink,
-                                       String originalLink, LocalDateTime createdDate, LocalDateTime modifiedDate){
+                                       String originalLink, LocalDateTime createdDate, LocalDateTime modifiedDate, String content){
         NewsRequestDTO newsRequestDTO = new NewsRequestDTO();
 
         newsRequestDTO.setTitle(title);
+        newsRequestDTO.setSummary(summary);
         newsRequestDTO.setReporter(reporter);
         newsRequestDTO.setPress(press);
         newsRequestDTO.setRegion(region);
@@ -656,7 +752,16 @@ public class SeleniumNewsCrawler {
         newsRequestDTO.setOriginalLink(originalLink);
         newsRequestDTO.setCreatedDate(createdDate);
         newsRequestDTO.setModifiedDate(modifiedDate);
+        newsRequestDTO.setContent(content);
 
         return newsRequestDTO;
+    }
+
+    public String summary(String content) {
+        KoreanSummarizer koreanSummarizer = new KoreanSummarizer();
+        String summary = koreanSummarizer.summarize(content);
+        // List<String> s = koreanSummarizer.getKeywords(content);
+
+        return summary;
     }
 }
