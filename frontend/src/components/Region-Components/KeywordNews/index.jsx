@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Card, Typography } from "@mui/material";
 import newsData from "./newsData.json";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 const KeywordNews = ({ keyword, region }) => {
   const relatedNews = newsData.filter((news) => {
     if (news.keyword && keyword && news.region === region) {
@@ -90,7 +90,6 @@ const KeywordNews = ({ keyword, region }) => {
                 </Typography>
               </div>
             </Card>
-
           </div>
         );
       })}

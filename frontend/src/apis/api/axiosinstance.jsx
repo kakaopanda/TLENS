@@ -197,6 +197,32 @@ export const getReporterCategory = async (name) => {
   }
 };
 
+// 지역별 뉴스 개수 가져오기
+export const getRegion = async () => {
+  try {
+    const res = await defaultInstance.get("/region");
+    return res.data.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 지역별 뉴스 데이터 가져오기
+export const getRegionNews = async (name, page, pageSize) => {
+  try {
+    const res = await defaultInstance.get("/region/news", {
+      params: {
+        region: name,
+        pageNo: page,
+        pageSize: pageSize,
+      },
+    });
+    return res.data.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // 다음은 사용법
 
 // import { defaultInstance, authInstance } from '@apis/utils'
