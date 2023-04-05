@@ -13,16 +13,15 @@ import HotKeywordChart from "../../Charts-Components/HotKeywordChart";
 
 // MUI
 import Divider from "@mui/material/Divider";
+import { Button } from "@mui/material";
 
 const CompanyDetail = () => {
   const { name } = useParams();
   const { state } = useLocation();
-
   const [keyName, setKeyName] = useState("");
   const [loading, setLoading] = useState(false);
   const [newsData, setNewsData] = useState([]);
-
-  const page = 0;
+  const [day, setDay] = useState(750);
   const pageSize = 10;
   const mainBotLeftRef = useRef(null);
 
@@ -114,7 +113,23 @@ const CompanyDetail = () => {
           <Divider orientation="vertical" />
           <div className="companydetail-top-right">
             <h2 style={{ marginLeft: "10px" }}>{name} 주가 그래프</h2>
-            {loading && <CompanyStock keyName={keyName} />}
+            <div style={{ display: "flex", marginLeft: "5%" }}>
+              <Button
+                onClick={() => {
+                  setDay(61);
+                }}
+              >
+                3개월
+              </Button>
+              <Button
+                onClick={() => {
+                  setDay(750);
+                }}
+              >
+                1년
+              </Button>
+            </div>
+            {loading && <CompanyStock keyName={keyName} day={day} />}
           </div>
         </div>
         <div className="companydetail-mid">
@@ -133,30 +148,22 @@ const CompanyDetail = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="companydetail-bot-wrapper">
         <h2>T:LENS 키워드 분석 : {name}</h2>
         <Divider />
-        <div style={{ display: "flex" }}>
-          <div
-            style={{
-              width: "65%",
-              justifyContent: "center",
-              height: "95vh",
-              overflowY: "auto",
-            }}
-            ref={mainBotLeftRef}
-          >
+        <div className="companydetail-bot" style={{ display: "flex" }}>
+          <div className="companydetail-bot-news" ref={mainBotLeftRef}>
             <MainNewsCard newsData={newsData} />
           </div>
           <Divider orientation="vertical" flexItem />
-          <div style={{ width: "35%" }}>
+          <div className="companydetail-bot-right">
             <br />
-            <h3 style={{ marginLeft: "5%" }}>차트 뭐 들어가야되나</h3>
-            <div style={{ margin: "5%", border: "1px solid #D8D8D8" }}>
+            <h3 className="companydetail-bot-right-h3">차트 뭐 들어가야되나</h3>
+            <div className="companydetail-bot-right2">
               <HotKeywordChart />
             </div>
-            <h3 style={{ marginLeft: "5%" }}>{name} HOT Keyword</h3>
-            <div style={{ margin: "5%", border: "1px solid #D8D8D8" }}>
+            <h3 className="companydetail-bot-right2-h3">{name} HOT Keyword</h3>
+            <div className="companydetail-bot-right3">
               <WordCloud />
             </div>
           </div>

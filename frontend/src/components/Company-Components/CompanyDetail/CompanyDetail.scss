@@ -99,8 +99,40 @@
           background-color: white;
           border-radius: 20px;
           margin: 5%;
+          justify-content: center;
         }
       }
+    }
+  }
+  .companydetail-bot-news {
+    width: 65%;
+    justify-content: center;
+    height: 95vh;
+    overflow-y: auto;
+  }
+  .companydetail-bot-news::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .companydetail-bot-right {
+    width: 35%;
+    
+    .companydetail-bot-right-h3 {
+      margin-left: 5%;
+    }
+    
+    .companydetail-bot-right2 {
+      margin: 5%;
+      border: 1px solid #D8D8D8;
+    }
+    
+    .companydetail-bot-right2-h3 {
+      margin-left: 5%;
+    }
+    
+    .companydetail-bot-right3 {
+      margin: 5%;
+      border: 1px solid #D8D8D8;
     }
   }
 }

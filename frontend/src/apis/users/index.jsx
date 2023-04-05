@@ -1,9 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import authInstance from "../api/interceptor"
+import authInstance from "../api/interceptor";
 
 // const BASE_URL = "http://localhost:8080/api/v1";
-const BASE_URL = "http://j8c206.p.ssafy.io:8080/api/v1";
+const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
 
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url, options) => {
@@ -27,8 +27,6 @@ const axiosAuthApi = (url, token, options) => {
 
 // axios 인스턴스를 내보낸다.
 export const defaultInstance = axiosApi(BASE_URL);
-
-
 
 // 로그아웃
 export const logout = async () => {
