@@ -5,6 +5,7 @@ import {toast} from "react-toastify"
 const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
 
 
+
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url, options) => {
   const instance = axios.create({ baseURL: url, ...options });
@@ -81,7 +82,7 @@ export const getSubscribe = async () => {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/subscribe/reporter");
-    console.log(response.data.content)
+    // console.log(response.data.content)
     return response.data.content
   } catch (error) {
     console.log(error);
@@ -94,7 +95,7 @@ export const getSubscribeNews = async () => {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/subscribe/reporter/news");
-    console.log(response.data.content)
+    // console.log(response.data.content)
     return response.data.content
   } catch (error) {
     console.log(error);
@@ -165,4 +166,76 @@ export const scrapList = async () => {
   } catch (error) {
     console.log(error);
   }
-};  
+};
+
+
+////////////////////////////////////////////////////////////// 키워드 등록하기 
+// 키워드 상태 보기
+export const keywordStatus = async (keyword) => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const response = await authInstance.get("/users/keyword/status", {
+      params: { name  : keyword },
+    });
+    return response.data.content
+
+  } catch (error) {
+    console.log(error);
+  }
+}; 
+
+// 키워드 등록하기
+export const keywordRegister = async (keyword) => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    await authInstance.post("/users/keyword", [], {
+      params: { keyword: keyword },
+    });
+    toast.success(<h3>키워드가 등록되었습니다.👋</h3>, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+};
+
+// 키워드 제거하기
+
+export const deleteKeyword = async (keyword) => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    await authInstance.delete("/users/keyword",  {
+      params: { keyword : keyword },
+    });
+    toast.error(<h3>스크랩을 취소 하셨습니다.👋</h3>, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+// 키워드 가져오기
+
+export const subKeyword = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const response = await authInstance.get("/users/keyword");
+    return response.data.content
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
