@@ -52,6 +52,8 @@ const SearchResult = () => {
 
   useEffect(() => {
     getNews(keyword, 0);
+    const el = mainBotLeftRef.current;
+    el.scrollTop = 0;
   }, [keyword]);
 
   const handleScroll = () => {
