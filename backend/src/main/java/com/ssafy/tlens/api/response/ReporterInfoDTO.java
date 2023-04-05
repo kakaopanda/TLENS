@@ -17,7 +17,7 @@ public class ReporterInfoDTO {
     public ReporterInfoDTO(Reporter reporter) {
         reporterId = reporter.getReporterId();
         name = reporter.getName();
-        press = reporter.getPress().getName();
+        press = reporter.getPress().getThumbnail();
         thumbnail = reporter.getThumbnail();
         crawlLink = reporter.getCrawlLink();
     }
