@@ -8,7 +8,7 @@ import {
 } from "../../apis/api/axiosinstance";
 import MainNewsCard from "../../components/Main-Components/MainNewsCard";
 import "./SearchResult.scss";
-
+import { ToastContainer } from "react-toastify";
 // Charts
 import SearchResultChart1 from "../../components/Charts-Components/SearchResultChart1";
 import SearchResultChart2 from "../../components/Charts-Components/SearchResultChart2";
@@ -16,8 +16,42 @@ import SearchResultChart2 from "../../components/Charts-Components/SearchResultC
 // MUI
 import {Divider, Button} from "@mui/material";
 
+// API
+import { keywordRegister, keywordStatus, deleteKeyword } from "../../apis/news";
+
+
 const SearchResult = () => {
   const { keyword } = useParams();
+
+  // 로그인 중이고
+  const isLoggedIn = localStorage.getItem("Authorization");
+  // 등록 중이면
+  const [subkeyword, setSubKeyword] = useState(null);
+
+
+  const handleSub = () => {
+    keywordRegister(keyword);
+    console.log("등록");
+    setSubKeyword(true);
+  };
+
+  const handleCancel = () => {
+    console.log(keyword)
+    deleteKeyword(keyword);
+    console.log("제거");
+    setSubKeyword(false);
+  };
+
+  useEffect(() => {
+    
+    async function checkSubscriptionStatus() {
+      const data = await keywordStatus(keyword);
+      setSubKeyword(data);
+      console.log(data)
+    }
+    checkSubscriptionStatus();
+  }, [keyword]);
+
 
   const pageSize = 10;
   const mainBotLeftRef = useRef(null);
@@ -52,8 +86,6 @@ const SearchResult = () => {
 
   useEffect(() => {
     getNews(keyword, 0);
-    const el = mainBotLeftRef.current;
-    el.scrollTop = 0;
   }, [keyword]);
 
   const handleScroll = () => {
@@ -94,12 +126,18 @@ const SearchResult = () => {
 
   return (
     <div className="searchresult-wrapper">
+        <ToastContainer />
       <div className="searchresult-container">
         <div className="searchresult-text">
           <h2>"{keyword}" 뉴스 기사</h2>
-          <Button>
-            키워드 등록하기
-          </Button>
+          {isLoggedIn && (
+              <Button
+                onClick={subkeyword ? handleCancel : handleSub}
+                variant="contained"
+              >
+                {subkeyword ? "키워드 등록취소" : "키워드 등록하기"}
+              </Button>
+            )}
         </div>
         <div className="searchresult-text2">
           <h2>T:LENS 검색어 분석 : {keyword}</h2>

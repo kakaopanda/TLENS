@@ -14,7 +14,6 @@ const axiosApi = (url, options) => {
 // Post, Put, Delete 등 요청으로 인증값이 필요한 경우
 const axiosAuthApi = (url, token, options) => {
   // console.log("확인", token);
-  console.log(options);
   const instance = axios.create({
     baseURL: url,
     headers: {
