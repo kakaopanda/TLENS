@@ -88,7 +88,7 @@ const Region = () => {
   }, [newsData.length]);
 
   return (
-    <div style={{ fontFamily: "Jua, sans-serif" }}>
+    <div className="region-wrapper" style={{ fontFamily: "Jua, sans-serif" }}>
       <Box
         sx={{
           display: "flex",

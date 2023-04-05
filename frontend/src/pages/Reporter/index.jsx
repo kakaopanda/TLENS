@@ -9,6 +9,7 @@ const Reporter = () => {
   return (
     <div>
       <Box
+        className="reporter-wrapper"
         sx={{
           display: "flex",
           width: "100%",
