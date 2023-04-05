@@ -1,9 +1,12 @@
 package com.ssafy.tlens.api.service;
 
+import com.ssafy.tlens.api.response.KeywordResponseDTO;
 import com.ssafy.tlens.common.RedisDao;
 import com.ssafy.tlens.common.ResponseDto;
 import com.ssafy.tlens.config.jwt.JwtProvider;
 import com.ssafy.tlens.api.request.SignUpRequestDto;
+import com.ssafy.tlens.common.exception.handler.NotFoundException;
+import com.ssafy.tlens.entity.rdbms.Keyword;
 import com.ssafy.tlens.entity.rdbms.User;
 import com.ssafy.tlens.enums.ResponseEnum;
 import com.ssafy.tlens.handler.exception.CustomApiException;
@@ -13,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Component("userService")
 public class UserServiceImpl implements UserService {
@@ -107,4 +113,17 @@ public class UserServiceImpl implements UserService {
         System.out.println("update 완료, encPassword : " + encPassword);
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_PROFILE_CHANGE_SUCCESS), HttpStatus.OK);
     }
+    public List<KeywordResponseDTO> getKeywordByUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));
+
+        List<Keyword> keywords = user.getKeywords();
+
+        List<KeywordResponseDTO> keywordList = keywords.stream()
+                .map(keyword -> new KeywordResponseDTO(keyword))
+                .collect(Collectors.toList());
+
+        return keywordList;
+    }
+
 }

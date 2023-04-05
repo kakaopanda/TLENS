@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./NewsCardModal.scss";
 import Dialog from "@mui/material/Dialog";
 import { Button, Divider } from "@mui/material";
+import { ToastContainer } from "react-toastify";
 
 // API
 import {scrapStatus, scrapArticle, cancelScrap} from "../../apis/news"
@@ -39,6 +40,7 @@ const NewsCardModal = ({ open, onClose, news }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
+      <ToastContainer />
       <div className="modal-container">
         <div className="modal-top">
           <div className="modal-image">

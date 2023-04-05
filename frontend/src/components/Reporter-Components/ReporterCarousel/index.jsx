@@ -8,7 +8,7 @@ import { getPressData, getReporterData } from "../../../apis/api/axiosinstance";
 // MUI
 import Divider from "@mui/material/Divider";
 
-const MAX_VISIBILITY = 4;
+const MAX_VISIBILITY = 10;
 
 const Carousel = ({ children, active, handlePrev, handleNext }) => {
   const count = React.Children.count(children);
@@ -46,7 +46,7 @@ const Carousel = ({ children, active, handlePrev, handleNext }) => {
 };
 
 const ReporterCarousel = () => {
-  const [active, setActive] = useState(3);
+  const [active, setActive] = useState(6);
   const [pressData, setPressData] = useState([]);
   const [reporterData, setReporterData] = useState([]);
   const [pressName, setPressName] = useState("");
@@ -88,7 +88,8 @@ const ReporterCarousel = () => {
 
   const getPress = async () => {
     const data = await getPressData();
-    setPressData(data);
+    const sliceData = data.slice(0, 24);
+    setPressData(sliceData);
   };
 
   useEffect(() => {
@@ -113,6 +114,8 @@ const ReporterCarousel = () => {
 
   useEffect(() => {
     getReporter(pressName, page);
+    const el = mainBotLeftRef.current;
+    el.scrollTop = 0;
   }, [pressName, page]);
 
   const handleScroll = () => {
@@ -148,20 +151,7 @@ const ReporterCarousel = () => {
       <h2 style={{ textAlign: "left", marginLeft: "8%" }}>
         {reporterData[1]?.press} : {reporterCount}명
       </h2>
-      <div
-        style={{
-          margin: "0 8% 3% 8%",
-          height: "70vh",
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-          border: "1px solid #D8D8D8",
-          borderRadius: "10px",
-          overflow: "auto",
-        }}
-        ref={mainBotLeftRef}
-      >
+      <div className="reportercarousel-main-news" ref={mainBotLeftRef}>
         {reporterData ? (
           reporterData.map((V, index) => {
             return (

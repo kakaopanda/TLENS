@@ -1,6 +1,11 @@
 package com.ssafy.tlens.api.controller;
 
+import com.ssafy.tlens.api.request.ScrapRequestDTO;
+import com.ssafy.tlens.api.response.KeywordResponseDTO;
+import com.ssafy.tlens.api.response.NewsInfoDTO;
+import com.ssafy.tlens.api.service.KeywordSerivceImpl;
 import com.ssafy.tlens.common.ResponseDto;
+import com.ssafy.tlens.common.model.response.HttpResponseEntity;
 import com.ssafy.tlens.config.auth.PrincipalDetails;
 import com.ssafy.tlens.config.jwt.JwtProperties;
 import com.ssafy.tlens.config.jwt.JwtProvider;
@@ -18,6 +23,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+import static com.ssafy.tlens.common.model.response.HttpResponseEntity.success;
 
 @RestController
 @RequestMapping("/users")
@@ -25,6 +33,8 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     private final UserServiceImpl userService;
     private final JwtProvider jwtProvider;
+
+    private final KeywordSerivceImpl keywordSerivce;
 
     @PostMapping
     @ApiOperation(value = "회원가입")
@@ -75,5 +85,31 @@ public class UserController {
         userService.update(email, rawPwd);
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_USERNAME_CK_SUCCESS), HttpStatus.OK);
+    }
+
+    @GetMapping("/keyword")
+    public ResponseEntity<?> getKeywordByUser(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        List<KeywordResponseDTO> result = userService.getKeywordByUser(principalDetails.getUser().getUserId());
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
+    }
+
+    @GetMapping("/keyword/status")
+    public ResponseEntity<?> getKeywordStatusByUser(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam String name) {
+        Boolean result = keywordSerivce.getKeywordStatusByUser(principalDetails.getUser().getUserId(), name);
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
+    }
+
+    @PostMapping("/keyword")
+    public HttpResponseEntity.ResponseResult<?> insert(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam String keyword) throws Exception {
+        keywordSerivce.insert(principalDetails.getUser().getUserId(), keyword);
+        return success();
+    }
+
+    @DeleteMapping("/keyword")
+    public HttpResponseEntity.ResponseResult<?> delete(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam String keyword) {
+        keywordSerivce.delete(principalDetails.getUser().getUserId(), keyword);
+        return success();
     }
 }
