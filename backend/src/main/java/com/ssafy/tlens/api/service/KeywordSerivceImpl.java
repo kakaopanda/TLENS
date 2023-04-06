@@ -7,6 +7,7 @@ import com.ssafy.tlens.repository.KeywordRepository;
 import com.ssafy.tlens.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,8 @@ public class KeywordSerivceImpl implements KeywordService {
     private final KeywordRepository keywordRepository;
     private final UserRepository userRepository;
 
+    @Override
+    @Transactional
     public void insert(Long userId, String name) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));
@@ -26,6 +29,9 @@ public class KeywordSerivceImpl implements KeywordService {
 
         keywordRepository.save(keyword);
     }
+
+    @Override
+    @Transactional
     public void delete(Long userId, String Keyword) {
 
         Keyword keyword = keywordRepository.findByUserAndName(userId, Keyword)
@@ -34,6 +40,7 @@ public class KeywordSerivceImpl implements KeywordService {
         keywordRepository.delete(keyword);
     }
 
+    @Override
     public Boolean getKeywordStatusByUser(Long userId, String keyword) {
 
         if (keywordRepository.findByUserAndName(userId, keyword).isPresent()) {

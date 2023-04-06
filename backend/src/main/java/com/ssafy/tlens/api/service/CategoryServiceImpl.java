@@ -17,6 +17,7 @@ import com.ssafy.tlens.repository.PressRepository;
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class CategoryServiceImpl implements CategoryService{
     private  final NewsSearchRepository newsSearchRepository;
     private  final PressRepository pressRepository;
 
+    @Override
+    @Transactional
     public void insertToCategory(TrendRequestDTO request) {
 
         Category category = categoryRepository.findById(request.getTargetId())
@@ -46,6 +49,8 @@ public class CategoryServiceImpl implements CategoryService{
         categoryTrendRepository.save(categoryTrend);
     }
 
+    @Override
+    @Transactional
     public void updateToCategory(TrendRequestDTO request) {
 
         CategoryTrend trend = categoryTrendRepository.findById(request.getTargetId())
@@ -54,6 +59,8 @@ public class CategoryServiceImpl implements CategoryService{
         trend.update(request.getKeyword(),request.getCount(),request.getDate());
     }
 
+    @Override
+    @Transactional
     public void deleteToCategory(Long id) {
 
         CategoryTrend trend = categoryTrendRepository.findById(id)
@@ -62,6 +69,7 @@ public class CategoryServiceImpl implements CategoryService{
         categoryTrendRepository.delete(trend);
     }
 
+    @Override
     public List<MainCategoryDTO> getMainCategory() {
 
         List<Category> categories = categoryRepository.findAll();
@@ -71,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService{
                 .collect(Collectors.toList());
     }
 
-
+    @Override
     public List<NewsInfoDTO> getNewsByCategory(String category, int pageNo, int pageSize) {
         List<News> newses = newsSearchRepository.findByCategory(category, pageNo, pageSize);
 
@@ -80,6 +88,7 @@ public class CategoryServiceImpl implements CategoryService{
                 .collect(Collectors.toList());
     }
 
+    @Override
     public CountNewsByCategoryDTO countNewsByCategory(String category) {
         Long countAllNews = newsSearchRepository.countNewsByCategory(category);
         Long countRecentNews = newsSearchRepository.countNewsByCategoryOnToday(category);

@@ -20,7 +20,6 @@ public class MypageServiceImpl implements MypageService {
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
     public UserInfoResponseDTO getUserInfo(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found user id : " + id));
@@ -29,7 +28,6 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    @Transactional
     public List<String> getUserKeyword(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found user id : " + id));
