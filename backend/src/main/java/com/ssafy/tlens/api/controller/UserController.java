@@ -21,10 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 import static com.ssafy.tlens.common.model.response.HttpResponseEntity.success;
 
 @RestController
@@ -64,7 +62,6 @@ public class UserController {
     // 로그아웃
     @GetMapping("/logout")
     public ResponseEntity<?> logout(@AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request) {
-        System.out.println("logout 진입");
         String reqATK = request.getHeader(JwtProperties.HEADER_STRING)
                 .replace(JwtProperties.TOKEN_PREFIX, "");
         userService.logout(principalDetails.getUser().getEmail(), reqATK);
@@ -86,6 +83,21 @@ public class UserController {
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_USERNAME_CK_SUCCESS), HttpStatus.OK);
     }
+
+    @DeleteMapping
+    @ApiOperation( value = "회원탈퇴" )
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "회원탈퇴 성공", response = ResponseEntity.class)
+    })
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request) {
+        String email = principalDetails.getUser().getEmail();
+        String reqATK = request.getHeader(JwtProperties.HEADER_STRING)
+                .replace(JwtProperties.TOKEN_PREFIX, "");
+        userService.logout(principalDetails.getUser().getEmail(), reqATK);
+
+        return userService.deleteUser(email);
+    }
+
 
     @GetMapping("/keyword")
     public ResponseEntity<?> getKeywordByUser(@AuthenticationPrincipal PrincipalDetails principalDetails) {
