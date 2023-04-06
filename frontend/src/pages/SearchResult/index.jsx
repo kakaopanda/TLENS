@@ -14,11 +14,10 @@ import SearchResultChart1 from "../../components/Charts-Components/SearchResultC
 import SearchResultChart2 from "../../components/Charts-Components/SearchResultChart2";
 
 // MUI
-import {Divider, Button} from "@mui/material";
+import { Divider, Button } from "@mui/material";
 
 // API
 import { keywordRegister, keywordStatus, deleteKeyword } from "../../apis/news";
-
 
 const SearchResult = () => {
   const { keyword } = useParams();
@@ -28,7 +27,6 @@ const SearchResult = () => {
   // 등록 중이면
   const [subkeyword, setSubKeyword] = useState(null);
 
-
   const handleSub = () => {
     keywordRegister(keyword);
     console.log("등록");
@@ -36,22 +34,19 @@ const SearchResult = () => {
   };
 
   const handleCancel = () => {
-    console.log(keyword)
+    console.log(keyword);
     deleteKeyword(keyword);
     console.log("제거");
     setSubKeyword(false);
   };
 
   useEffect(() => {
-    
     async function checkSubscriptionStatus() {
       const data = await keywordStatus(keyword);
       setSubKeyword(data);
-      console.log(data)
     }
     checkSubscriptionStatus();
   }, [keyword]);
-
 
   const pageSize = 10;
   const mainBotLeftRef = useRef(null);
@@ -126,18 +121,18 @@ const SearchResult = () => {
 
   return (
     <div className="searchresult-wrapper">
-        <ToastContainer />
+      <ToastContainer />
       <div className="searchresult-container">
         <div className="searchresult-text">
           <h2>"{keyword}" 뉴스 기사</h2>
           {isLoggedIn && (
-              <Button
-                onClick={subkeyword ? handleCancel : handleSub}
-                variant="contained"
-              >
-                {subkeyword ? "키워드 등록취소" : "키워드 등록하기"}
-              </Button>
-            )}
+            <Button
+              onClick={subkeyword ? handleCancel : handleSub}
+              variant="contained"
+            >
+              {subkeyword ? "키워드 등록취소" : "키워드 등록하기"}
+            </Button>
+          )}
         </div>
         <div className="searchresult-text2">
           <h2>T:LENS 검색어 분석 : {keyword}</h2>

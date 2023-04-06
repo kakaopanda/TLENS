@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const ReporterColumnChart = () => {
+const ReporterColumnChart = ({ ageCnt }) => {
   const colors = [
     "#0d6efd",
     "#6610f2",
@@ -16,7 +16,7 @@ const ReporterColumnChart = () => {
   const state = {
     series: [
       {
-        data: [21, 22, 10, 28, 16, 21, 13, 30],
+        data: ageCnt,
       },
     ],
     options: {
@@ -47,14 +47,15 @@ const ReporterColumnChart = () => {
       },
       xaxis: {
         categories: [
-          ["10"],
-          ["20"],
-          ["30"],
-          ["40"],
-          ["50"],
-          ["60"],
-          ["70"],
-          ["80"],
+          ["0~10"],
+          ["10~20"],
+          ["20~30"],
+          ["30~40"],
+          ["40~50"],
+          ["50~60"],
+          ["60~70"],
+          ["70~80"],
+          ["80~90"],
         ],
         labels: {
           style: {

@@ -11,6 +11,7 @@ import WordCloud from "../../Charts-Components/WordCloud";
 import {
   getReporterNews,
   getReporterCategory,
+  getReporterSubscribe,
 } from "../../../apis/api/axiosinstance";
 
 // MUI
@@ -24,6 +25,7 @@ const ReporterDetail = () => {
   const { state } = useLocation();
   const [newsData, setNewsData] = useState([]);
   const [categoryCount, setCategoryCount] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const page = 0;
   const pageSize = 10;
@@ -52,9 +54,31 @@ const ReporterDetail = () => {
     checkSubscriptionStatus();
   }, [state.data.reporterId]);
 
+  const [ageCnt, setAgeCnt] = useState([]);
+  const [genderCheck, setGenderCheck] = useState([]);
+
+  const getReporterSubs = async () => {
+    const res = await getReporterSubscribe(state.data.reporterId);
+    let cnt = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let [man, female] = [0, 0];
+    res?.forEach((V, i) => {
+      V.forEach((element, index) => {
+        if (element > 0) {
+          cnt[index] += element;
+          i === 0 ? (man += element) : (female += element);
+        }
+      });
+    });
+    setGenderCheck([man, female]);
+    setAgeCnt(cnt);
+  };
+
+  useEffect(() => {
+    getReporterSubs();
+  }, [state.data.reporterId, subscribe]);
+
   const handleSub = () => {
     subReporter(state.data.reporterId);
-    console.log(typeof state.data.reporterId);
     setSubscribe(true);
   };
 
@@ -67,12 +91,16 @@ const ReporterDetail = () => {
   const handleScroll = async () => {
     const el = mainBotLeftRef.current;
     if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
+      setOpen(true);
       const res3 = await getReporterNews(
         state.data.name,
         Math.ceil(newsData.length / pageSize),
         pageSize
       );
       setNewsData((prevData) => [...prevData, ...res3]);
+      setTimeout(() => {
+        setOpen(false);
+      }, 1000);
     }
   };
 
@@ -109,14 +137,17 @@ const ReporterDetail = () => {
               alt=""
             />
             <h2 style={{ textAlign: "left" }}>{state.data.name}</h2>
-            {isLoggedIn && (
-              <Button
-                onClick={subscribe ? handleCancel : handleSub}
-                variant="contained"
-              >
-                {subscribe ? "구독 취소" : "구독하기"}
-              </Button>
-            )}
+            <br />
+            <div style={{ textAlign: "right" }}>
+              {isLoggedIn && (
+                <Button
+                  onClick={subscribe ? handleCancel : handleSub}
+                  variant="contained"
+                >
+                  {subscribe ? "구독 취소" : "구독하기"}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
         <div className="reporterdetail-left-main">
@@ -139,11 +170,11 @@ const ReporterDetail = () => {
           <div className="reporterdetail-left-main-chart1">
             <div className="reporterdetail-left-main-chart1-1">
               <h5 className="reporterdetail-left-main-h5">나이 통계</h5>
-              <ReporterColumnChart />
+              <ReporterColumnChart ageCnt={ageCnt} />
             </div>
             <div className="reporterdetail-left-main-chart2">
               <h5 className="reporterdetail-left-main-h5">성별 통계</h5>
-              <ReporterPieChart2 />
+              <ReporterPieChart2 genderCheck={genderCheck} />
             </div>
           </div>
         </div>

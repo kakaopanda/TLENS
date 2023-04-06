@@ -1,30 +1,14 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 
 //MUI
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Input from "@mui/joy/Input";
 
-const SearchDrawer = ({ anchor, toggleDrawer1 }) => {
-  const navigate = useNavigate();
-
-  const handleKeyword = (e) => {
-    if (e.key === "Enter") {
-      navigate(`/search/${e.target.value}`);
-      toggleDrawer1(anchor, false);
-      
-    }
-  };
-
+const SearchDrawer = ({ anchor, toggleDrawer1, handleKeyword }) => {
   return (
     <Box sx={{ width: "auto" }} role="presentation">
       <br />
       <br />
-      <Button>키워드1</Button>
-      <Button>키워드2</Button>
-      <Button>키워드3</Button>
-      <Button>키워드4</Button>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "70%" }}>
           <Input
@@ -33,17 +17,10 @@ const SearchDrawer = ({ anchor, toggleDrawer1 }) => {
             variant="outlined"
             placeholder="ex)삼성전자, 카카오, 네이버"
             autoFocus={true}
+            onKeyUp={toggleDrawer1(anchor, false)}
             onKeyPress={handleKeyword}
           />
         </Box>
-        {/* <IconButton
-          size="large"
-          edge="start"
-          color="primary"
-          sx={{ marginRight: "5%" }}
-        >
-          <SearchIcon />
-        </IconButton> */}
       </Box>
       <br />
       <br />
