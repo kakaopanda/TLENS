@@ -68,7 +68,7 @@ const Login = () => {
           <div >
             <form onSubmit={handleSubmit} autoComplete="off" className="container">
               <div className="input-forms">
-                <img src="img/logo.png" alt="로고"/>
+                <img src="img/login.png" alt="로고"/>
                 <Divider
                   sx={{
                     border: "2px solid #0066CC"
