@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public ResponseEntity<?> deleteUser(String email) {
         // 유저의 대한 DB정보를 삭제한다.
-        User user = userRepository.deleteByEmail(email).orElseThrow(()
+        userRepository.deleteByEmail(email).orElseThrow(()
             -> new CustomApiException(ResponseEnum.FAIL_DELETE_USER));
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_DELETE_SUCCESS), HttpStatus.OK);
