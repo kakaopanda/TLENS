@@ -50,7 +50,7 @@ const ReporterDetail = () => {
       setSubscribe(data.content);
     }
     checkSubscriptionStatus();
-  }, []);
+  }, [state.data.reporterId]);
 
   const handleSub = () => {
     subReporter(state.data.reporterId);

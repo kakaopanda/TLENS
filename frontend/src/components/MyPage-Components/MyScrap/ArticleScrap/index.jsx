@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import AspectRatio from "@mui/joy/AspectRatio";
-import Link from "@mui/joy/Link";
 import Card from "@mui/joy/Card";
 import Chip from "@mui/joy/Chip";
-import Typography from "@mui/joy/Typography";
 import NewsCardModal from "../../../NewsCardModal"
 import { Divider, Button } from "@material-ui/core";
 import "./articleScrap.scss"
