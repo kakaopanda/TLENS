@@ -10,6 +10,7 @@ import SearchResultChart2 from "../../Charts-Components/SearchResultChart2";
 import CompanyKeyword from "../../Charts-Components/CompanyKeyword";
 import WordCloud from "../../Charts-Components/WordCloud";
 import HotKeywordChart from "../../Charts-Components/HotKeywordChart";
+import dummy from "./dummy.json";
 
 // MUI
 import Divider from "@mui/material/Divider";
@@ -168,7 +169,7 @@ const CompanyDetail = () => {
               {name} 키워드 (Top30)
             </h3>
             <div className="companydetail-bot-right3">
-              <WordCloud />
+              <WordCloud dummy2={dummy} />
             </div>
           </div>
         </div>
