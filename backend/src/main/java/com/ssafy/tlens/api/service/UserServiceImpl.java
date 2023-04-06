@@ -116,6 +116,7 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_DELETE_SUCCESS), HttpStatus.OK);
     }
 
+    @Override
     public List<KeywordResponseDTO> getKeywordByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));
