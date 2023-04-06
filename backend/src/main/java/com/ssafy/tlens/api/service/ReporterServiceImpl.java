@@ -147,7 +147,12 @@ public class ReporterServiceImpl implements ReporterService {
             if (gender == "male") {
                 gen = ageCount.get(0);
             }
-            gen.add(age/10, gen.get(age/10) + 1);
+            int idx = age/10;
+            if (idx > 9) {
+                idx = 9;
+            }
+            int nowCnt = gen.get(idx);
+            gen.set(idx, nowCnt + 1);
 
         }
         return new SubscribeInfoResponseDTO(ageCount);
