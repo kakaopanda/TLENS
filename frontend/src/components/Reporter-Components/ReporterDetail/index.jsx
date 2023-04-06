@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
 import "./ReporterDetail.scss";
+import dummy2 from "./dummy.json";
 
 // Charts
 import ReporterPieChart from "../../Charts-Components/ReporterPieChart";
@@ -191,7 +192,7 @@ const ReporterDetail = () => {
             borderRadius: "10px",
           }}
         >
-          <WordCloud />
+          <WordCloud dummy2={dummy2} />
         </div>
         <Divider />
         <h2 className="reporterdetail-right-h2">

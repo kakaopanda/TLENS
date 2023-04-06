@@ -11,7 +11,7 @@ const WordCloudContainer = ({ category, dummy2 }) => {
       console.log("123124124");
       setDummyData(dummy[category - 1]);
     } else {
-      setDummyData(dummy2[0]);
+      setDummyData(dummy2);
     }
   });
 
