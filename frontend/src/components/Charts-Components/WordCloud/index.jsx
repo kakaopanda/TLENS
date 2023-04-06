@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WordCloud from "react-wordcloud";
 import { useNavigate } from "react-router-dom";
 import dummy from "./data.json";
 
-const WordCloudContainer = ({ category }) => {
+const WordCloudContainer = ({ category, dummy2 }) => {
   const navigate = useNavigate();
-  const data = dummy[category - 1];
+  const [dummyData, setDummyData] = useState([]);
+  useEffect(() => {
+    if (category) {
+      console.log("123124124");
+      setDummyData(dummy[category - 1]);
+    } else {
+      setDummyData(dummy2[0]);
+    }
+  });
+
+  const data = dummyData;
 
   const options = {
     fontSizes: [10, 60],
@@ -14,6 +24,8 @@ const WordCloudContainer = ({ category }) => {
     padding: 1,
     willReadFrequently: true,
   };
+  console.log(data);
+  console.log(dummy2);
 
   const handleWordClick = (word) => {
     navigate(`/search/${word.text}`);
