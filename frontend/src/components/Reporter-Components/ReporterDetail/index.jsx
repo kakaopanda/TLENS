@@ -25,7 +25,6 @@ const ReporterDetail = () => {
   const { state } = useLocation();
   const [newsData, setNewsData] = useState([]);
   const [categoryCount, setCategoryCount] = useState([]);
-  const [open, setOpen] = useState(false);
 
   const page = 0;
   const pageSize = 10;
@@ -41,6 +40,7 @@ const ReporterDetail = () => {
 
   // 로그인 중이고
   const isLoggedIn = localStorage.getItem("Authorization");
+
   // 구독 중이면
   const [subscribe, setSubscribe] = useState(null);
 
@@ -75,32 +75,30 @@ const ReporterDetail = () => {
 
   useEffect(() => {
     getReporterSubs();
-  }, [state.data.reporterId, subscribe]);
+  }, [subscribe]);
+
+  const subHandler = async (subFunction) => {
+    await subFunction(state.data.reporterId);
+    setSubscribe(!subscribe);
+  };
 
   const handleSub = () => {
-    subReporter(state.data.reporterId);
-    setSubscribe(true);
+    subHandler(subReporter);
   };
 
   const handleCancel = () => {
-    cancelSub(state.data.reporterId);
-    console.log("제거");
-    setSubscribe(false);
+    subHandler(cancelSub);
   };
 
   const handleScroll = async () => {
     const el = mainBotLeftRef.current;
     if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
-      setOpen(true);
       const res3 = await getReporterNews(
         state.data.name,
         Math.ceil(newsData.length / pageSize),
         pageSize
       );
       setNewsData((prevData) => [...prevData, ...res3]);
-      setTimeout(() => {
-        setOpen(false);
-      }, 1000);
     }
   };
 
