@@ -100,7 +100,7 @@ export const getUserInfo = async (id) => {
     return response;
   } catch (error) {
     console.log(error);
-    return error
+    return error;
   }
 };
 
@@ -192,6 +192,18 @@ export const getReporterCategory = async (name) => {
       count.push(V.cnt);
     });
     return { text, count };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 기자별 구독 현황 가져오기
+export const getReporterSubscribe = async (reporterId) => {
+  try {
+    const res = await defaultInstance.get("/reporter/subscribe", {
+      params: { reporterId: reporterId },
+    });
+    return res.data.content.ageCount;
   } catch (error) {
     console.log(error);
   }

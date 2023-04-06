@@ -1,10 +1,10 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const ReporterPieChart2 = () => {
+const ReporterPieChart2 = ({ genderCheck }) => {
   const colors = ["#0d6efd", "#d63384"];
   const state = {
-    series: [71, 15],
+    series: genderCheck,
     options: {
       chart: {
         width: 380,

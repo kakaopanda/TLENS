@@ -1,10 +1,8 @@
 import axios from "axios";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 
 // const BASE_URL = "http://localhost:8080/api/v1";
 const BASE_URL = "https://j8c206.p.ssafy.io/api/v1";
-
-
 
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url, options) => {
@@ -22,7 +20,6 @@ const axiosAuthApi = (url, token) => {
     headers: {
       Authorization: token,
     },
-    
   });
   return instance;
 };
@@ -45,12 +42,11 @@ export const subReporter = async (reporterId) => {
   }
 };
 
-
 export const cancelSub = async (id) => {
   try {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
-    await authInstance.delete("/subscribe",  {
+    await authInstance.delete("/subscribe", {
       params: { reporterId: id },
     });
     toast.error(<h3>구독을 취소 하셨습니다.👋</h3>, {
@@ -62,20 +58,18 @@ export const cancelSub = async (id) => {
   }
 };
 
-
 export const subStatus = async (id) => {
   try {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
-    const response = await authInstance.get("/subscribe/status",  {
-      params: { reporterId : id },
+    const response = await authInstance.get("/subscribe/status", {
+      params: { reporterId: id },
     });
-    return response.data
+    return response.data;
   } catch (error) {
     console.log(error);
   }
 };
-
 
 export const getSubscribe = async () => {
   try {
@@ -83,12 +77,11 @@ export const getSubscribe = async () => {
     const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/subscribe/reporter");
     // console.log(response.data.content)
-    return response.data.content
+    return response.data.content;
   } catch (error) {
     console.log(error);
   }
-}
-
+};
 
 export const getSubscribeNews = async () => {
   try {
@@ -96,11 +89,11 @@ export const getSubscribeNews = async () => {
     const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/subscribe/reporter/news");
     // console.log(response.data.content)
-    return response.data.content
+    return response.data.content;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 ///////////////////////////////////////////////////////////////////////// 기사 스크랩
 
@@ -118,16 +111,14 @@ export const scrapArticle = async (id) => {
   } catch (error) {
     console.log(error);
   }
-
 };
-
 
 export const cancelScrap = async (id) => {
   try {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
-    await authInstance.delete("/scrap",  {
-      params: { newsId : id },
+    await authInstance.delete("/scrap", {
+      params: { newsId: id },
     });
     toast.error(<h3>스크랩을 취소 하셨습니다.👋</h3>, {
       position: "top-center",
@@ -138,21 +129,18 @@ export const cancelScrap = async (id) => {
   }
 };
 
-
 export const scrapStatus = async (id) => {
   try {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/scrap/status", {
-      params: { newsId : id },
+      params: { newsId: id },
     });
-    return response
-
+    return response;
   } catch (error) {
     console.log(error);
   }
-};  
-
+};
 
 export const scrapList = async () => {
   try {
@@ -160,30 +148,26 @@ export const scrapList = async () => {
     const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/scrap/news");
     // console.log(response.data.content.lst)
-    return response.data.content
-    
-
+    return response.data.content;
   } catch (error) {
     console.log(error);
   }
 };
 
-
-////////////////////////////////////////////////////////////// 키워드 등록하기 
+////////////////////////////////////////////////////////////// 키워드 등록하기
 // 키워드 상태 보기
 export const keywordStatus = async (keyword) => {
   try {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/users/keyword/status", {
-      params: { name  : keyword },
+      params: { name: keyword },
     });
-    return response.data.content
-
+    return response.data.content;
   } catch (error) {
     console.log(error);
   }
-}; 
+};
 
 // 키워드 등록하기
 export const keywordRegister = async (keyword) => {
@@ -200,7 +184,6 @@ export const keywordRegister = async (keyword) => {
   } catch (error) {
     console.log(error);
   }
-
 };
 
 // 키워드 제거하기
@@ -209,8 +192,8 @@ export const deleteKeyword = async (keyword) => {
   try {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
-    await authInstance.delete("/users/keyword",  {
-      params: { keyword : keyword },
+    await authInstance.delete("/users/keyword", {
+      params: { keyword: keyword },
     });
     toast.error(<h3>스크랩을 취소 하셨습니다.👋</h3>, {
       position: "top-center",
@@ -221,7 +204,6 @@ export const deleteKeyword = async (keyword) => {
   }
 };
 
-
 // 키워드 가져오기
 
 export const subKeyword = async () => {
@@ -229,13 +211,8 @@ export const subKeyword = async () => {
     const token = localStorage.getItem("Authorization");
     const authInstance = axiosAuthApi(BASE_URL, token);
     const response = await authInstance.get("/users/keyword");
-    return response.data.content
-
+    return response.data.content;
   } catch (error) {
     console.log(error);
   }
 };
-
-
-
-

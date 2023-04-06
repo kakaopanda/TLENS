@@ -20,7 +20,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import Drawer from "@mui/material/Drawer";
 import UploadIcon from "@mui/icons-material/Upload";
 
-
 const Header = () => {
   const navigate = useNavigate();
 
@@ -91,9 +90,10 @@ const Header = () => {
   );
 
   const personalInfo = (anchor) => (
-    <PersonalDrawer 
+    <PersonalDrawer
       anchor={anchor}
       toggleDrawer={toggleDrawer}
+      handleKeyword={handleKeyword}
     />
   );
 
@@ -165,7 +165,6 @@ const Header = () => {
                 {personalInfo("right")}
               </Drawer>
             </React.Fragment>
-
           </Box>
         </Toolbar>
       </AppBar>

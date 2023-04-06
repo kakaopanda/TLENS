@@ -46,7 +46,7 @@ const Carousel = ({ children, active, handlePrev, handleNext }) => {
 };
 
 const ReporterCarousel = () => {
-  const [active, setActive] = useState(6);
+  const [active, setActive] = useState(4);
   const [pressData, setPressData] = useState([]);
   const [reporterData, setReporterData] = useState([]);
   const [pressName, setPressName] = useState("");
