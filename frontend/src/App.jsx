@@ -4,6 +4,7 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Header from "./layout/Header";
+import Footer from "./layout/Footer";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Main from "./pages/Main";
@@ -51,10 +52,9 @@ function App() {
           <Route path="/company/:name" element={<CompanyDetail />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/reporter/:name" element={<ReporterDetail />} />
-
         </Routes>
       </div>
-      {/* {showHeader && <Footer />} */}
+      <Footer />
     </React.Fragment>
   );
 }
