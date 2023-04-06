@@ -4,13 +4,12 @@ import com.ssafy.tlens.api.request.NewsRequestDTO;
 import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.common.exception.handler.NotFoundException;
 import com.ssafy.tlens.entity.rdbms.News;
-import com.ssafy.tlens.repository.NewsRepository;
-import com.ssafy.tlens.repository.NewsSearchRepository;
-import com.ssafy.tlens.repository.PressRepository;
+import com.ssafy.tlens.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +17,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
+    private final MorphemeRepository morphemeRepository;
+    private final CategoryTrendRepository categoryTrendRepository;
+    private final CategoryTrendCustom categoryTrendCustom;
+    private final CategoryRepository categoryRepository;
     private final NewsSearchRepository newsSearchRepository;
     private final PressRepository pressRepository;
 
@@ -62,4 +65,5 @@ public class NewsServiceImpl implements NewsService {
 
         return newsInfoList;
     }
+
 }
