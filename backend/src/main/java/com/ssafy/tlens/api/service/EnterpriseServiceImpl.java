@@ -12,6 +12,7 @@ import com.ssafy.tlens.repository.EnterpriseRepository;
 import com.ssafy.tlens.repository.EnterpriseTrendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     private final EnterpriseTrendRepository enterpriseTrendRepository;
     private final EnterpriseRepository enterpriseRepository;
 
+    @Override
+    @Transactional
     public void insertToEnterprise(TrendRequestDTO request) {
 
         Enterprise enterprise = enterpriseRepository.findById(request.getTargetId())
@@ -38,6 +41,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         enterpriseTrendRepository.save(enterpriseTrend);
     }
 
+    @Override
+    @Transactional
     public void updateToEnterprise(TrendRequestDTO request) {
 
         EnterpriseTrend trend = enterpriseTrendRepository.findById(request.getTargetId())
@@ -46,6 +51,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         trend.update(request.getKeyword(),request.getCount(),request.getDate());
     }
 
+    @Override
+    @Transactional
     public void deleteToEnterprise(Long id) {
 
         EnterpriseTrend trend = enterpriseTrendRepository.findById(id)
@@ -54,6 +61,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         enterpriseTrendRepository.delete(trend);
     }
 
+    @Override
     public List<MainEnterpriseDTO> getMainEnterprise() {
 
         List<Enterprise> enterprises = enterpriseRepository.findAll();
@@ -65,6 +73,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         return entepriseInfoList;
     }
 
+    @Override
     public EnterpriseDetailDTO getEnterpriseDetail(Long enterpriseId) {
 
         Enterprise enterprise = enterpriseRepository.findById(enterpriseId)

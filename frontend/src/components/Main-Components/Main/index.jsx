@@ -11,6 +11,9 @@ import SearchResultChart2 from "../../Charts-Components/SearchResultChart2";
 // MUI
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
 
 // Api
 import { defaultInstance } from "../../../apis/news";
@@ -20,6 +23,7 @@ const MainChart = (props) => {
   const [todayNewsCount, setTodayNewsCount] = useState("");
   const [allNewsCount, setAllNewsCount] = useState("");
   const [category, setCategory] = useState("");
+  const [open, setOpen] = useState(false);
   const [splitKeyword, setSplitKeyword] = useState({
     textList: [],
     valueList: [],
@@ -87,8 +91,27 @@ const MainChart = (props) => {
       } catch (error) {
         console.log(error);
       }
+      setTimeout(() => {
+        setOpen(false);
+      }, 1000);
     }
   };
+
+  const handleScroll = () => {
+    const el = mainBotLeftRef.current;
+    if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
+      getCategoryNews(category, Math.ceil(keywordNews.length / pageSize));
+      setOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    const el = mainBotLeftRef.current;
+    el.addEventListener("scroll", handleScroll);
+    return () => {
+      el.removeEventListener("scroll", handleScroll);
+    };
+  }, [keywordNews.length]);
 
   const addCommas = (num) => {
     const str = num.toString();
@@ -101,6 +124,7 @@ const MainChart = (props) => {
   };
 
   useEffect(() => {
+    // 스위치변경(true);
     setKeywordNews([]);
     setCategory("");
     if (props?.value === "1") {
@@ -129,21 +153,6 @@ const MainChart = (props) => {
   useEffect(() => {
     getCategoryNews(category, 0);
   }, [category]);
-
-  const handleScroll = () => {
-    const el = mainBotLeftRef.current;
-    if (el.scrollTop + el.clientHeight + 1 >= el.scrollHeight) {
-      getCategoryNews(category, Math.ceil(keywordNews.length / pageSize));
-    }
-  };
-
-  useEffect(() => {
-    const el = mainBotLeftRef.current;
-    el.addEventListener("scroll", handleScroll);
-    return () => {
-      el.removeEventListener("scroll", handleScroll);
-    };
-  }, [keywordNews.length]);
 
   return (
     <div>
@@ -203,6 +212,12 @@ const MainChart = (props) => {
       <Divider />
       <div className="main-bot-wrapper">
         <div className="main-bot-left" ref={mainBotLeftRef}>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
           <MainNewsCard newsData={keywordNews} />
         </div>
         <Divider orientation="vertical" flexItem />

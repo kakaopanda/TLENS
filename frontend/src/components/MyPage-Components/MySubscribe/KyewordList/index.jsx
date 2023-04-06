@@ -1,100 +1,59 @@
-import React, { useState } from 'react';
-import data from './data.json';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { subKeyword, deleteKeyword } from "../../../../apis/news";
+import './keywordList.scss';
 
-function Keyword({ word, onClick, onClickDelete, selected }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <div
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        padding: '10px',
-        margin: '5px',
-        backgroundColor: selected ? '#ff9933' : '#0066cc',
-        height: '30px',
-        fontSize: '15px',
-        color: '#ffffff',
-        borderRadius: '5px',
-      }}
-
-    >
-      <span
-        style={{
-          marginRight: '10px',
-          cursor: 'pointer',
-        }}
-        onClick={() => onClick(word)}
-      >
-        {word}
-      </span>
-      {selected || isHovered ? (
-        <button
-          style={{
-            border: 'none',
-            backgroundColor: 'transparent',
-            color: 'red',
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '20px',
-            height: '20px',
-            marginLeft: '5px',
-          }}
-          onClick={() => onClickDelete(word)}
-        >
-          X
-        </button>
-      ) : null}
-    </div>
-  );
-}
-
-function KeywordDetail({ selectedKeyword }) {
-  const keyword = data[selectedKeyword];
-  if (!keyword) {
-    return null;
-  }
-
-  return (
-    <div>
-      <h2>T:LENS 키워드 : {selectedKeyword}</h2>
-      <p>{keyword.description}</p>
-    </div>
-  );
-}
-
-function App() {
+function KeywordList() {
   const [selectedKeyword, setSelectedKeyword] = useState('');
-  const [keywordData, setKeywordData] = useState(data);
+  const [keywordData, setKeywordData] = useState([]);
+
+  useEffect(() => {
+    const fetchScrapList = async () => {
+      try {
+        const response = await subKeyword();
+        setKeywordData(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchScrapList();
+  }, []);
 
   function handleKeywordClick(word) {
     setSelectedKeyword(word);
   }
 
-  function handleKeywordDelete(word) {
-    const newData = { ...keywordData };
-    delete newData[word];
-    setSelectedKeyword('');
-    setKeywordData(newData);
+  async function handleDeleteClick(word) {
+    try {
+      await deleteKeyword(word);
+      setKeywordData(keywordData.filter((keyword) => keyword.name !== word));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
-    <div>
-      <div>
-        {Object.keys(keywordData).map((word) => (
-          <Keyword
-            key={word}
-            word={word}
-            onClick={handleKeywordClick}
-            onClickDelete={handleKeywordDelete}
-            selected={selectedKeyword === word}
-          />
+    <div className="keyword-list-container">
+      <div className="keyword-list">
+        {keywordData.map((keyword) => (
+          <div
+            key={keyword.id}
+            className="keyword-item"
+            onMouseEnter={(e) => e.currentTarget.lastChild.style.display = "inline-block"}
+            onMouseLeave={(e) => e.currentTarget.lastChild.style.display = "none"}
+          >
+            <div className="keyword-name" onClick={() => handleKeywordClick(keyword.name)}>
+              {keyword.name}
+            </div>
+            <div
+              className="delete-button"
+              onClick={(e) => handleDeleteClick(keyword.name)}
+            >
+              X
+            </div>
+          </div>
         ))}
       </div>
-      <KeywordDetail selectedKeyword={selectedKeyword} />
       {selectedKeyword && (
         <Link to={`/search/${selectedKeyword}`} className="keyword-search">
           {selectedKeyword}에 대한 키워드 검색 >>
@@ -104,4 +63,4 @@ function App() {
   );
 }
 
-export default App;
+export default KeywordList;

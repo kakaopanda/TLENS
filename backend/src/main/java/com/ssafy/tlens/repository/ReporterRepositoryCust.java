@@ -15,7 +15,7 @@ public class ReporterRepositoryCust {
 
     private final EntityManager em;
 
-    public List<Reporter> getNewsByReporter(String press, int pageNo, int pageSize) {
+    public List<Reporter> getReporterByPress(String press, int pageNo, int pageSize) {
         JPAQueryFactory query = new JPAQueryFactory(em);
         QReporter reporter = QReporter.reporter;
 

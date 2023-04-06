@@ -71,21 +71,14 @@ public class UserServiceImpl implements UserService {
         String refreshTokenInRedis = redisDao.getValues(requestEmail);
         if (refreshTokenInRedis != null) {
             redisDao.deleteValues(requestEmail);
-            System.out.println("삭제 완료");
+//            System.out.println("삭제 완료");
         }
 
-        // Redis에 로그아웃 처리한 AT 저장
-//        long now = (new Date()).getTime();
-//        long remain = jwtProvider.getExpiration(ATK);
-//        Date blacklistTokenExpires = new Date(remain - now);
+        // Redis에 로그아웃 처리한 AT 저장 (블랙리스트)
         long expiration = jwtProvider.getExpiration(ATK);
-        System.out.println("ATK를 KEY로 하는 REDIS 값 삭제");
+//        System.out.println("ATK를 KEY로 하는 REDIS 값 삭제");
         redisDao.setValues(ATK, "logout", expiration);
-        System.out.println("삭제 완료");
-
-//        redisService.setValuesWithTimeout(requestAccessToken,
-//                "logout",
-//                expiration);
+//        System.out.println("삭제 완료");
     }
 
     @Override
@@ -113,6 +106,16 @@ public class UserServiceImpl implements UserService {
         System.out.println("update 완료, encPassword : " + encPassword);
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_PROFILE_CHANGE_SUCCESS), HttpStatus.OK);
     }
+    @Override
+    @Transactional
+    public ResponseEntity<?> deleteUser(String email) {
+        // 유저의 대한 DB정보를 삭제한다.
+        userRepository.deleteByEmail(email).orElseThrow(()
+            -> new CustomApiException(ResponseEnum.FAIL_DELETE_USER));
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_DELETE_SUCCESS), HttpStatus.OK);
+    }
+
     public List<KeywordResponseDTO> getKeywordByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));

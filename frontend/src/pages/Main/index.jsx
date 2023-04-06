@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useLocation } from "react";
 import MainComponent from "../../components/Main-Components/Main";
 import "./Main.scss";
 

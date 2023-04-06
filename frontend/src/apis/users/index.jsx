@@ -14,7 +14,6 @@ const axiosApi = (url, options) => {
 // Post, Put, Delete 등 요청으로 인증값이 필요한 경우
 const axiosAuthApi = (url, token, options) => {
   // console.log("확인", token);
-  console.log(options);
   const instance = axios.create({
     baseURL: url,
     headers: {
@@ -127,3 +126,40 @@ export const logout = async () => {
   }
 };
 
+
+// 비밀번호 확인
+export const passwordCheck = async (password) => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const response = await authInstance.get(`/users/${password}`, {
+      params: { rawPwd: password },
+    });
+    console.log(response)
+    
+    return response
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+
+// 비밀번호 변경
+export const passwordChange = async (password) => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const response = await authInstance.put(`/users/${password}`, [], {
+      params: { rawPwd: password },
+    });
+    toast.success(<h3>비밀번호가 변경되었습니다.😎</h3>, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+    return response
+  } catch (error) {
+    console.log(error);
+  }
+  
+};
