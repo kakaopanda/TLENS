@@ -275,7 +275,7 @@ public class NewsController {
                     newsService.insert(list.get(j));
 
                     // 크롤링한 기사의 제목 및 내용을 JSON 객체에 담아 Kafka 서버에 POST 요청으로 전달한다.
-                    URL url = new URL("http://localhost:8090/kafka/data");
+                    URL url = new URL("http://j8c206.p.ssafy.io:8090/kafka/data");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("POST");
                     con.setRequestProperty("Content-Type", "application/json");
