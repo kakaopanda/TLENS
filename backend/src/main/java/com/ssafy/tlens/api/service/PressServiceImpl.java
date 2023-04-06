@@ -108,6 +108,8 @@ public class PressServiceImpl implements PressService {
             }
     };
 
+    @Override
+    @Transactional
     public void insertToPress(TrendRequestDTO request) {
 
         Press press = pressRepository.findById(request.getTargetId())
@@ -123,6 +125,8 @@ public class PressServiceImpl implements PressService {
         pressTrendRepository.save(pressTrend);
     }
 
+    @Override
+    @Transactional
     public void updateToPress(TrendRequestDTO request) {
 
         PressTrend trend = pressTrendRepository.findById(request.getTargetId())
@@ -131,6 +135,8 @@ public class PressServiceImpl implements PressService {
         trend.update(request.getKeyword(),request.getCount(),request.getDate());
     }
 
+    @Override
+    @Transactional
     public void deleteToPress(Long id) {
 
         PressTrend trend = pressTrendRepository.findById(id)
@@ -139,6 +145,7 @@ public class PressServiceImpl implements PressService {
         pressTrendRepository.delete(trend);
     }
 
+    @Override
     public List<MainPressDTO> getMainPress() {
 
         List<Press> presses = pressRepository.findAll();

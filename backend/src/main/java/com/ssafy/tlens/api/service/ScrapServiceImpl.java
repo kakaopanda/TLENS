@@ -47,8 +47,6 @@ public class ScrapServiceImpl implements ScrapService {
         scrapRepository.save(scrap);
     }
 
-    ;
-
     @Override
     @Transactional
     public void delete(ScrapRequestDTO scrapRequestDTO) {
@@ -63,8 +61,6 @@ public class ScrapServiceImpl implements ScrapService {
 
         scrapRepository.delete(scrap);
     }
-
-    ;
 
     @Override
     public ListAndCntResponseDTO getScrapNewsList(Long userId) {

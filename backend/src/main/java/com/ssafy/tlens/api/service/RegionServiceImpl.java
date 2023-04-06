@@ -15,6 +15,7 @@ import com.ssafy.tlens.repository.RegionTrendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,6 +31,8 @@ public class RegionServiceImpl implements RegionService {
     private final NewsSearchRepository newsSearchRepository;
     private final PressRepository pressRepository;
 
+    @Override
+    @Transactional
     public void insertToRegion(TrendRequestDTO request) {
 
         Region region = regionRepository.findById(request.getTargetId())
@@ -45,6 +48,8 @@ public class RegionServiceImpl implements RegionService {
         regionTrendRepository.save(regionTrend);
     }
 
+    @Override
+    @Transactional
     public void updateToRegion(TrendRequestDTO request) {
 
         RegionTrend trend = regionTrendRepository.findById(request.getTargetId())
@@ -53,6 +58,8 @@ public class RegionServiceImpl implements RegionService {
         trend.update(request.getKeyword(),request.getCount(),request.getDate());
     }
 
+    @Override
+    @Transactional
     public void deleteToRegion(Long id) {
 
         RegionTrend trend = regionTrendRepository.findById(id)
@@ -61,6 +68,8 @@ public class RegionServiceImpl implements RegionService {
         regionTrendRepository.delete(trend);
     }
 
+    @Override
+    @Transactional
     public List<RegionResponseDTO> getMainRegion() {
 
         List<Region> regions = regionRepository.findAll();
@@ -87,6 +96,7 @@ public class RegionServiceImpl implements RegionService {
         return regionInfoList;
     }
 
+    @Override
     public List<NewsInfoDTO> getNewsByRegion(String region, int pageNo, int pageSize) {
         List<News> newses = newsSearchRepository.findByRegion(region, pageNo, pageSize);
 

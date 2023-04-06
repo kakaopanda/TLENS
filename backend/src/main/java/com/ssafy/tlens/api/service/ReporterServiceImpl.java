@@ -1,9 +1,7 @@
 package com.ssafy.tlens.api.service;
 
 
-import com.ssafy.tlens.api.request.ReporterRequestDTO;
 import com.ssafy.tlens.api.request.TrendRequestDTO;
-import com.ssafy.tlens.api.response.MainPressDTO;
 import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.api.response.ReporterInfoDTO;
 import com.ssafy.tlens.api.response.WordCountDTO;
@@ -16,6 +14,7 @@ import com.ssafy.tlens.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,6 +31,9 @@ public class ReporterServiceImpl implements ReporterService {
     private final NewsSearchRepository newsSearchRepository;
     private final NewsRepository newsRepository;
     private final ReporterRepositoryCust repositoryRepositoryCust;
+
+    @Override
+    @Transactional
     public void insertToReporter(TrendRequestDTO request) {
 
         Reporter reporter = reporterRepository.findById(request.getTargetId())
@@ -47,6 +49,8 @@ public class ReporterServiceImpl implements ReporterService {
         reporterTrendRepository.save(reporterTrend);
     }
 
+    @Override
+    @Transactional
     public void updateToReporter(TrendRequestDTO request) {
 
         ReporterTrend trend = reporterTrendRepository.findById(request.getTargetId())
@@ -55,6 +59,8 @@ public class ReporterServiceImpl implements ReporterService {
         trend.update(request.getKeyword(),request.getCount(),request.getDate());
     }
 
+    @Override
+    @Transactional
     public void deleteToReporter(Long id) {
 
         ReporterTrend trend = reporterTrendRepository.findById(id)
@@ -63,6 +69,7 @@ public class ReporterServiceImpl implements ReporterService {
         reporterTrendRepository.delete(trend);
     }
 
+    @Override
     public List<ReporterInfoDTO> getReportersByPress(Long pressId) {
 
         Press press = pressRepository.findById(pressId)
@@ -77,9 +84,10 @@ public class ReporterServiceImpl implements ReporterService {
         return reporterInfoList;
     }
 
+    @Override
     public List<ReporterInfoDTO> getReportersByPressOffset(String press, int pageNo, int pageSize) {
 
-        List<Reporter> reporters = repositoryRepositoryCust.getNewsByReporter(press, pageNo, pageSize);
+        List<Reporter> reporters = repositoryRepositoryCust.getReporterByPress(press, pageNo, pageSize);
 
         List<ReporterInfoDTO> reporterInfoList = reporters.stream()
                 .map(reporter -> new ReporterInfoDTO(reporter))
@@ -88,6 +96,7 @@ public class ReporterServiceImpl implements ReporterService {
         return reporterInfoList;
     }
 
+    @Override
     public List<NewsInfoDTO> getNewsByReporter(String reporter, int pageNo, int pageSize) {
         List<News> newses = newsSearchRepository.findByReporter(reporter, pageNo, pageSize);
 
@@ -96,6 +105,8 @@ public class ReporterServiceImpl implements ReporterService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
     public List<WordCountDTO> getCategoryCountByReporterNews(String reporter) {
         List<News> newses = newsRepository.findByReporter(reporter);
 
