@@ -163,3 +163,18 @@ export const passwordChange = async (password) => {
   }
   
 };
+
+
+// 회원 탈퇴
+
+export const withdrawalUser = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const response = await authInstance.delete("/users");
+    console.log(response)
+  }
+   catch (error) {
+    console.log(error);
+  }
+};

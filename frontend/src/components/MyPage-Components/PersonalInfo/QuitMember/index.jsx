@@ -1,39 +1,51 @@
 import React, {useState} from "react";
 import { Modal, Box, Typography, TextField, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import './quitMember.scss'
 
+// API
+import { withdrawalUser, passwordCheck } from "../../../../apis/users";
+
 const QuitMember = ({ onClose }) => {
+  const navigate = useNavigate()
   const [currentPassword, setCurrentPassword] = useState("");
   const [isAuthed, setIsAuthed] = useState(false);
   const [inputText, setInputText] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  function authenticatePassword() {
-    const validPassword = "password123"; // 유효한 비밀번호
-    if (currentPassword === validPassword) {
-      setIsAuthed(true);
-    } else {
-      alert("비밀번호가 일치하지 않습니다.");
-      setCurrentPassword("");
+
+  const handleAuthSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await passwordCheck(currentPassword);
+      if (response.data.code === 200) {
+        setIsAuthed(true);
+      } else {
+        setErrorMessage("비밀번호 인증에 실패했습니다.");
+      }
+    } catch (error) {
+      setErrorMessage("비밀번호 인증에 실패했습니다.");
     }
   }
   const handleCurrentPasswordChange = (event) => {
     setCurrentPassword(event.target.value);
-  };
-
-  const handleAuthSubmit = (event) => {
-    event.preventDefault();
-    authenticatePassword();
-  };
+  }
+  
 
   const handleInputChange = (e) => {
     setInputText(e.target.value);
   }
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (inputText === '저는 다시 한번 트렌즈의 서비스를 이용하겠습니다') {
-      // 탈퇴 처리 로직
+  
+      await withdrawalUser();
+      localStorage.removeItem("Authorization");
+      localStorage.removeItem("refresh-token");
+      localStorage.removeItem("userId");
       alert('탈퇴되었습니다.');
+      navigate('/main')
       onClose(); // 모달 닫기
     } else {
       alert('올바른 문구를 입력해주세요.');
@@ -80,7 +92,7 @@ const QuitMember = ({ onClose }) => {
               }}
             />
             <div className="auth-button">
-              <Button onClick={authenticatePassword} className="button" type="submit" variant="contained" color="primary" sx={{ mt: 5, justifyContent: 'center', width: '160px'}}>
+              <Button onClick={handleAuthSubmit} className="button" type="submit" variant="contained" color="primary" sx={{ mt: 5, justifyContent: 'center', width: '160px'}}>
                 인증하기
               </Button>
             </div>
@@ -109,7 +121,7 @@ const QuitMember = ({ onClose }) => {
               }}
             />
             <div className="auth-button">
-              <Button onClick={authenticatePassword} className="button" type="submit" variant="contained" color="primary" sx={{ mt: 5, justifyContent: 'center', width: '160px'}}>
+              <Button onClick={handleFormSubmit} className="button" type="submit" variant="contained" color="primary" sx={{ mt: 5, justifyContent: 'center', width: '160px'}}>
                 탈퇴하기
               </Button>
             </div>
