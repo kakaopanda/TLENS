@@ -124,7 +124,8 @@ const MainChart = (props) => {
   };
 
   useEffect(() => {
-    // 스위치변경(true);
+    const el = mainBotLeftRef.current;
+    el.scrollTop = 0;
     setKeywordNews([]);
     setCategory("");
     if (props?.value === "1") {
