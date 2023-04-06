@@ -132,7 +132,7 @@ const CompanyDetail = () => {
             {loading && <CompanyStock keyName={keyName} day={day} />}
           </div>
         </div>
-        <div className="companydetail-mid">
+        {/* <div className="companydetail-mid">
           <div className="companydetail-mid-left">
             <h2 style={{ marginLeft: "4%" }}>키워드 관계도 : {name}</h2>
             <div className="companydetail-mid-left-1">
@@ -146,7 +146,7 @@ const CompanyDetail = () => {
               <CompanyKeyword />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="companydetail-bot-wrapper">
         <h2>T:LENS 키워드 분석 : {name}</h2>
@@ -158,11 +158,15 @@ const CompanyDetail = () => {
           <Divider orientation="vertical" flexItem />
           <div className="companydetail-bot-right">
             <br />
-            <h3 className="companydetail-bot-right-h3">차트 뭐 들어가야되나</h3>
+            <h3 className="companydetail-bot-right-h3">
+              {name} 년도 별 기사 데이터 건수
+            </h3>
             <div className="companydetail-bot-right2">
               <HotKeywordChart />
             </div>
-            <h3 className="companydetail-bot-right2-h3">{name} HOT Keyword</h3>
+            <h3 className="companydetail-bot-right2-h3">
+              {name} 키워드 (Top30)
+            </h3>
             <div className="companydetail-bot-right3">
               <WordCloud />
             </div>

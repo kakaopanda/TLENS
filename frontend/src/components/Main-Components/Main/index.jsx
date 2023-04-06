@@ -49,7 +49,6 @@ const MainChart = (props) => {
 
     const textList = result.map(({ text }) => text);
     const valueList = result.map(({ value }) => value);
-
     return { textList, valueList };
   };
 
@@ -205,7 +204,7 @@ const MainChart = (props) => {
         <Divider orientation="vertical" flexItem />
         <div className="main-mid-right">
           <h2>T:LENS 핫 키워드(Top 30)</h2>
-          <Wordcloud />
+          <Wordcloud category={props?.value} />
         </div>
       </div>
       <Divider />

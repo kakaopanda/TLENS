@@ -44,9 +44,7 @@ function App() {
           {/* <Route path="/mypage" element={<Mypage />} /> */}
           <Route
             path="/mypage"
-            element={
-            <PrivateRoute path="/mypage" component={Mypage}/>
-          }
+            element={<PrivateRoute path="/mypage" component={Mypage} />}
           />
           <Route path="/reporter" element={<Reporter />} />
           <Route path="/company/:name" element={<CompanyDetail />} />
