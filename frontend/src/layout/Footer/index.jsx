@@ -1,65 +1,26 @@
-import React from "react";
-import SimpleReactFooter from "simple-react-footer";
+import "./Footer.scss";
+import * as React from "react";
 
 const Footer = () => {
-  const footerData = {
-    description: "Your description here",
-    title:
-      "Your title hereour title hereour tititle hereour title hereour title hereour title here",
-    columns: [
-      {
-        title: "Resources",
-        resources: [
-          {
-            name: "Resource 1",
-            link: "/resource1",
-          },
-          {
-            name: "Resource 2",
-            link: "/resource2",
-          },
-          {
-            name: "Resource 3",
-            link: "/resource3",
-          },
-        ],
-      },
-      {
-        title: "Legal",
-        resources: [
-          {
-            name: "Privacy Policy",
-            link: "/privacy",
-          },
-          {
-            name: "Terms of Use",
-            link: "/terms",
-          },
-        ],
-      },
-      {
-        title: "Contact",
-        resources: [
-          {
-            name: "Email",
-            link: "mailto:your.email@example.com",
-          },
-          {
-            name: "Twitter",
-            link: "https://twitter.com/yourhandle",
-          },
-        ],
-      },
-    ],
-    backgroundColor: "#015cad",
-    textColor: "#fff",
-    fontColor: "#fff",
-  };
   return (
-    <div>
-      <SimpleReactFooter {...footerData} />
-    </div>
+    <>
+      <div className="footer-wrapper">
+        <div className="footer-title">
+          <span>T:LENS</span>
+        </div>
+        <div className="footer-contents">
+          삼성 청년 SW아카데미 8기 광주_2반_C206
+        </div>
+        <div className="my-website">
+          <div className="my-website-title">Our Projects</div>
+          <a href="https://lab.ssafy.com/s08-bigdata-dist-sub2/S08P22C206">
+            🏴GitLab
+          </a>
+          <br />
+        </div>
+        <br />
+      </div>
+    </>
   );
 };
-
 export default Footer;
