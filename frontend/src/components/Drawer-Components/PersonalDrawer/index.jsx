@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Divider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 // Components
 import SubReportList from "../../MyPage-Components/MySubscribe/Sub-ReportList";
@@ -11,7 +12,7 @@ import "./personalDrawer.scss";
 import { logout } from "../../../apis/users/";
 import { getUserInfo } from "../../../apis/api/axiosinstance";
 
-const PersonalDrawer = ({ anchor, toggleDrawer, handleNavigate }) => {
+const PersonalDrawer = ({ anchor, toggleDrawer }) => {
   const navigate = useNavigate();
 
   const Authorization = localStorage.getItem("Authorization");
@@ -34,30 +35,22 @@ const PersonalDrawer = ({ anchor, toggleDrawer, handleNavigate }) => {
     fetchUserInfo();
   }, [userId]);
 
-  // const logout = async () => {
-  //   try {
-  //     await authInstance.get('/users/logout');
-
-  //   } catch (error) {
-  //     console.log(error);
-
-  //   }
-  // };
-
   return (
-    <div>
+    <div className="drawer-wrapper">
       <Box
         onClick={toggleDrawer(anchor, false)}
-        sx={{ width: 300 }}
+        sx={{ width: '300px', padding: 0  }}
         role="presentation"
       >
         <ToastContainer />
         <div>
+          <img src="img/logo.png" alt="로고" style={{width:"100px", marginBlock: "10px"}}/>
+          <Divider sx={{ borderWidth: "2px", color: "#0066cc" }} />
           {isLoggedIn ? (
-            <h4>안녕하세요!! "{userInfo.nickname}" 님</h4>
+            <h4 style={{fontWeight:"bold"}}>안녕하세요!! "{userInfo.nickname}" 님</h4>
           ) : (
             <div className="drawer-login">
-              <Divider />
+              <Divider sx={{ borderWidth: "2px", color: "#0066cc" }} />
               <h5>
                 <span className="t-lens">T:LENS</span>의 더 많은 서비스를
                 원하시나요?
@@ -74,7 +67,30 @@ const PersonalDrawer = ({ anchor, toggleDrawer, handleNavigate }) => {
                 fullWidth
                 type="submit"
                 sx={{
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  color: "white",
                   width: "150px",
+                  marginTop: "10px",
+                  marginBottom: "20px",
+                }}
+                onClick={() => {
+                  navigate("/mypage");
+                }}
+              >
+                <LogoutIcon /> My Page
+              </Button>
+              <Button
+                color="error"
+                variant="contained"
+                fullWidth
+                type="submit"
+                sx={{
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  color: "white",
+                  width: "100px",
+                  marginLeft:"10px",
                   marginTop: "10px",
                   marginBottom: "20px",
                 }}
@@ -86,7 +102,7 @@ const PersonalDrawer = ({ anchor, toggleDrawer, handleNavigate }) => {
                   navigate("/main");
                 }}
               >
-                로그아웃
+                <LogoutIcon /> 로그아웃
               </Button>
             </div>
           ) : (
@@ -98,7 +114,7 @@ const PersonalDrawer = ({ anchor, toggleDrawer, handleNavigate }) => {
                 type="submit"
                 sx={{
                   width: "150px",
-                  marginTop: "10px",
+                  marginRight: "30px",
                   marginBottom: "20px",
                 }}
                 onClick={() => {
@@ -110,19 +126,19 @@ const PersonalDrawer = ({ anchor, toggleDrawer, handleNavigate }) => {
             </div>
           )}
         </div>
-        <Divider />
+          <Divider sx={{ borderWidth: "2px", color: "#0066cc" }} />
         <div>
-          <Divider />
+          <Divider sx={{ borderWidth: "2px", color: "#0066cc" }} />
         </div>
         {isLoggedIn && <SubReportList key={userId} userInfo={userInfo} />}
-        <Divider sx={{ marginTop: "5%" }} />
+        <Divider sx={{ marginTop: "5%", borderWidth: "2px", color: "#0066cc" }} />
         <div>
           {isLoggedIn && (
             <Button
               style={{ fontWeight: "bold" }}
               onClick={() => navigate("/mypage")}
             >
-              MyPage에서 구독 기자들을 확인하세요
+              MyPage에서 구독내용을 확인하세요
             </Button>
           )}
         </div>
