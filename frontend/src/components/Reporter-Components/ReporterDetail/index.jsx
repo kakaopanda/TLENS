@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import MainNewsCard from "../../Main-Components/MainNewsCard";
 import "./ReporterDetail.scss";
 
@@ -112,6 +113,7 @@ const ReporterDetail = () => {
 
   return (
     <div className="reporterdetail-wrapper">
+      <ToastContainer />
       <div className="reporterdetail-left">
         <div className="reporterdetail-left-top">
           <div className="reporterdetail-left-top-1">

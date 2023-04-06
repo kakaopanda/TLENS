@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { subKeyword, deleteKeyword } from "../../../../apis/news";
 import './keywordList.scss';
 
@@ -34,25 +35,28 @@ function KeywordList() {
 
   return (
     <div className="keyword-list-container">
+      <ToastContainer />
       <div className="keyword-list">
-        {keywordData.map((keyword) => (
-          <div
-            key={keyword.id}
-            className="keyword-item"
-            onMouseEnter={(e) => e.currentTarget.lastChild.style.display = "inline-block"}
-            onMouseLeave={(e) => e.currentTarget.lastChild.style.display = "none"}
-          >
-            <div className="keyword-name" onClick={() => handleKeywordClick(keyword.name)}>
-              {keyword.name}
-            </div>
+        {keywordData && keywordData.length > 0 && (
+          keywordData.map((keyword) => (
             <div
-              className="delete-button"
-              onClick={(e) => handleDeleteClick(keyword.name)}
+              key={keyword.id}
+              className="keyword-item"
+              onMouseEnter={(e) => e.currentTarget.lastChild.style.display = "inline-block"}
+              onMouseLeave={(e) => e.currentTarget.lastChild.style.display = "none"}
             >
-              X
+              <div className="keyword-name" onClick={() => handleKeywordClick(keyword.name)}>
+                {keyword.name}
+              </div>
+              <div
+                className="delete-button"
+                onClick={(e) => handleDeleteClick(keyword.name)}
+              >
+                X
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
       {selectedKeyword && (
         <Link to={`/search/${selectedKeyword}`} className="keyword-search">

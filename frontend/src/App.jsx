@@ -41,13 +41,13 @@ function App() {
           <Route path="/search/:keyword" element={<SearchResult />} />
           <Route path="/company" element={<Company />} />
           <Route path="/region" element={<Region />} />
-          <Route path="/mypage" element={<Mypage />} />
-          {/* <Route
+          {/* <Route path="/mypage" element={<Mypage />} /> */}
+          <Route
             path="/mypage"
             element={
             <PrivateRoute path="/mypage" component={Mypage}/>
           }
-          /> */}
+          />
           <Route path="/reporter" element={<Reporter />} />
           <Route path="/company/:name" element={<CompanyDetail />} />
           <Route path="/statistics" element={<Statistics />} />
