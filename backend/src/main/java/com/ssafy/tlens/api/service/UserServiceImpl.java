@@ -112,10 +112,10 @@ public class UserServiceImpl implements UserService {
         // 유저의 대한 DB정보를 삭제한다.
         userRepository.deleteByEmail(email).orElseThrow(()
             -> new CustomApiException(ResponseEnum.FAIL_DELETE_USER));
-
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.USER_DELETE_SUCCESS), HttpStatus.OK);
     }
 
+    @Override
     public List<KeywordResponseDTO> getKeywordByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Could not found user id : " + userId));

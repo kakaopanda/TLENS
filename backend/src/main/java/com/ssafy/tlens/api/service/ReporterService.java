@@ -4,6 +4,7 @@ import com.ssafy.tlens.api.request.ReporterRequestDTO;
 import com.ssafy.tlens.api.request.TrendRequestDTO;
 import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.api.response.ReporterInfoDTO;
+import com.ssafy.tlens.api.response.SubscribeInfoResponseDTO;
 import com.ssafy.tlens.api.response.WordCountDTO;
 import com.ssafy.tlens.entity.rdbms.Press;
 
@@ -19,4 +20,5 @@ public interface ReporterService {
     List<NewsInfoDTO> getNewsByReporter(String reporter, int pageNo, int pageSize);
     void insert(ReporterInfoDTO reporterInfoDTO, Press press);
     List<WordCountDTO> getCategoryCountByReporterNews(String reporter);
+    SubscribeInfoResponseDTO getSubscribeInfoByReporter(Long reporterId);
 }

@@ -4,12 +4,10 @@ package com.ssafy.tlens.api.service;
 import com.ssafy.tlens.api.request.TrendRequestDTO;
 import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.api.response.ReporterInfoDTO;
+import com.ssafy.tlens.api.response.SubscribeInfoResponseDTO;
 import com.ssafy.tlens.api.response.WordCountDTO;
 import com.ssafy.tlens.common.exception.handler.NotFoundException;
-import com.ssafy.tlens.entity.rdbms.News;
-import com.ssafy.tlens.entity.rdbms.Press;
-import com.ssafy.tlens.entity.rdbms.Reporter;
-import com.ssafy.tlens.entity.rdbms.ReporterTrend;
+import com.ssafy.tlens.entity.rdbms.*;
 import com.ssafy.tlens.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +29,7 @@ public class ReporterServiceImpl implements ReporterService {
     private final NewsSearchRepository newsSearchRepository;
     private final NewsRepository newsRepository;
     private final ReporterRepositoryCust repositoryRepositoryCust;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -125,6 +124,33 @@ public class ReporterServiceImpl implements ReporterService {
             countList.add(new WordCountDTO(key,map.get(key)));
         }
         return countList;
+    }
+
+    @Override
+    public SubscribeInfoResponseDTO getSubscribeInfoByReporter(Long reporterId) {
+        List<User> users = userRepository.getSubscribeUserByReporterId(reporterId);
+
+        List<ArrayList<Integer>> ageCount = new ArrayList<>();
+        for (int i = 0 ; i < 2; i++){
+            ageCount.add(new ArrayList<>(8));
+        }
+        for (int j = 0 ; j < 9; j++) {
+            ageCount.get(0).add(0);
+            ageCount.get(1).add(0);
+        }
+
+        for (User user : users) {
+            int age = user.getAge();
+            String gender = user.getGender();
+
+            ArrayList<Integer> gen = ageCount.get(1);
+            if (gender == "male") {
+                gen = ageCount.get(0);
+            }
+            gen.add(age/10, gen.get(age/10) + 1);
+
+        }
+        return new SubscribeInfoResponseDTO(ageCount);
     }
 
 

@@ -3,6 +3,7 @@ package com.ssafy.tlens.api.controller;
 import com.ssafy.tlens.api.request.TrendRequestDTO;
 import com.ssafy.tlens.api.response.NewsInfoDTO;
 import com.ssafy.tlens.api.response.ReporterInfoDTO;
+import com.ssafy.tlens.api.response.SubscribeInfoResponseDTO;
 import com.ssafy.tlens.api.response.WordCountDTO;
 import com.ssafy.tlens.api.service.ReporterService;
 import com.ssafy.tlens.common.ResponseDto;
@@ -56,6 +57,13 @@ public class ReporterController {
     @GetMapping("/category/count")
     public ResponseEntity<?> getCategoryByReporterNews(@RequestParam String reporter) {
         List<WordCountDTO> result = reporterService.getCategoryCountByReporterNews(reporter);
+
+        return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
+    }
+
+    @GetMapping("/subscribe")
+    public ResponseEntity<?> getSubscribeInfoByReporter(@RequestParam Long reporterId) {
+        SubscribeInfoResponseDTO result = reporterService.getSubscribeInfoByReporter(reporterId);
 
         return new ResponseEntity<>(new ResponseDto<>(ResponseEnum.PRODUCT_CATEGORY_SUCCESS, result), HttpStatus.OK);
     }

@@ -14,6 +14,5 @@ public interface RegionService {
     void updateToRegion(TrendRequestDTO trendRequestDTO);
     void deleteToRegion(Long id);
     List<RegionResponseDTO> getMainRegion();
-
     List<NewsInfoDTO> getNewsByRegion(String region, int pageNo, int pageSize);
 }

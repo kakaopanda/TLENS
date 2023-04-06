@@ -12,7 +12,6 @@ public interface PressService {
     void updateToPress(TrendRequestDTO trendRequestDTO);
     void deleteToPress(Long id);
     List<MainPressDTO> getMainPress();
-
     void settingPress();
     Press getPress(long pressId);
 }
