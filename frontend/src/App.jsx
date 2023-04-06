@@ -13,7 +13,6 @@ import Company from "./pages/Company";
 import Region from "./pages/Region";
 import Reporter from "./pages/Reporter";
 import CompanyDetail from "./components/Company-Components/CompanyDetail";
-import Statistics from "./pages/Statistics";
 import Mypage from "./pages/Mypage";
 import ReporterDetail from "./components/Reporter-Components/ReporterDetail";
 
@@ -23,6 +22,7 @@ import PrivateRoute from "./routes/PrivateRoutes";
 import PublicRoute from "./routes/PublicRoutes";
 
 function App() {
+  const location = useLocation();
   const { pathname } = useLocation();
   const isHomePage = pathname === "/";
   const showHeader = !isHomePage;
@@ -50,11 +50,10 @@ function App() {
           />
           <Route path="/reporter" element={<Reporter />} />
           <Route path="/company/:name" element={<CompanyDetail />} />
-          <Route path="/statistics" element={<Statistics />} />
           <Route path="/reporter/:name" element={<ReporterDetail />} />
         </Routes>
       </div>
-      <Footer />
+      {location.pathname !== "/reporter" && <Footer />}
     </React.Fragment>
   );
 }

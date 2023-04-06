@@ -4,6 +4,7 @@ import "./ReporterCarousel.scss";
 import ReporterCard from "../ReporterCard";
 import ReporterCard2 from "../ReporterCard2";
 import { getPressData, getReporterData } from "../../../apis/api/axiosinstance";
+import Footer from "../../../layout/Footer";
 
 // MUI
 import Divider from "@mui/material/Divider";
@@ -163,6 +164,9 @@ const ReporterCarousel = () => {
         )}
       </div>
       <br />
+      <div style={{ marginLeft: "-2%", marginRight: "-2%" }}>
+        <Footer />
+      </div>
     </div>
   );
 };
