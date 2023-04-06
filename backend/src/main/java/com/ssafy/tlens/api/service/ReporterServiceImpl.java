@@ -149,7 +149,7 @@ public class ReporterServiceImpl implements ReporterService {
             }
             int idx = age/10;
             if (idx > 9) {
-                idx = 9;
+                idx = 8;
             }
             int nowCnt = gen.get(idx);
             gen.set(idx, nowCnt + 1);
