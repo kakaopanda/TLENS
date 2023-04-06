@@ -1,17 +1,14 @@
 import * as React from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 //MUI
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
 import WebhookIcon from "@mui/icons-material/Webhook";
 import WorkIcon from "@mui/icons-material/Work";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
@@ -80,22 +77,6 @@ const MenuDrawer = ({ anchor, toggleDrawer, handleNavigate }) => {
           </ListItem>
         ))}
         <Divider />
-      </List>
-      <List>
-        {["통계자료"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              onClick={() => {
-                handleNavigate(text);
-              }}
-            >
-              <ListItemIcon>
-                {index % 2 === 0 ? <InsertChartIcon color="primary" /> : null}
-              </ListItemIcon>
-              <ListItemText sx={{ color: "#0066CC" }} primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
       </List>
     </Box>
   );
