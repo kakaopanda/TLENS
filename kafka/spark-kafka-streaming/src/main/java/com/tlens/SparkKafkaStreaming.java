@@ -24,7 +24,7 @@ import static org.apache.spark.sql.functions.*;
 public class SparkKafkaStreaming {
 
     private static final Logger log = LoggerFactory.getLogger(SparkKafkaStreaming.class);
-    private static final String KAFKA_TOPIC_NAME = "news";
+    private static final String KAFKA_TOPIC_NAME = "tlens";
 
     public static void main(String[] args) {
 
