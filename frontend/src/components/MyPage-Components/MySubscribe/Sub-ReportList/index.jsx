@@ -30,7 +30,7 @@ const SubReportList = ({ userInfo }) => {
   return (
     <div>
       <h4>내가 구독한 기자 : (총 {subReporter.length} 명)</h4>
-      <div style={{ maxHeight: "700px", overflowY: "scroll" }}>
+      <div style={{ maxHeight: "430px", overflowY: "scroll" }}>
         {" "}
         {/* 카드 부분 스크롤 적용 */}
         {subReporter.map((reporter, index) => {

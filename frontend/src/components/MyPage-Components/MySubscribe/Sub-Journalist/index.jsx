@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import MainNewsCard from "../../../Main-Components/MainNewsCard"
 import SubArticles from '../Sub-articles';
 import './subJournalist.scss';
 
-import reporters from "./reporters.json";
 
 // API
 import {getSubscribe} from "../../../../apis/news"
