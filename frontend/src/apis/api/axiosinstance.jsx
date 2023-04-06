@@ -235,6 +235,18 @@ export const getRegionNews = async (name, page, pageSize) => {
   }
 };
 
+// 마이페이지 스크랩 카운트 가져오기
+export const getMyPageScrapCount = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    const authInstance = axiosAuthApi(BASE_URL, token);
+    const res = await authInstance.get("/mypage/scrap/count");
+    return res.data.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // 다음은 사용법
 
 // import { defaultInstance, authInstance } from '@apis/utils'
