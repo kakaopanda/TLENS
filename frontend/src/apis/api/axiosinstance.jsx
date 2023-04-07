@@ -135,6 +135,20 @@ export const getKeywordNews = async (keyword, page) => {
     console.log(error);
   }
 };
+// 메인페이지 키워드 가져오기
+export const getMainKeyword = async (category) => {
+  try {
+    const res = await defaultInstance.get("/categoryTrend/wordcloud", {
+      params: {
+        category: category,
+        count: 30,
+      },
+    });
+    return res.data.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // 언론사 데이터 가져오기
 export const getPressData = async () => {

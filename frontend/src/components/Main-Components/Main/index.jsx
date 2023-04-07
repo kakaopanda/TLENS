@@ -16,6 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 // Api
 import { defaultInstance } from "../../../apis/news";
+import { getMainKeyword } from "../../../apis/api/axiosinstance";
 
 const MainChart = (props) => {
   const [keywordNews, setKeywordNews] = useState([]);
@@ -23,6 +24,9 @@ const MainChart = (props) => {
   const [allNewsCount, setAllNewsCount] = useState("");
   const [category, setCategory] = useState("");
   const [open, setOpen] = useState(false);
+  const [KeywordCount, setKeywordCount] = useState([]);
+  const [textList, setTextList] = useState([]);
+  const [valueList, setValueList] = useState([]);
   const [splitKeyword, setSplitKeyword] = useState({
     textList: [],
     valueList: [],
@@ -30,6 +34,24 @@ const MainChart = (props) => {
 
   const pageSize = 10;
   const mainBotLeftRef = useRef(null);
+
+  const getMainKeywords = async (category) => {
+    try {
+      const res = await getMainKeyword(category);
+      const ten = res.slice(0, 10);
+      let textList = [];
+      let valueList = [];
+      ten.map((V) => {
+        textList.push(V.text);
+        valueList.push(V.value);
+      });
+      setTextList(textList);
+      setValueList(valueList);
+      setKeywordCount(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const countWords = (text) => {
     const words = text.split(" ");
@@ -150,6 +172,7 @@ const MainChart = (props) => {
   }, [props.value]);
 
   useEffect(() => {
+    getMainKeywords(category);
     getCategoryNews(category, 0);
   }, [category]);
 
@@ -198,12 +221,12 @@ const MainChart = (props) => {
       <div className="main-mid-wrapper" style={{ fontFamily: 'Do Hyeon, sans-serif' }}>
         <div className="main-mid-left">
           <h2>키워드 Top 10</h2>
-          <BarCharts splitKeyword={splitKeyword} />
+          <BarCharts textList={textList} valueList={valueList} />
         </div>
         <Divider orientation="vertical" flexItem />
         <div className="main-mid-right">
           <h2>T:LENS 핫 키워드(Top 30)</h2>
-          <Wordcloud category={props?.value} />
+          <Wordcloud KeywordCount={KeywordCount} />
         </div>
       </div>
       <Divider />

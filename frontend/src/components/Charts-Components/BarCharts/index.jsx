@@ -1,11 +1,11 @@
 import React from "react";
 import ApexCharts from "react-apexcharts";
 
-const BarCharts = ({ splitKeyword }) => {
+const BarCharts = ({ valueList, textList }) => {
   const state = {
     series: [
       {
-        data: splitKeyword.valueList,
+        data: valueList,
       },
     ],
     options: {
@@ -56,7 +56,7 @@ const BarCharts = ({ splitKeyword }) => {
         colors: ["#fff"],
       },
       xaxis: {
-        categories: splitKeyword.textList,
+        categories: textList,
       },
       yaxis: {
         labels: {
