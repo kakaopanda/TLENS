@@ -3,7 +3,6 @@ import "./MainNewsCard.scss";
 
 // MUI
 import Card from "@mui/joy/Card";
-import Link from "@mui/joy/Link";
 import Chip from "@mui/joy/Chip";
 import AspectRatio from "@mui/joy/AspectRatio";
 import { Divider } from "@mui/material";
@@ -29,7 +28,7 @@ const MainNewsCard = ({ newsData }) => {
   if (!newsData) return null; // add conditional check
   const err = "요약정보가 없습니다!";
   return (
-    <div className="news-container">
+    <div className="news-container" >
       {newsData.map((V, index) => {
         return (
           <Card
@@ -57,11 +56,12 @@ const MainNewsCard = ({ newsData }) => {
             <Divider orientation="vertical" flexItem />
             <div className="newscard-wrapper" style={{ width: "80%" }}>
               <div className="newscard-title">
-                <h3 className="newscard-title-text">{V.title}</h3>
+                <h3 className="newscard-title-text" 
+                style={{ fontFamily: 'Jua, sans-serif'}}>{V.title}</h3>
                 <Divider />
               </div>
               <div className="newscard-main">
-                <h4 className="newscard-main-text">
+                <h4 className="newscard-main-text" style={{ fontFamily: 'Do Hyeon, sans-serif' }}>
                   {V.summary ? V.summary : err}
                 </h4>
               </div>

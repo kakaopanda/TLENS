@@ -26,6 +26,7 @@ function App() {
   const { pathname } = useLocation();
   const isHomePage = pathname === "/";
   const showHeader = !isHomePage;
+  const showFooter = !isHomePage;
 
   return (
     <React.Fragment>
@@ -51,7 +52,7 @@ function App() {
           <Route path="/reporter/:name" element={<ReporterDetail />} />
         </Routes>
       </div>
-      {location.pathname !== "/reporter" && <Footer />}
+       {location.pathname !== "/reporter" && showFooter && <Footer />}
     </React.Fragment>
   );
 }

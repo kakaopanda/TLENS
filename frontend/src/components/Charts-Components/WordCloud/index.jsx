@@ -34,8 +34,12 @@ const WordCloudContainer = ({ category, dummy2 }) => {
   return (
     <div>
       <WordCloud
+        style={{ "fontFamily": 'Jua, sans-serif'}}
         words={data}
-        options={options}
+        options={{
+          ...options,
+          fontFamily: 'Do Hyeon, sans-serif' 
+        }}
         callbacks={{
           onWordClick: handleWordClick,
         }}

@@ -40,14 +40,13 @@ const MyPage = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: "white",
-        padding: 10,
-        borderRadius: "15px",
-        margin: 0,
-      }}
-    >
+    <div style={{  
+      backgroundColor: 'white',
+      padding: 10,
+      borderRadius: '15px',
+      // height: '90vh',
+      margin: 0,
+    }}>
       <Box
         sx={{ flexGrow: 1, bgcolor: "parent", display: "flex", height: "100%" }}
       >
