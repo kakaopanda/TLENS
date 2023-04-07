@@ -76,11 +76,11 @@ const ArticleScrap = ({ name }) => {
               <Divider orientation="vertical" flexItem />
               <div className="newscard-wrapper" style={{ width: "80%" }}>
                 <div className="newscard-title">
-                  <h3 className="newscard-title-text">{news.title}</h3>
+                  <h3 className="newscard-title-text" style={{ "font-family": 'Jua, sans-serif'}}>{news.title}</h3>
                   <Divider />
                 </div>
                 <div className="newscard-main">
-                  <h4 className="newscard-main-text">
+                  <h4 className="newscard-main-text" style={{ fontFamily: 'Do Hyeon, sans-serif' }}>
                     {news.summary ? news.summary : err}
                   </h4>
                 </div>

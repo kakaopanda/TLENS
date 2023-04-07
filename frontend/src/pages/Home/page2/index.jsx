@@ -1,6 +1,6 @@
 import React from "react"
 import "./style.scss"
-
+import DoubleArrowOutlinedIcon from '@mui/icons-material/DoubleArrowOutlined';
 
 const Page2= () =>{
   return(
@@ -13,13 +13,13 @@ const Page2= () =>{
           기사 작성 패턴 분석!
         </p>
         <h5 style={{ "font-family": 'Jua, sans-serif', fontSize:"30px" }}>
-          악의적 의도를 가진 기사, 제목낚시로 뉴스 보기가 싫어진 적이 있지 않으신가요?  
+          <DoubleArrowOutlinedIcon /> 악의적 의도를 가진 기사, 제목낚시로 뉴스 보기가 싫어진 적이 있지 않으신가요?  
         </h5>
         <h5 style={{ "font-family": 'Jua, sans-serif', fontSize:"30px" }}>
-          T:LENS에서는 언론사별, 기자별 페이지를 마련하여, 자신의 스타일에 맞는 기사를 챙겨보실 수 있습니다.
+          <DoubleArrowOutlinedIcon /> T:LENS에서는 언론사별, 기자별 페이지를 마련하여, 자신의 스타일에 맞는 기사를 챙겨보실 수 있습니다.
         </h5>
         <h5 style={{ "font-family": 'Jua, sans-serif', fontSize:"30px" }}>
-          지금 T:LENS의 기자 구독, 기사 스크랩 기능을 이용해보세요.
+          <DoubleArrowOutlinedIcon /> 지금 T:LENS의 기자 구독, 기사 스크랩 기능을 이용해보세요.
         </h5>
       </div>
     </div>

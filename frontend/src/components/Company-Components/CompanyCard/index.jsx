@@ -34,7 +34,7 @@ const CompanyCard = ({ name, ename, category, ceo, birth, index }) => {
             height="80"
           />
         </CardOverflow>
-        <Typography level="h2" sx={{ fontSize: "md" }}>
+        <Typography level="h2" sx={{ fontSize: "md" }} style={{ fontFamily: 'Do Hyeon, sans-serif' }}>
           <Link
             sx={{ color: "black" }}
             onClick={() => {
@@ -46,7 +46,7 @@ const CompanyCard = ({ name, ename, category, ceo, birth, index }) => {
             {name}
           </Link>
         </Typography>
-        <Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
+        <Typography level="body2" sx={{ mt: 0.5, mb: 2 }} style={{ fontFamily: 'Do Hyeon, sans-serif' }}>
           <Link
             sx={{ color: "black" }}
             onClick={() => {
@@ -58,7 +58,7 @@ const CompanyCard = ({ name, ename, category, ceo, birth, index }) => {
         </Typography>
         <Divider inset="context" />
         <CardOverflow className="company-card-overflow" variant="soft">
-          <Typography level="body3">대표 : {ceo}</Typography>
+          <Typography level="body3" style={{ fontFamily: 'Do Hyeon, sans-serif' }}>대표 : {ceo}</Typography>
         </CardOverflow>
       </Card>
     </div>
