@@ -34,7 +34,8 @@ function KeywordList() {
   }
 
   return (
-    <div className="keyword-list-container">
+    <div className="keyword-list-container" style={{ fontFamily: 'Nanum Gothic Coding, monospace' }}
+>
       <ToastContainer />
       <div className="keyword-list">
         {keywordData && keywordData.length > 0 && (

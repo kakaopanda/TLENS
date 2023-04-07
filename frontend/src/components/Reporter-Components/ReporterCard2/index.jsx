@@ -53,11 +53,11 @@ const ReporterCard2 = ({ V, pressData }) => {
             {V[2]}
           </Typography>
           <Typography fontSize="sm" aria-describedby="card-description" mb={1}>
-            <Link overlay underline="none" sx={{ color: "text.tertiary" }}>
+            <Link overlay underline="none" sx={{ color: "text.tertiary" }} style={{ "font-family": 'Jua, sans-serif'}}>
               {V.press} : {V.name}
             </Link>
           </Typography>
-          <Typography fontSize="sm" aria-describedby="card-description" mb={1}>
+          <Typography fontSize="sm" aria-describedby="card-description" mb={1} style={{ fontFamily: 'Do Hyeon, sans-serif' , color: "#0066cc"}}>
             클릭시 정보 확인
           </Typography>
         </div>

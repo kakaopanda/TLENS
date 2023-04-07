@@ -7,7 +7,6 @@ import { Divider, Button } from "@material-ui/core";
 import "./articleScrap.scss"
 
 
-
 // API
 import { scrapList, cancelScrap } from "../../../../apis/news"
 

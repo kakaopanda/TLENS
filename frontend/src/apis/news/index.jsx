@@ -33,7 +33,7 @@ export const subReporter = async (reporterId) => {
     await authInstance.post("/subscribe", [], {
       params: { reporterId: reporterId },
     });
-    toast.success(<h3>기자 구독을 하셨습니다.👋</h3>, {
+    toast.success(<h3>기자 구독을 하셨습니다.😎</h3>, {
       position: "top-center",
       autoClose: 2000,
     });
@@ -104,7 +104,7 @@ export const scrapArticle = async (id) => {
     await authInstance.post("/scrap", [], {
       params: { newsId: id },
     });
-    toast.success(<h3>기사 스크랩이 되었습니다.👋</h3>, {
+    toast.success(<h3>기사 스크랩이 되었습니다.😎</h3>, {
       position: "top-center",
       autoClose: 2000,
     });
@@ -177,7 +177,7 @@ export const keywordRegister = async (keyword) => {
     await authInstance.post("/users/keyword", [], {
       params: { keyword: keyword },
     });
-    toast.success(<h3>키워드가 등록되었습니다.👋</h3>, {
+    toast.success(<h3>키워드가 등록되었습니다.😎</h3>, {
       position: "top-center",
       autoClose: 2000,
     });
