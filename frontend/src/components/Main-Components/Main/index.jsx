@@ -192,7 +192,7 @@ const MainChart = (props) => {
             },
           }}
         >
-          <h3 className="main-top-h3" >오늘 작성된 기사</h3>
+          <h3 className="main-top-h3">오늘 작성된 기사</h3>
           <h2 className="main-top-h2">{todayNewsCount} 건</h2>
         </Box>
         <hr className="main-top-hr" />
@@ -214,11 +214,14 @@ const MainChart = (props) => {
         </Box>
       </div>
       <br />
-      <div className="main-mid" style={{ "font-family": 'Jua, sans-serif'}}>
+      <div className="main-mid" style={{ "font-family": "Jua, sans-serif" }}>
         <h2>T:LENS 키워드 통계 : {category}</h2>
       </div>
       <Divider />
-      <div className="main-mid-wrapper" style={{ fontFamily: 'Do Hyeon, sans-serif' }}>
+      <div
+        className="main-mid-wrapper"
+        style={{ fontFamily: "Do Hyeon, sans-serif" }}
+      >
         <div className="main-mid-left">
           <h2>키워드 Top 10</h2>
           <BarCharts textList={textList} valueList={valueList} />
@@ -230,7 +233,9 @@ const MainChart = (props) => {
         </div>
       </div>
       <Divider />
-      <h2 className="main-bot-h2"  style={{ "font-family": 'Jua, sans-serif'}}>T:LENS 키워드 뉴스 : {category}</h2>
+      <h2 className="main-bot-h2" style={{ "font-family": "Jua, sans-serif" }}>
+        T:LENS 키워드 뉴스 : {category}
+      </h2>
       <Divider />
       <div className="main-bot-wrapper">
         <div className="main-bot-left" ref={mainBotLeftRef}>
@@ -244,14 +249,17 @@ const MainChart = (props) => {
         </div>
         <Divider orientation="vertical" flexItem />
         <div className="main-bot-right">
-          <div className="main-bot-right-wrapper" style={{ fontFamily: 'Do Hyeon, sans-serif' }}>
+          <div
+            className="main-bot-right-wrapper"
+            style={{ fontFamily: "Do Hyeon, sans-serif" }}
+          >
             <h2 className="main-bot-right-h2">시간별 핫 키워드(Top 3)</h2>
             <br />
             <div className="main-bot-right-1">
               <KeywordChart />
             </div>
             <br />
-            <h2 className="main-bot-right-h2">시간별 핫 키워드(Top 10)</h2>
+            <h2 className="main-bot-right-h2">연관도 분석</h2>
             <br />
             <div className="main-bot-right-2">
               <SearchResultChart2 keyword={category} />
