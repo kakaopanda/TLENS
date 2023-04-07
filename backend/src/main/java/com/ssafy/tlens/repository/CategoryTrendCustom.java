@@ -1,6 +1,7 @@
 package com.ssafy.tlens.repository;
 
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.tlens.entity.rdbms.CategoryTrend;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +35,19 @@ public class CategoryTrendCustom {
     public List<CategoryTrend> getCategoryTrendByDateAndCategoryOrderByCount(Timestamp startTime, Timestamp endTime, Long categoryId, int count){
         return jpaQueryFactory.selectFrom(categoryTrend)
                 .where(categoryTrend.date.between(startTime,endTime)
-                        ,categoryTrend.category.categoryId.eq(categoryId)
+                        ,eqCategoryId(categoryId)
                         ,categoryTrend.keyword.length().gt(5))
                 .orderBy(categoryTrend.count.desc())
                 .limit(count)
                 .fetch();
+    }
+
+    private BooleanExpression eqCategoryId(Long categoryId){
+        if(categoryId == null || categoryId == 0){
+            return null;
+        }else {
+            return categoryTrend.category.categoryId.eq(categoryId);
+        }
     }
 
 
