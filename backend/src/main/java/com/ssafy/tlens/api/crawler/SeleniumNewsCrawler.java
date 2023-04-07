@@ -23,8 +23,8 @@ public class SeleniumNewsCrawler {
 
     // STEP2. 드라이버 속성(Properties) 지정
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    // public static final String WEB_DRIVER_PATH = "src/main/java/com/ssafy/tlens/api/crawler/selenium/chromedriver_win32/chromedriver.exe";
-    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+     public static final String WEB_DRIVER_PATH = "src/main/java/com/ssafy/tlens/api/crawler/selenium/chromedriver_win32/chromedriver.exe";
+//    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
     String currentPath = Paths.get("").toAbsolutePath().toString();
 
     // STEP3. 크롤링 할 URL 지정
@@ -49,7 +49,7 @@ public class SeleniumNewsCrawler {
         ChromeOptions options = new ChromeOptions();
 
         // 브라우저 실행을 백그라운드로 전환한다.
-        options.addArguments("headless");
+//        options.addArguments("headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
@@ -206,7 +206,7 @@ public class SeleniumNewsCrawler {
                                 thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                         list.add(newsRequestDTO);
-                        System.out.println(newsRequestDTO);
+                        System.out.println(newsRequestDTO.getPress() + " " + newsRequestDTO.getTitle());
                         driver.navigate().back();
                     } catch(TimeoutException e1){
                         try{
@@ -284,7 +284,7 @@ public class SeleniumNewsCrawler {
                                     thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
-                            System.out.println(newsRequestDTO);
+                            System.out.println(newsRequestDTO.getPress() + " " + newsRequestDTO.getTitle());
                             driver.navigate().back();
                         } catch(TimeoutException e2){
                             // Case3. 스포츠 기사 페이지로 리다이렉트 된 경우
@@ -361,7 +361,7 @@ public class SeleniumNewsCrawler {
                                     thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
-                            System.out.println(newsRequestDTO);
+                            System.out.println(newsRequestDTO.getPress() + " " + newsRequestDTO.getTitle());
                             driver.navigate().back();
                         }
                     }
@@ -476,7 +476,7 @@ public class SeleniumNewsCrawler {
                                 thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                         list.add(newsRequestDTO);
-                        System.out.println(newsRequestDTO);
+                        System.out.println(newsRequestDTO.getPress() + " " + newsRequestDTO.getTitle());
                         driver.navigate().back();
                     } catch(TimeoutException e1){
                         try{
@@ -553,7 +553,7 @@ public class SeleniumNewsCrawler {
                                     thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
-                            System.out.println(newsRequestDTO);
+                            System.out.println(newsRequestDTO.getPress() + " " + newsRequestDTO.getTitle());
                             driver.navigate().back();
                         } catch(TimeoutException e2){
                             // Case3. 스포츠 기사 페이지로 리다이렉트 된 경우
@@ -631,7 +631,7 @@ public class SeleniumNewsCrawler {
                                     thumbNail, crawlLink, originalLink, createdDate, modifiedDate, content);
 
                             list.add(newsRequestDTO);
-                            System.out.println(newsRequestDTO);
+                            System.out.println(newsRequestDTO.getPress() + " " + newsRequestDTO.getTitle());
                             driver.navigate().back();
                         }
                     }
@@ -693,6 +693,11 @@ public class SeleniumNewsCrawler {
             else if(data.length()==20){
                 hour = Integer.parseInt(data.substring(15,17));
                 minute = Integer.parseInt(data.substring(18,20));
+                if(dayNight.equals("오전")){
+                    if(hour == 12){
+                        hour -= 12;
+                    }
+                }
             }
             else{
                 hour = 0;
