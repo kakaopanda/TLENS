@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -81,12 +82,23 @@ public class CategoryTrendServiceImpl implements CategoryTrendService {
         startTime.setHours(-11);
         List<CategoryTrend> categoryTrendList = categoryTrendCustom.getCategoryTrendByDateAndCategoryOrderByCount(startTime, endTime, c.getCategoryId(), count);
 
-        return categoryTrendList.stream()
+        List<CategoryTrendResponseDTO> categorys =  categoryTrendList.stream()
                 .map(categoryTrend -> CategoryTrendResponseDTO.builder()
-                        .keyword(categoryTrend.getKeyword())
-                        .count(categoryTrend.getCount())
+                        .text(categoryTrend.getKeyword())
+                        .value(categoryTrend.getCount())
                         .build())
                 .collect(Collectors.toList());
+
+        StringBuilder compare = new StringBuilder();
+        List<CategoryTrendResponseDTO> result = new ArrayList<>();
+        for ( CategoryTrendResponseDTO categoryTrend : categorys) {
+            if(!compare.toString().contains(categoryTrend.getText())){
+                compare.append(categoryTrend.getText());
+                result.add(categoryTrend);
+            }
+        }
+
+        return  result;
     }
 
     private Timestamp getDate(String day) {
