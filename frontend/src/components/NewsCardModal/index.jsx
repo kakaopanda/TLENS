@@ -41,7 +41,7 @@ const NewsCardModal = ({ open, onClose, news }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <ToastContainer />
-      <div className="modal-container">
+      <div className="modal-container" style={{ "font-family": 'Jua, sans-serif'}}>
         <div className="modal-top">
           <div className="modal-image">
             <img
@@ -76,12 +76,13 @@ const NewsCardModal = ({ open, onClose, news }) => {
           }}
         >
           {isLogined ? (
-            <Button onClick={newsScrap ? handleCancel : handleScrap} color="primary" variant="contained">
+            <Button onClick={newsScrap ? handleCancel : handleScrap} color="primary" variant="contained" style={{ "font-family": 'Jua, sans-serif'}}>
               {newsScrap ? "기사 스크랩 취소" : "T:LENS 기사 스크랩"}
             </Button>
           ) : null}
           
           <Button
+            style={{ "font-family": 'Jua, sans-serif'}}
             color="primary"
             variant="contained"
             onClick={() => window.open(news.link)}

@@ -113,7 +113,7 @@ const ReporterDetail = () => {
   }, [newsData.length]);
 
   return (
-    <div className="reporterdetail-wrapper">
+    <div className="reporterdetail-wrapper" style={{ fontFamily: 'Do Hyeon, sans-serif' }}>
       <ToastContainer />
       <div className="reporterdetail-left">
         <div className="reporterdetail-left-top">
@@ -182,7 +182,7 @@ const ReporterDetail = () => {
       </div>
       <div className="reporterdetail-right">
         <h2 className="reporterdetail-right-h2">
-          T:LENS 키워드 : {state[2]} 기자
+          T:LENS 키워드 :  {state.data.name}
         </h2>
         <div
           style={{
@@ -196,7 +196,7 @@ const ReporterDetail = () => {
         </div>
         <Divider />
         <h2 className="reporterdetail-right-h2">
-          T:LENS 키워드 뉴스 : {state[2]} 기자
+          T:LENS 키워드 뉴스 :  {state.data.name}
         </h2>
         <div className="reporterdetail-right-news" ref={mainBotLeftRef}>
           {newsData.length > 0 ? (

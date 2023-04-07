@@ -120,7 +120,7 @@ const SearchResult = () => {
   };
 
   return (
-    <div className="searchresult-wrapper">
+    <div className="searchresult-wrapper" style={{ "font-family": 'Jua, sans-serif'}}>
       <ToastContainer />
       <div className="searchresult-container">
         <div className="searchresult-text">
