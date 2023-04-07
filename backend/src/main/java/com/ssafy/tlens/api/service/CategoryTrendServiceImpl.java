@@ -67,7 +67,15 @@ public class CategoryTrendServiceImpl implements CategoryTrendService {
 
     @Override
     public List<CategoryTrendResponseDTO> getCategoryTrends(String category, int count) {
-        Category c = categoryRepository.getCategoryByName(category);
+        Category c = null;
+        if ("전체".equals(category)) {
+            c = Category.builder()
+                    .categoryId(0L)
+                    .name("전체")
+                    .build();
+        } else {
+            c = categoryRepository.getCategoryByName(category);
+        }
         Timestamp endTime = new Timestamp(new Date().getTime());
         Timestamp startTime = new Timestamp(endTime.getTime());
         startTime.setHours(-11);
