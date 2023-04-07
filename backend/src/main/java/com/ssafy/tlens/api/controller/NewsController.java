@@ -316,8 +316,8 @@ public class NewsController {
     }
 
     // 5분마다 실시간 기사 크롤링을 수행한다.
-    // @Scheduled(cron = "*/5 * * * * *")
-    @PostMapping("regionCrawling")
+     @Scheduled(cron = "*/5 * * * * *")
+//    @PostMapping("regionCrawling")
     public HttpResponseEntity.ResponseResult<?> regionCrawling() throws Exception {
         // 지역 언론사를 대상으로 최근 뉴스 기사를 크롤링한다.
         for(int i=0; i<regionPress[0].length; i++){
@@ -353,7 +353,7 @@ public class NewsController {
                     newsService.insert(list.get(j));
 
                     // 크롤링한 기사의 제목 및 내용을 JSON 객체에 담아 Kafka 서버에 POST 요청으로 전달한다.
-                    URL url = new URL("http://localhost:8090/kafka/data");
+                    URL url = new URL("http://j8c206.p.ssafy.io:8090/kafka/data");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("POST");
                     con.setRequestProperty("Content-Type", "application/json");
@@ -449,6 +449,4 @@ public class NewsController {
         }
         return success();
     }
-
-
 }
