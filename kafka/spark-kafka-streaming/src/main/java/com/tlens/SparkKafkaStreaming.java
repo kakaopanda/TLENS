@@ -53,7 +53,7 @@ public class SparkKafkaStreaming {
                 .format("kafka")
                 .option("kafka.bootstrap.servers", "j8c206.p.ssafy.io:9092") // kafka 서버 url
                 .option("subscribe", KAFKA_TOPIC_NAME) // kafka topic name
-                .option("startingOffsets", "earliest") // 코드를 실행할 때 카프카 토픽을 가져오면서 오프셋 시작 위치 결정
+                .option("startingOffsets", "latest") // 코드를 실행할 때 카프카 토픽을 가져오면서 오프셋 시작 위치 결정
                 .option("maxOffsetsPerTrigger", 10)  // 한번의 배치에서 가져올 수 있는 최대 데이터 개수
                 .option("stopGracefullyOnShutdown", true)
                 .option("kafka.group.id", "consumer") // consumer 그룹 id
@@ -75,7 +75,7 @@ public class SparkKafkaStreaming {
         Dataset<Row> result = df.select(from_json(col("value"), schema).as("data"))
                 .select(
                         col("data.title").as("title"),
-                        col("data.newsId").as("newsId"),
+                        col("data.newsId").as("news_id"),
                         callUDF("tokenize", col("data.content")).as("words") // UDF 함수를 사용해 문장의 형태소 분석 실시 후 결과를 칼럼으로 생성
                 ).withColumn("word", concat_ws(",", col("words"))); // UDF 함수 결과로 생성된 array(string) 데이터를 string으로 변환하여 칼럼 생성
 
@@ -99,7 +99,7 @@ public class SparkKafkaStreaming {
         properties.put("driver", "com.mysql.jdbc.Driver");
 
         // dataframe을 MySQL에 저장
-        batchDF.select(col("newsId"), col("title"), col("word")) // 저장하기 원하는 칼럼
+        batchDF.select(col("news_id"), col("title"), col("word")) // 저장하기 원하는 칼럼
                 .write()
                 .mode(SaveMode.Append) // append는 기존 테이블에 데이터 추가, overwrite는 기존 테이블에 덮어쓰기
                 .jdbc("jdbc:mysql://j8c206.p.ssafy.io:3306/tlens", "morpheme", properties); // jdbc 연결

@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class CategoryTrendResponseDTO {
-    private String keyword;
-    private int count;
+    private String text;
+    private int value;
 }
