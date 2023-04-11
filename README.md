@@ -66,21 +66,21 @@ T:LENS는 실시간 크롤링 및 분산 처리를 통해 뉴스 트렌드를 �
 
 1. 메인 & 분야별 트렌드 페이지
 
-![TLens1](/uploads/a7804168ab2ab90f4643b6ebadea360d/TLens1.gif)
-![TLens2](/uploads/c962b3ceb4a733fd23ee3593fdb45ec6/TLens2.gif)
+![001](https://user-images.githubusercontent.com/63866366/231034428-ecb2a999-48ad-48e9-8a61-a54d1fe7af70.gif)
+![002](https://user-images.githubusercontent.com/63866366/231034444-58a56c02-88a2-486f-b838-f8180cf2bc75.gif)
 
 2. 기업별 트렌드 페이지
 
-![TLens7](/uploads/62fe3354b095f0005cc81d8370f63f58/TLens7.gif)
+![003](https://user-images.githubusercontent.com/63866366/231034468-07c32d52-b51b-4801-ab60-bbae6dcbba37.gif)
 
 3. 지역별 트렌드 페이지
 
-![TLens4](/uploads/8e8ef7aaf67839d883dd4abe3b3baef5/TLens4.gif)
+![004](https://user-images.githubusercontent.com/63866366/231034484-23e0b34c-3fc7-486f-8eaa-53ae51853509.gif)
 
 4. 언론사별 기자 트렌드 페이지
 
-![TLens5](/uploads/373ac71669e87a8715c85b5262abdac3/TLens5.gif)
+![005](https://user-images.githubusercontent.com/63866366/231034511-f095fe83-d33f-43ab-b25b-e928e527861e.gif)
 
 5. 마이페이지
 
-![TLens6](/uploads/969dc519a860eb4129296560e124de73/TLens6.gif)
+![006](https://user-images.githubusercontent.com/63866366/231034527-548df247-3b4d-4958-b886-2a230aac0b23.gif)
